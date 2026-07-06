@@ -1,0 +1,2439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer">
+    <title>【 2026 大阪聖誕 Osaka X'mas 】</title>
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #eff6ff;        
+            --card-bg: #f8fbff;            
+            --text-main: #1e3a8a;        
+            --text-light: #64748b;
+            --primary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --line-color: #bfdbfe;
+            --col-transport: #ef4444; 
+            --col-food: #2563eb;        
+            --col-sight: #f97316;        
+            --col-lodging: #eab308;        
+            --font-serif: 'Shippori Mincho', serif;
+            --font-sans: 'Noto Sans TC', sans-serif;
+            --font-num: 'Lato', sans-serif;
+            --radius: 16px;
+            --shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.1);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding-bottom: 100px;
+        }
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(30, 58, 138, 0.2); 
+            backdrop-filter: blur(4px);
+            z-index: 2000; display: none;
+            flex-direction: column; justify-content: flex-end; 
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active { display: flex; }
+        @keyframes slideUp { from {transform: translateY(100%);} to {transform: translateY(0);} }
+        .modal-container {
+            width: 100%; height: 85%; 
+            background: #fff; 
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            padding: 25px;
+            overflow-y: auto;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        .modal-close-x {
+            position: absolute; top: 15px; right: 20px; font-size: 1.8rem; 
+            color: #94a3b8; cursor: pointer; padding: 10px; z-index: 10;
+        }
+        /* 編輯按鈕 (底部) */
+        .modal-edit-btn-bottom {
+            width: 100%; padding: 16px; border-radius: 12px; border: 2px dashed #bfdbfe; 
+            font-size: 1rem; cursor: pointer; color: var(--primary-blue); font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: #fff; margin-top: 20px;
+        }
+        /* 編輯模式表單 */
+        .edit-form { display: flex; flex-direction: column; gap: 15px; padding-top: 20px; padding-bottom: 40px; }
+        .edit-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+        .edit-label { font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .edit-input, .edit-textarea, .edit-select { 
+            padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px; 
+            font-size: 1rem; color: #1e3a8a; background: #f8fbff; outline: none; width: 100%;
+            height: 34px; 
+        }
+        /* 模擬 Textarea 的 Div */
+        .edit-content-box {
+            padding: 8px 12px; border: 1px solid #bfdbfe; border-radius: 8px;
+            font-size: 1rem; color: #1e3a8a; background: #f8fbff; 
+            height: 34px; 
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            cursor: pointer; display: flex; align-items: center;
+        }
+        .edit-textarea { resize: vertical; min-height: 150px; height: auto; } 
+        .edit-row { display: flex; gap: 10px; align-items: center; }
+        .edit-section-title { margin-top: 15px; font-size: 0.9rem; color: var(--primary-blue); font-weight: 700; border-bottom: 2px solid #eff6ff; padding-bottom: 5px; }
+        .edit-btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-save { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); flex: 1; }
+        .btn-cancel { background: #fff; border: 1px solid #bfdbfe; color: #64748b; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; flex: 1; }
+        .btn-delete-event { background: #fee2e2; border: none; color: #ef4444; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 700; margin-top: 20px; cursor: pointer; width: 100%; }
+        /* Modal Content Styles */
+        .m-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 10px; }
+        .m-tag { 
+            border: 1.5px solid; 
+            padding: 3px 12px; border-radius: 50px; font-size: 0.75rem; 
+            letter-spacing: 1px; text-transform: uppercase; font-weight: 700;
+            background: #fff;
+        }
+        .m-time-icon { color: #94a3b8; font-size: 0.9rem; }
+        .m-time { font-family: var(--font-num); font-size: 1.3rem; font-weight: 700; color: #64748b; }
+        .m-title { 
+            font-family: var(--font-serif); font-size: 2rem; font-weight: 800; 
+            line-height: 1.2; margin-bottom: 5px; color: #1e3a8a; 
+        }
+        .m-addr { font-size: 0.9rem; color: #64748b; margin-bottom: 25px; display: flex; align-items: center; gap: 6px;}
+        .m-sec-header {
+            font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; 
+            border-bottom: 1px solid #bfdbfe; padding-bottom: 8px; margin-bottom: 15px; margin-top: 35px;
+            font-weight: 700; display: flex; align-items: center; gap: 6px;
+        }
+        .m-sec-header i { color: var(--primary-blue); font-size: 1rem; }
+        .food-rec-list { display: flex; flex-direction: column; gap: 10px; }
+        .food-rec-item {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #fff; border: 1px solid #dbeafe; padding: 15px; border-radius: 12px;
+        }
+        .rec-name-cn { font-size: 1rem; font-weight: 700; color: #334155; }
+        .rec-name-jp { font-size: 1rem; font-weight: 500; color: #1e3a8a; text-decoration: underline; text-decoration-color: #bfdbfe; cursor: pointer; }
+        .rec-name-jp:active { opacity: 0.7; }
+        .res-combined-box {
+            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; 
+            overflow: hidden; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.05);
+        }
+        .res-top {
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+            background: #fff;
+        }
+        .res-label { font-size: 0.8rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+        .res-abc { font-size: 1.2rem; color: #1e3a8a; font-weight: 800; font-family: var(--font-num); margin-top: 4px; }
+        .res-link-icon { color: #cbd5e1; font-size: 1.4rem; cursor: pointer; }
+        .res-divider { height: 1px; background-image: linear-gradient(to right, #dbeafe 50%, transparent 50%); background-size: 8px 1px; background-repeat: repeat-x; }
+        .res-bottom {
+            padding: 15px 20px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center;
+        }
+        .conf-title { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+        .conf-val { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 1px; }
+        .copy-icon { color: #94a3b8; font-size: 1.2rem; cursor: pointer; padding: 5px; }
+        .copy-icon:active { color: var(--primary-blue); transform: scale(0.9); }
+        .ps-box {
+            background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 18px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .ps-cn { font-size: 1.1rem; font-weight: 700; color: #334155; }
+        .ps-jp { font-size: 1rem; color: #1e3a8a; cursor: pointer; text-decoration: underline; text-decoration-color: #bfdbfe; }
+        .about-box { 
+            background: #fff; border: 1px solid #dbeafe; padding: 18px; border-radius: 12px;
+            display: flex; align-items: center; gap: 15px; 
+        }
+        .ab-icon { font-size: 1.8rem; color: var(--primary-blue); }
+        .ab-code { font-family: var(--font-num); font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
+        .ab-label { font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; }
+
+        .desc-list { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .desc-item { padding-left: 15px; border-left: 4px solid #bfdbfe; cursor: pointer; }
+        .desc-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #1e3a8a; }
+        .desc-content { 
+            font-size: 0.95rem; color: #334155; line-height: 1.7; text-align: justify; 
+            white-space: normal;
+        }
+        .m-btn {
+            width: 100%; padding: 16px; border-radius: 12px; border: none; font-size: 1rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+            margin-bottom: 12px; transition: 0.2s; font-weight: 600;
+        }
+        .btn-map { background: #334155; color: white; box-shadow: 0 4px 10px rgba(51, 65, 85, 0.2); } 
+        .btn-web { background: #fff; border: 1px solid #cbd5e1; color: #334155; }
+        .btn-vlog { background: transparent; color: #64748b; font-size: 0.95rem; margin-top: 0px; margin-bottom: 0px }
+        .btn-vlog i { color: #94a3b8; font-size: 1.2rem; margin-top: 0px; margin-bottom: 0px }
+        /* --- Center Popup (Big Card) 修正 (Req 1) --- */
+        .center-popup {
+            position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; z-index: 3000; display: none;
+            background: rgba(239, 246, 255, 0.98); 
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px;
+            animation: zoomIn 0.2s ease-out;
+            cursor: pointer;
+        }
+        .center-popup.active { display: flex; }
+        @keyframes zoomIn { from {opacity: 0;} to {opacity: 1;} }
+        .cp-header-line {
+            width: 100%; max-width: 90%;
+            border-bottom: 2px solid #cbd5e1; 
+            position: relative;
+            margin-bottom: 0px; 
+            height: 40px; 
+            display: flex; 
+            align-items: flex-end; 
+            justify-content: center;
+        }
+        .cp-hint-text {
+            margin-bottom: 15px; /* 文字固定在橫線上方 10px */
+            font-size: 1.2rem; letter-spacing: 2px; font-weight: 800; color: #94a3b8;
+        }
+        .cp-fuji-icon {
+            position: absolute; right: 0; bottom: 20px; /* 圖示固定在橫線右下角 */
+            font-size: 1.5rem; color: #94a3b8;
+        }
+        .cp-content { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 100%; max-width: 90%;
+        }
+        .cp-jp { 
+            font-family: var(--font-serif); font-size: 3.5rem; font-weight: 900; line-height: 1.4; color: #1e3a8a;
+            word-break: break-all; white-space: pre-wrap; text-align: center;
+            padding: 5px 10px;
+            margin: 0px 0;
+            width: fit-content;
+            max-width: 100%;
+            max-height: 70vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .cp-sub, .cp-spacer, .cp-close { display: none; }
+        /* --- Custom Confirm Modal --- */
+        .confirm-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3); z-index: 4000; display: none;
+            justify-content: center; align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .confirm-overlay.active { display: flex; }
+        .confirm-box {
+            background: #eff6ff;
+            width: 80%; max-width: 300px; padding: 25px; border-radius: 16px; text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-height: 80%; overflow-y: auto;
+        }
+        .confirm-text { font-size: 1.1rem; font-weight: 600; color: #1e3a8a; margin-bottom: 20px; }
+        .confirm-btns { display: flex; gap: 10px; justify-content: center; }
+        .confirm-btn { 
+            flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 1rem;
+        }
+        .btn-yes { background: #ef4444; color: white; }
+        .btn-no { background: #fff; border: 1px solid #bfdbfe; color: #64748b; }
+        .btn-ok { background: var(--primary-blue); color: white; width: 100%; flex: auto; }
+        /* --- Header & Tabs --- */
+        header { background: rgba(239, 246, 255, 0.95); backdrop-filter: blur(10px); padding: 15px 0 0 0; position: sticky; top: 0; z-index: 100; text-align: center; }
+        .trip-tag { font-size: 0.6rem; letter-spacing: 2px; color: var(--primary-blue); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .trip-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .trip-badge { background: var(--light-blue); color: var(--primary-blue); padding: 2px 6px; border-radius: 6px; font-size: 0.7rem; vertical-align: middle; margin-left: 5px; }
+        .date-scroller { display: flex; overflow-x: auto; padding: 10px 20px 5px 20px; gap: 28px; scrollbar-width: none; background: rgba(239, 246, 255, 0.95); border-bottom: 1px solid #dbeafe; }
+        .date-scroller::-webkit-scrollbar { display: none; }
+        .date-item { display: flex; flex-direction: column; align-items: center; min-width: 45px; color: #94a3b8; cursor: pointer; transition: all 0.3s; position: relative; padding-bottom: 15px; }
+        .date-item.active { color: var(--primary-blue); transform: scale(1.05); }
+        .d-day { font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; font-family: var(--font-num); text-transform: uppercase;}
+        .d-date { font-family: var(--font-serif); font-size: 1.17rem; line-height: 1; }
+        .date-item::after { content: ''; position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background-color: var(--primary-blue); border-radius: 50%; opacity: 0; transition: opacity 0.3s ease; }
+        .date-item.active::after { opacity: 1; }
+        .add-day-btn {
+            min-width: 45px; display: flex; align-items: center; justify-content: center; 
+            color: var(--primary-blue); font-size: 1.5rem; cursor: pointer;
+        }
+        .hero-section { display: flex; align-items: center; padding: 25px 20px 15px; gap: 15px; position: relative; }
+        .day-vertical { 
+            writing-mode: vertical-rl; 
+            text-orientation: upright; 
+            font-family: var(--font-serif); 
+            font-size: 1.5rem; font-weight: 700; color: #1e3a8a; letter-spacing: 0.3em; 
+        }
+        .hero-card { flex: 1; height: 220px; border-radius: var(--radius); overflow: hidden; position: relative; background-size: cover; background-position: center; display: flex; align-items: flex-end; box-shadow: var(--shadow); }
+        .hero-overlay { width: 100%; padding: 20px; background: linear-gradient(to top, rgba(30, 58, 138, 0.85) 0%, transparent 100%); color: white; }
+        .hero-meta-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .hero-badge { border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; letter-spacing: 1px; }
+        .hero-city { font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 4px; color: rgba(255,255,255,0.9); }
+        .hero-title { margin: 0; font-family: var(--font-serif); font-size: 1.4rem; letter-spacing: 1px;}
+        .day-action-btns { position: absolute; bottom: 15px; right: 15px; display: flex; gap: 10px; z-index: 10; }
+        .day-btn { color: rgba(255,255,255,0.8); font-size: 1.2rem; cursor: pointer; background: rgba(0,0,0,0.3); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .weather-container { padding: 0 20px; margin-bottom: 20px; }
+        .weather-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px; }
+        .weather-loc { font-family: var(--font-serif); font-size: 1.2rem; line-height: 1; color: #1e3a8a; }
+        .weather-sub { font-size: 0.8rem; color: #64748b; margin-top: 5px; }
+        .weather-strip { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .weather-strip::-webkit-scrollbar { display: none; }
+        .w-col { text-align: center; min-width: 35px; }
+        .w-time { font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px; font-family: var(--font-num); }
+        .w-icon { font-size: 1.2rem; color: var(--primary-blue); margin-bottom: 5px; }
+        .w-temp { font-weight: 600; font-size: 0.9rem; font-family: var(--font-num); color: #334155; }
+        .weather-update-btn { font-size: 0.8rem; color: var(--primary-blue); margin-right: 10px; cursor: pointer; }
+        .hotel-bar { margin-top: 15px; padding-top: 15px; border-top: 1px solid #dbeafe; display: flex; align-items: center; cursor: pointer; }
+        .hotel-line { width: 4px; height: 32px; background: #eab308; margin-right: 12px; border-radius: 4px; }
+        .hotel-label { font-size: 0.65rem; color: #94a3b8; display: block; margin-bottom: 2px; }
+        .hotel-name { font-family: var(--font-serif); font-size: 1.1rem; color: #1e3a8a; font-weight: 600; }
+        .branch-toggle { margin: 10px 20px 20px; background: #dbeafe; padding: 4px; border-radius: 10px; display: flex; }
+        .branch-btn { flex: 1; border: none; background: none; padding: 8px; border-radius: 8px; font-size: 0.9rem; color: #64748b; font-weight: 500; cursor: pointer; transition: 0.2s; }
+        .branch-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1); }
+        .timeline-wrapper { padding: 10px 20px 30px 20px; position: relative; }
+        .timeline-row { display: flex; position: relative; min-height: 100px; } 
+        .t-time-col { width: 55px; text-align: right; padding-right: 15px; flex-shrink: 0; font-family: var(--font-num); font-size: 1rem; color: #334155; font-weight: 600; padding-top: 0; }
+        .t-line-col { width: 20px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+        .t-line { width: 2px; background: var(--line-color); position: absolute; top: 8px; bottom: -8px; left: 50%; transform: translateX(-50%); z-index: 1; }
+        .timeline-row:last-child .t-line { display: none; }
+        .t-dot { width: 10px; height: 10px; background: #eff6ff; border: 2px solid #cbd5e1; border-radius: 50%; z-index: 2; margin-top: 8px; transition: 0.3s; }
+        .timeline-row.active .t-time-col { color: var(--primary-blue); transform: scale(1.1); transition: 0.3s; }
+        .timeline-row.active .t-dot { background: var(--primary-blue); border-color: var(--primary-blue); box-shadow: 0 0 0 4px var(--light-blue); transform: scale(1.2); }
+        .t-content-col { flex: 1; padding-left: 15px; padding-bottom: 30px; cursor: pointer; position: relative; }
+        .t-bar { position: absolute; left: 0; top: 5px; bottom: 35px; width: 4px; border-radius: 4px; }
+        .type-transport .t-bar, .type-car .t-bar, .type-flight .t-bar { background-color: var(--col-transport); }
+        .type-food .t-bar { background-color: var(--col-food); }
+        .type-sightseeing .t-bar { background-color: var(--col-sight); }
+        .type-lodging .t-bar { background-color: var(--col-lodging); }
+        .t-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; color: #1e3a8a; }
+        .t-tag-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .t-tag-icon { font-size: 0.8rem; color: #94a3b8; }
+        .t-tag-text { font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-num); }
+        .t-desc { font-size: 0.9rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .add-event-btn {
+            width: 100%; padding: 15px; border: 2px dashed #bfdbfe; border-radius: 12px;
+            color: var(--primary-blue); font-weight: 700; background: #fff; cursor: pointer;
+            margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px;
+        }
+        /* --- Wallet --- */
+        .wallet-container { padding: 20px; }
+        .balance-card { background: var(--card-bg); border-radius: 16px; padding: 25px; text-align: center; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #e0f2fe; }
+        .calc-box { display: flex; flex-direction: column; gap: 12px; }
+        .calc-row { display: flex; align-items: center; background: #fff; border-radius: 10px; padding: 12px; border: 1px solid #dbeafe; }
+        .calc-label { font-weight: bold; color: #334155; width: 50px; font-size: 0.9rem; }
+        .calc-input { flex: 1; border: none; background: transparent; font-size: 1.3rem; text-align: right; outline: none; font-family: var(--font-num); color: #1e3a8a; }
+        .calc-swap-btn { background: #fff; border: 1px solid #dbeafe; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; margin: -18px auto; color: var(--primary-blue); cursor: pointer; z-index: 5; font-size: 0.9rem; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1); transition: 0.2s; }
+        .calc-swap-btn:active { transform: scale(0.9); }
+        .date-picker-wrapper { display: inline-flex; align-items: center; justify-content: center; gap: 8px; color: #334155; font-size: 1rem; margin-bottom: 5px; cursor: pointer; padding: 8px 16px; border-radius: 20px; background: #eff6ff; border: 1px solid #dbeafe; transition: 0.2s; font-weight: 500; }
+        .date-picker-wrapper:active { background: #e0f2fe; color: var(--primary-blue); border-color: var(--primary-blue); }
+        .date-chevron { font-size: 0.8rem; color: var(--primary-blue); }
+        .input-row { display: flex; gap: 10px; margin-bottom: 15px; align-items: stretch; }
+        .input-std { 
+            padding: 0 15px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 1.1rem; 
+            background: #fff; outline: none; width: 42%; height: 60px;
+        }
+        .input-std:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        .btn-add { 
+            background: #1e3a8a; color: white; border: none; padding: 0; width: 60px; height: 60px;
+            border-radius: 14px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+        }
+        .expense-list { margin-top: 20px; }
+        .exp-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed #cbd5e1; }
+        .exp-date { font-size: 0.75rem; color: var(--primary-blue); display: block; margin-bottom: 4px; font-family: var(--font-num); font-weight: 700; }
+        .exp-name { font-size: 1rem; font-weight: 500; color: #334155; }
+        .exp-price { font-weight: 700; color: #1e3a8a; font-family: var(--font-num); font-size: 1.1rem; }
+        .exp-del { color: #ef4444; background: none; border: none; margin-left: 10px; font-size: 1.2rem; padding: 5px; }
+        .wallet-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-export { flex: 1; background: #fff; border: 1px solid #bfdbfe; color: #1e3a8a; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
+        .btn-clear { flex: 1; background: #fee2e2; border: none; color: #ef4444; padding: 12px; border-radius: 10px; font-weight: 500; cursor: pointer; }
+        /* --- Info New Styles --- */
+        .info-block { background: var(--card-bg); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 15px; border: 1px solid #e0f2fe; }
+        .info-title { font-weight: 700; color: var(--primary-blue); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .action-btn { background: #fff; border: 1px solid #dbeafe; padding: 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; font-weight: 500; cursor: default; }
+        /* Map Embed - Modified for Card Style (Req 1) */
+        .map-card-wrapper {
+             border-radius: 16px;
+             overflow: hidden;
+             box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.1);
+             border: 1px solid #dbeafe;
+             background: #fff;
+             margin-bottom: 15px;
+        }
+        .info-map-container { 
+            position: relative; width: 100%; height: 250px; 
+            /* border-radius removed here as it is handled by wrapper now */
+            background: #e2e8f0; 
+            margin-bottom: 0; /* remove bottom margin inside wrapper */
+        }
+        .info-map-iframe { width: 100%; height: 100%; border: 0; }
+        .info-map-link-bottom { 
+            padding: 14px; 
+            text-align: center; 
+            font-size: 0.95rem; 
+            color: #1e3a8a; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            font-weight: 700; 
+            text-decoration: none;
+            background: #f8fbff; /* Light card footer bg */
+            border-top: 1px solid #e0f2fe;
+            transition: background 0.2s;
+        }
+        .info-map-link-bottom:active {
+            background: #dbeafe;
+        }
+        /* VJW Banner */
+        .vjw-banner {
+            background: #1e3a8a; color: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow); cursor: pointer;
+        }
+        .vjw-tag { font-size: 0.65rem; background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; letter-spacing: 1px; font-weight: 700; }
+        .vjw-title { font-size: 1.4rem; font-family: var(--font-serif); font-weight: 700; }
+        .vjw-sub { font-size: 0.8rem; color: #bfdbfe; margin-top: 4px; }
+        .vjw-icon { font-size: 1.5rem; background: rgba(255,255,255,0.2); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: white; }
+        /* Emergency */
+        .em-header { font-size: 1.1rem; color: #1e3a8a; font-weight: 800; font-family: var(--font-serif); display: flex; align-items: center; gap: 8px; margin-top: 10px; border-bottom: 1px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 20px}
+        .em-header i { color: #ef4444; }
+        .em-grid { display: flex; gap: 15px; margin-bottom: 15px; }
+        .em-card { flex: 1; background: #fff; border: 1px solid #dbeafe; border-radius: 12px; text-align: center; padding: 20px 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .em-label { font-size: 0.8rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; margin-bottom: 5px; }
+        .em-num { font-size: 2.2rem; font-weight: 800; color: #ef4444; font-family: var(--font-num); line-height: 1; }
+        .em-hotline { background: #fff; border: 1px solid #dbeafe; border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .em-hl-title { font-weight: 700; color: #334155; font-size: 1rem; line-height: 1.3; }
+        .em-hl-sub { font-size: 0.75rem; color: #94a3b8; margin-top: 4px; text-transform: uppercase; }
+        .em-hl-num { font-size: 1.3rem; font-weight: 700; color: #334155; font-family: var(--font-num); margin-top: 10px; }
+        .em-hl-btn { background: #1e3a8a; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .em-note { font-size: 0.7rem; color: #94a3b8; margin-top: 8px; text-align: center; }
+        /* Transport Card */
+        .ts-card { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #dbeafe; box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 12px; position: relative; overflow: hidden; }
+        .ts-card::before { content: ''; position: absolute; left: 0; top: 15px; bottom: 15px; width: 5px; background: #1e3a8a; border-radius: 0 4px 4px 0; }
+        .ts-label { font-size: 0.85rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; padding-left: 15px; }
+        .ts-jp { font-size: 1.5rem; font-family: var(--font-serif); font-weight: 700; color: #1e3a8a; padding-left: 15px; }
+        .ts-cn { font-size: 0.9rem; color: #64748b; margin-top: 5px; padding-left: 15px; }
+        /* Reservation Card (New Style) */
+        .rc-card { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #dbeafe; box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 12px; }
+        .rc-cat { font-size: 0.7rem; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+        .rc-title { font-size: 1.1rem; font-weight: 700; color: #334155; margin-bottom: 15px; }
+        .rc-divider { height: 1px; background: #eff6ff; margin-bottom: 15px; border-top: 1px dashed #bfdbfe; }
+        .rc-code-box { display: flex; justify-content: space-between; align-items: flex-end; }
+        .rc-code-val { font-size: 1.1rem; color: #1e3a8a; font-family: var(--font-num); font-weight: 700 }
+        .rc-link { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: #94a3b8; cursor: pointer; }
+        .btn-reset-app { 
+            width: 100%; padding: 12px; border-radius: 10px; border: none; 
+            background: #475569; color: #fff; cursor: pointer; font-weight: 500; 
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .bottom-nav { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 50px; padding: 12px 35px; display: flex; justify-content: space-between; box-shadow: 0 10px 30px -5px rgba(59, 130, 246, 0.25); z-index: 1000; border: 1px solid rgba(255,255,255,0.8); }
+        .nav-icon { font-size: 1.4rem; color: #94a3b8; padding: 5px; cursor: pointer; transition: 0.3s; }
+        .nav-icon.active { color: var(--primary-blue); transform: translateY(-3px); }
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+        /* --- 圖片預覽視窗樣式 --- */
+        .img-preview-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 5000;
+            display: none; justify-content: center; align-items: center;
+            overflow: hidden; /* 防止背景滑動 */
+            animation: fadeIn 0.3s;
+        }
+        .img-preview-overlay.active { display: flex; }
+        .img-preview-container {
+            width: 100%; height: 100%;
+            overflow: auto; /* 允許圖片放大後捲動 */
+            display: flex; justify-content: center; align-items: center;
+            -webkit-overflow-scrolling: touch; /* 讓 iOS 滑動更順暢 */
+        }
+        .img-preview-content {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain;
+            transition: width 0.3s ease; /* 放大縮小的動畫 */
+            cursor: zoom-in;
+        }
+        /* 放大狀態：寬度設為 250% 讓手機可以左右滑動看細節 */
+        .img-preview-content.zoomed {
+            width: 250%; 
+            max-width: none; max-height: none;
+            cursor: zoom-out;
+            margin: auto; /* 放大後保持置中 */
+        }
+        .img-preview-close {
+            position: absolute; top: 20px; right: 20px;
+            color: white; font-size: 2rem; cursor: pointer;
+            background: rgba(0,0,0,0.3); padding: 5px 12px; border-radius: 50%;
+            z-index: 5001;
+        }
+        .img-preview-hint {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7); font-size: 0.9rem; pointer-events: none;
+            background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 20px;
+        }
+        /* --- 移除舊的 .day-action-btns 相關樣式 (選擇性，不刪也沒關係) --- */
+        /* --- 新增：標題旁的動作按鈕群組 --- */
+        .header-action-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;       /* 按鈕之間的距離 */
+            margin-left: 15px; /* 與地點文字(Shinjuku)的距離 */
+            padding-left: 15px;
+            border-left: 2px solid #dbeafe; /* 加一條分隔線，比較好看 */
+        }
+        .header-btn-icon {
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 5px;
+        }
+        /* 編輯按鈕顏色 */
+        .header-btn-icon.edit {
+            color: var(--primary-blue);
+        }
+        /* 刪除按鈕顏色 */
+        .header-btn-icon.del {
+            color: #ef4444; /* 紅色 */
+        }
+        .header-btn-icon:active {
+            transform: scale(0.9); /* 點擊時縮小效果 */
+        }
+        /* 當 Modal 開啟時，套用此類別到 body */
+        body.modal-open {
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden !important;
+            position: fixed; /* 徹底阻止 iOS 橡皮筋回彈 */
+        }
+        /* ===== 大阪優化模組 CSS ===== */
+        .allergy-quickbtn{ display:flex; align-items:center; gap:14px; background:#ef4444; color:#fff; border-radius:16px; padding:18px 20px; margin-bottom:15px; box-shadow:0 6px 18px rgba(239,68,68,.35); cursor:pointer; }
+        .allergy-quickbtn > i:first-child{ font-size:1.6rem; }
+        .aq-title{ font-size:1.15rem; font-weight:800; }
+        .aq-sub{ font-size:0.72rem; opacity:.9; margin-top:2px; letter-spacing:1px; }
+        .allergy-overlay{ position:fixed; inset:0; background:rgba(120,0,0,.35); backdrop-filter:blur(4px); z-index:6000; display:none; justify-content:center; align-items:center; padding:20px; }
+        .allergy-overlay.active{ display:flex; }
+        .allergy-card{ background:#fff; border:4px solid #ef4444; border-radius:22px; padding:26px 22px; width:100%; max-width:420px; max-height:88vh; overflow-y:auto; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+        .al-badge{ display:inline-block; background:#ef4444; color:#fff; font-weight:800; letter-spacing:2px; font-size:0.8rem; padding:5px 14px; border-radius:50px; }
+        .al-title{ font-family:var(--font-serif); font-size:2rem; font-weight:900; color:#b91c1c; line-height:1.25; margin:14px 0 18px; }
+        .al-item{ font-size:1.3rem; font-weight:800; color:#1e293b; padding:14px 0; border-top:2px dashed #fecaca; }
+        .al-item b{ color:#ef4444; }
+        .al-x{ color:#ef4444; font-weight:900; margin-right:8px; }
+        .al-note{ font-size:0.92rem; font-weight:600; color:#64748b; margin-top:6px; }
+        .al-plea{ background:#fef2f2; border-radius:14px; padding:16px; font-size:1.02rem; font-weight:700; color:#b91c1c; line-height:1.6; margin-top:18px; }
+        .al-close{ text-align:center; background:#1e293b; color:#fff; border-radius:12px; padding:14px; font-weight:700; margin-top:20px; cursor:pointer; }
+        .opt-card{ background:#fff; border:1px solid #dbeafe; border-radius:12px; padding:18px; box-shadow:0 4px 10px rgba(0,0,0,.03); }
+        .ritual-list{ display:flex; flex-direction:column; gap:2px; }
+        .ritual-row{ display:flex; align-items:center; gap:12px; padding:12px 4px; border-bottom:1px dashed #e2e8f0; font-size:1.05rem; color:#334155; font-weight:600; cursor:pointer; }
+        .ritual-row:last-child{ border-bottom:none; }
+        .ritual-row input{ width:22px; height:22px; accent-color:#22c55e; flex-shrink:0; }
+        .ritual-row.done span{ color:#94a3b8; text-decoration:line-through; }
+        .opt-link{ display:flex; align-items:center; gap:8px; color:#1e3a8a; font-weight:700; text-decoration:none; font-size:1rem; }
+        .opt-link i{ color:var(--primary-blue); }
+        .opt-sub{ font-size:0.8rem; color:#94a3b8; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+        .opt-note{ font-size:0.9rem; color:#475569; line-height:1.6; margin-top:6px; }
+        .opt-textarea{ width:100%; margin-top:8px; border:1px solid #dbeafe; border-radius:10px; padding:10px; font-size:0.95rem; color:#1e3a8a; min-height:70px; resize:vertical; outline:none; box-sizing:border-box; font-family:var(--font-sans); }
+        .illum-table{ width:100%; border-collapse:collapse; font-size:0.92rem; }
+        .illum-table th{ background:#eff6ff; color:#1e3a8a; font-weight:700; padding:8px; text-align:left; font-size:0.82rem; }
+        .illum-table td{ padding:8px; border-bottom:1px solid #f1f5f9; color:#334155; }
+        /* ===== Stage3 修正 ===== */
+        .al-intro{ font-size:1.05rem; font-weight:700; color:#334155; line-height:1.7; margin:14px 0 4px; }
+        .al-item2{ font-size:1.45rem; font-weight:800; color:#1e293b; padding:16px; border-left:6px solid #ef4444; background:#fff5f5; border-radius:0 12px 12px 0; margin-top:14px; }
+        .al-item2 .al-note{ font-size:0.95rem; font-weight:600; color:#64748b; margin-top:8px; }
+        .food-rec-item{ align-items:stretch; gap:12px; }
+        .rec-name-cn, .rec-name-jp{ flex:1 1 0; width:50%; min-width:0; word-break:break-word; overflow-wrap:anywhere; }
+        .ps-box{ align-items:stretch; gap:12px; }
+        .ps-cn, .ps-jp{ flex:1 1 0; width:50%; min-width:0; word-break:break-word; overflow-wrap:anywhere; }
+        .illum-table{ width:100%; border-collapse:collapse; font-size:0.9rem; }
+        .illum-table th, .illum-table td{ padding:9px 8px; border-bottom:1px solid #f1f5f9; color:#334155; }
+        .illum-table th{ background:#eff6ff; color:#1e3a8a; font-weight:700; font-size:0.82rem; text-align:left; }
+        .illum-table .il-date{ text-align:center; white-space:nowrap; width:1%; }
+        .illum-table .il-sun{ text-align:center; white-space:nowrap; width:1%; }
+        .illum-table .il-note-td{ word-break:keep-all; overflow-wrap:break-word; line-height:1.5; }
+    </style>
+</head>
+<body>
+<div id="detailModal" class="modal-overlay">
+    <div class="modal-container">
+        <i class="fas fa-times modal-close-x" onclick="closeDetailModal()"></i>
+        <div id="modalContent"></div>
+    </div>
+</div>
+<div id="centerPopup" class="center-popup" onclick="closeCenterPopup()">
+    <div class="cp-header-line">
+        <div class="cp-hint-text">TOP TO CLOSE</div>
+        <i class="fas fa-star cp-fuji-icon"></i>
+    </div>
+    <div id="cpContent" class="cp-content">
+        <div id="cpSub" class="cp-sub"></div>
+        <div class="cp-spacer"></div>
+        <div id="cpJp" class="cp-jp"></div>
+    </div>
+</div>
+<div id="textEditModal" class="confirm-overlay">
+    <div class="confirm-box" style="text-align:left;">
+        <div class="confirm-text" id="textEditTitle">編輯內容</div>
+        <textarea class="edit-textarea" id="textEditArea" rows="5"></textarea>
+        <div class="confirm-btns" style="margin-top:15px">
+            <button class="confirm-btn btn-no" onclick="closeTextEdit()">取消</button>
+            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="textEditConfirmBtn">確定</button>
+        </div>
+    </div>
+</div>
+<div id="confirmModal" class="confirm-overlay">
+    <div class="confirm-box">
+        <div class="confirm-text" id="confirmText">確定要清除紀錄嗎？</div>
+        <div class="confirm-btns" id="confirmBtnGroup">
+            <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
+            <button class="confirm-btn btn-yes" id="confirmYesBtn">確定</button>
+        </div>
+    </div>
+</div>
+<div id="dateInputModal" class="confirm-overlay">
+    <div class="confirm-box" style="text-align:left;">
+        <div class="confirm-text" id="dateModalTitle" style="text-align:center;">選擇日期</div>
+        <div class="edit-group">
+            <input type="date" id="newDateInput" class="edit-input" style="width:90%; height:22px; margin-left:auto; margin-right:auto; display:block;">
+        </div>
+    <div id="editDayExtraFields" style="display:none">
+        <div style="margin-top: 15px; margin-bottom: 8px; background: #fff; border: 1px solid #bfdbfe; height: 40px; padding: 0 10px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div class="edit-label" style="margin:0; font-size: 1rem; color: #1e3a8a;">            晴天 / 雨天</div>
+            <input type="checkbox" id="day-edit-has-branch" style="width: 25px; height: 25px; accent-color: var(--primary-blue);">
+        </div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊標題</div><input class="edit-input" id="day-edit-title" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">旅遊地點</div><input class="edit-input" id="day-edit-loc" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-group" style="margin-top: 10px"><div class="edit-label">景點圖片</div><input class="edit-input" id="day-edit-bg" style="margin-top: 8px; height:40px"></div>
+        <div class="edit-section-title" style="margin-top:15px; border-bottom:1px solid #ddd;">每日地圖設定</div>
+        <div class="edit-group" style="margin-top: 10px">
+            <div class="edit-label">嵌入地圖</div>
+            <input class="edit-input" id="day-edit-map-embed" placeholder="https://..." style="margin-top: 8px; height:40px">
+        </div>
+        <div class="edit-group" style="margin-top: 10px">
+            <div class="edit-label">導航連結</div>
+            <input class="edit-input" id="day-edit-map-link" placeholder="https://..." style="margin-top: 8px; height:40px">
+        </div>
+    </div>
+        <div class="confirm-btns" style="margin-top:20px">
+            <button class="confirm-btn btn-no" onclick="document.getElementById('dateInputModal').classList.remove('active'); unlockScroll();">取消</button>
+            <button class="confirm-btn btn-yes" style="background:var(--primary-blue);" id="dateModalConfirmBtn">確定</button>
+        </div>
+    </div>
+</div>
+<header>
+    <span class="trip-tag">Osaka Christmas 2026</span>
+    <div class="trip-title">
+        【 大阪聖誕之旅 】
+    </div>
+</header>
+<div id="view-trip" class="view-section active">
+    <div class="date-scroller" id="dateScroller"></div>
+    <div class="hero-section">
+        <div class="day-vertical" id="dayVertical">第一天</div>
+        <div class="hero-card" id="heroCard">
+            <div class="hero-overlay">
+                <div class="hero-meta-row">
+                    <span class="hero-badge" id="heroDay">DAY 1</span>
+                    <span class="hero-city" id="heroCity"><i class="fas fa-location-dot"></i> 東京都</span>
+                </div>
+                <h2 class="hero-title" id="heroTitle">東京副都心－新宿</h2>
+            </div>
+        </div>
+    </div>
+    <div class="weather-container">
+        <div class="weather-header">
+            <div style="display:flex; align-items:center;">
+                <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.35rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
+                <div>
+                    <div class="weather-loc" id="wLoc">Tokyo</div>
+                </div>
+                <div class="header-action-group">
+                    <i class="fas fa-pen header-btn-icon edit" onclick="openEditDayModal()"></i>
+                    <i class="fas fa-trash-alt header-btn-icon del" onclick="deleteDay()"></i>
+                </div>
+                </div>
+            <i class="fas fa-sun" style="font-size:1.8rem; color:var(--primary-blue)"></i>
+        </div>
+        <div class="weather-strip" id="weatherStrip"></div>
+        <div class="hotel-bar" id="hotelInfoBar" style="display:none;">
+            <div class="hotel-line"></div>
+            <div>
+                <span class="hotel-label">住宿資訊</span>
+                <div class="hotel-name" id="hotelName">Yksi Stay Shinjuku</div>
+            </div>
+        </div>
+    </div>
+    <div class="branch-toggle" id="branchToggle" style="display:none;">
+        <button class="branch-btn active" onclick="switchBranch('A')"><i class="fas fa-sun" style="gap: 10px"></i>  晴天</button>
+        <button class="branch-btn" onclick="switchBranch('B')"><i class="fas fa-snowflake" style="gap: 10px"></i>  雨天</button>
+    </div>
+    <div class="timeline-wrapper" id="timelineList"></div>
+</div>
+<div id="view-wallet" class="view-section">
+    <div class="wallet-container">
+        <div class="balance-card" style="padding:15px; margin-bottom:15px;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:12px;">
+                <div id="rateTitle" style="font-size:0.9rem; color:var(--primary-blue); font-weight:700;">匯率換算 [ 0.22 ]</div>
+                <i id="rateLockIcon" class="fas fa-lock-open" onclick="toggleRateLock()" style="color:#94a3b8; cursor:pointer; font-size:0.95rem;"></i>
+            </div>
+            <div class="calc-box">
+                <div class="calc-row" id="rowTop">
+                    <span class="calc-label" style="font-size:0.9rem" id="labelTop">JPY</span>
+                    <input type="number" id="inputTop" class="calc-input" placeholder="0" oninput="calcRate('top')">
+                </div>
+                <button class="calc-swap-btn" onclick="swapCurrency()"><i class="fas fa-arrows-alt-v"></i></button>
+                <div class="calc-row" id="rowBottom">
+                    <span class="calc-label" style="font-size:0.8rem" id="labelBottom">TWD</span>
+                    <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
+                </div>
+            </div>
+        </div>
+        <div class="balance-card">
+            <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
+                總支出 ( <span id="displayDateLabel">12月30日</span> )
+                <i class="fas fa-chevron-down date-chevron"></i>
+            </div>
+            <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
+            <div style="margin-top:5px; margin-bottom:10px; font-size:1.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
+            <div style="margin-top:10px">
+                <div class="input-row">
+                    <input type="text" id="expName" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="項目">
+                    <input type="number" id="expCost" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="日幣">
+                    <button class="btn-add" style="font-size:1.5rem;height: 40px" onclick="addExpense()">+</button>
+                </div>
+            </div>
+            <div class="expense-list" id="expenseList"></div>
+            <div class="wallet-actions" style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-export" style="flex: 1; font-size:0.95rem; height: 45px; background: #94a3b8; color: #ffffff; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="exportExpenses()">
+                    <i class="fas fa-file-download"></i> 匯出明細
+                </button>
+                <button class="btn-clear" style="flex: 1; font-size:0.95rem; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="askClearAll()">
+                    <i class="fas fa-trash-alt"></i> 清除所有明細
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="view-info" class="view-section">
+    <div class="wallet-container">
+        <div class="em-header"><i class="fas fa-map-marked-alt"></i> 行程資訊</div>
+        <div class="vjw-banner" style="display: flex; align-items: center; justify-content: space-between; padding: 22px; cursor: default; background: #233b7d; border-radius: 20px;">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; pointer-events: none;">
+                <div style="margin-bottom: 8px;">
+                    <span class="vjw-tag" style="background: #e5534b; padding: 4px 10px; border-radius: 5px; font-weight: 700; font-size: 0.8rem; color: #fff; display: inline-block;">MUST HAVE</span>
+                </div>
+                <div class="vjw-title" style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: 0.5px;">Visit Japan Web</div>
+                <div class="vjw-sub" style="font-size: 0.8rem; color: rgba(255,255,255,0.85); line-height: 1.4;">入境審查 & 海關申報 ( 請截圖 QR Code )</div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; flex-shrink: 0; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.1);">
+                <a href="https://vjw-lp.digital.go.jp/en/" target="_blank" style="color: #fff; text-decoration: none; font-size: 1.2rem; display: block; line-height: 1;">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <i id="vjw-qr-icon-sidebar" class="fas fa-qrcode" onclick="openVjwQrModal()" style="color: #fff; font-size: 1.2rem; cursor: pointer; display: none;"></i>
+                <i class="fas fa-cog" onclick="editVjwQrs()" style="color: rgba(255, 255, 255, 0.4); font-size: 1.2rem; cursor: pointer;"></i>
+            </div>
+        </div>
+        <style>
+            .map-card-wrapper {padding: 2px; background: #fff; border-radius: 16px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); border: 1px solid #dbeafe; box-sizing: border-box; margin-bottom: 15px}
+            .info-map-container {width: 100%; height: 188px; overflow: hidden; position: relative; border-radius: 12px 12px 0 0}
+            .info-map-iframe {width: 100%; height: calc(100% + 67px); border: 0; margin-top: -67px}
+            .info-map-link-bottom {display: block; background: #fff; text-align: center; padding: 12px; color: #1e3a8a; text-decoration: none; font-weight: 700; border-radius: 0 0 12px 12px; border-top: 1px solid #f1f5f9; font-size: 0.95rem}
+            .info-map-link-bottom:active {background-color: #f8fafc; color: #3b82f6}
+        </style>
+        <div class="map-card-wrapper" style="position:relative;">
+        <div onclick="editInfoMap()" style="position:absolute; top:20px; right:20px; z-index:10; background:rgba(255,255,255,0.8); padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem; font-weight:bold; color:#1e3a8a; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+            <i class="fas fa-pen"></i>
+        </div>
+        <div class="info-map-container">
+            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <a id="globalInfoMapLink" href="https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7" target="_blank" class="info-map-link-bottom">
+             <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
+        </a>
+        </div>
+        <div class="allergy-quickbtn" onclick="openAllergyCard()">
+            <i class="fas fa-triangle-exclamation"></i>
+            <div><div class="aq-title">過敏紅線卡</div><div class="aq-sub">ALLERGY ・ 一鍵給店員看</div></div>
+            <i class="fas fa-chevron-right" style="margin-left:auto;opacity:.6"></i>
+        </div>
+        <div class="em-header"><i class="fas fa-exclamation-circle"></i> 緊急聯絡 & 支援</div>
+        <div class="em-hotline">
+            <div style="flex:1">
+                <div class="em-hl-title">[ 訪日 ] 醫療 & 急難熱線</div>
+                <div class="em-hl-sub" style="margin-top:10px">新光樂遊卡</div>
+                <div class="em-hl-num" style="margin-top:5px">886-2-2326-6722</div>
+            </div>
+            <div class="em-hl-btn"><i class="fas fa-phone-alt"></i></div>
+        </div>
+        <div class="em-hotline" style="margin-top:20px; background:#f8fafc; border:none;">
+            <div style="flex:1">
+                <div class="em-hl-tag" style="background:#cbd5e1; color:#fff; font-size:0.7rem; padding:2px 6px; display:inline-block; border-radius:4px; margin-bottom:4px;">外交部</div>
+                <div class="em-hl-title" style="font-size:1rem; margin-top:5px">台北駐大阪經濟文化辦事處</div>
+                <div style="font-size:1rem; color:#334155; margin-top:7px; font-family:var(--font-num);">06-6227-8623 (代表)</div>
+                <div style="font-size:1rem; color:#ef4444; font-weight:700; margin-top:5px; font-family:var(--font-num);">090-8794-4568 / 090-2706-8277 (緊急·出發前確認)</div>
+            </div>
+        </div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-car-side" style="color:#1e3a8a"></i> 交通卡片</div>
+        <div class="ts-card">
+            <div class="ts-label">給司機 (TO DRIVER)</div>
+            <div class="ts-jp">ここへ行ってください。</div>
+            <div class="ts-cn">( 請載我到這裡 )</div>
+        </div>
+        <div class="ts-card" style="margin-top:20px">
+            <div class="ts-label">付款 (PAYMENT)</div>
+            <div class="ts-jp">カードは使えますか？</div>
+            <div class="ts-cn">( 可以使用信用卡嗎？ )</div>
+        </div>
+                <div id="resSection" class="em-header" style="margin-top:30px"><i class="fas fa-file-invoice" style="color:#1e3a8a"></i> 預約 & 訂位</div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FLIGHT</div>
+            <div class="rc-title" style="margin-bottom:5px">AirAsia D7（去/回）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">去 D7 378 台北15:40→關西19:20 ・ 回 KIX20:45→TPE23:05（官方時刻）</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">訂位後填入</div>
+                <div class="rc-link" onclick="copyToClipboard('AirAsia D7 378')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">LODGING</div>
+            <div class="rc-title" style="margin-bottom:5px">ホテル阪神大阪（阪神本館）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">スーペリアダブル 3泊 ¥64,580 ・ IN 15-21 / OUT 12:00</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">訂房後填入</div>
+                <div class="rc-link" onclick="copyToClipboard('Jalan yad346945')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">焼肉ごりちゃん 福島店</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/24 22:00 ・ 告知延遲＋玉ねぎNG</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">06-6454-7036</div>
+                <div class="rc-link" onclick="copyToClipboard('06-6454-7036')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">Parkside Grill（USJ 內）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/25 18:45 ・ TableCheck</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">11/25 台灣10:00 開搶</div>
+                <div class="rc-link" onclick="copyToClipboard('https://www.tablecheck.com/en/shops/parkside-grille/reserve')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">神戸プレジール本店（神戶牛）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 11:30 ・ TableCheck／電話 ・ 包廂＋熟度＋紅線</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">078-571-0141</div>
+                <div class="rc-link" onclick="copyToClipboard('078-571-0141')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">幸せのパンケーキ 神戸店</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 14:00 ・ EPARK / HotPepper</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">078-392-8888</div>
+                <div class="rc-link" onclick="copyToClipboard('078-392-8888')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">Osteria Gaudente（MOSAIC 3F）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 19:00 ・ ⚠️訂位連結待補</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">umie 078-382-7100</div>
+                <div class="rc-link" onclick="copyToClipboard('078-382-7100')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">肉のあさつ 梅田お初天神店</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/27 12:15 ・ TableCheck／HotPepper ・ 壽喜燒生蛋液✓</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">strJ003411553</div>
+                <div class="rc-link" onclick="copyToClipboard('https://www.tablecheck.com/ja/nikuno-asatsu/reserve')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FOOD</div>
+            <div class="rc-title" style="margin-bottom:5px">モンシェール堂島本店（下午茶）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/27 15:15 ・ ⚠️內用/訂位待補查</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">堂島捲發源店</div>
+                <div class="rc-link" onclick="copyToClipboard('モンシェール堂島本店')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-hat-wizard" style="color:#1e3a8a"></i> USJ 快捷</div>
+        <div class="opt-card">
+            <a class="opt-link" href="https://www.usj.co.jp/web/ja/jp" target="_blank"><i class="fas fa-clock"></i> USJ 官方 App／等候時間・抽選</a>
+            <div class="opt-sub" style="margin-top:14px">Single Rider（單人快速）</div>
+            <div class="opt-note">・フライング・ダイナソー（飛天翼龍）— Aaron 單人衝<br>・ハリウッド・ドリーム — 兩人可同乘<br>・其餘設施出發前於官方 App 確認</div>
+            <div class="opt-sub" style="margin-top:14px">當日演出/場次備忘（自動儲存）</div>
+            <textarea id="usjNote" class="opt-textarea" oninput="saveUsjNote()" placeholder="9月官方公布後，填入聖誕秀/遊行/樹燈場次..."></textarea>
+        </div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-lightbulb" style="color:#1e3a8a"></i> 點燈 / 日落時刻</div>
+        <div class="opt-card">
+            <table class="illum-table">
+                <tr><th class="il-date">日期</th><th class="il-sun">日落</th><th>燈飾重點</th></tr>
+                <tr><td class="il-date">12/24 大阪</td><td class="il-sun">16:53</td><td class="il-note-td">御堂筋イルミ／Grand Front／梅田</td></tr>
+                <tr><td class="il-date">12/25 USJ</td><td class="il-sun">16:53</td><td class="il-note-td">USJ 聖誕夜間秀・樹燈</td></tr>
+                <tr><td class="il-date">12/26 神戶</td><td class="il-sun">16:54</td><td class="il-note-td">Harborland／MOSAIC 港燈飾</td></tr>
+                <tr><td class="il-date">12/27 大阪</td><td class="il-sun">16:55</td><td class="il-note-td">返程日・梅田</td></tr>
+            </table>
+            <div class="opt-note" style="margin-top:10px">※ 神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；日落為天文推算（預估）。</div>
+        </div>
+<div class="em-header" style="margin-top:30px"><i class="fas fa-sync-alt" style="color:#1e3a8a"></i> 資料同步</div>
+        <div class="info-block" style="margin-top: 20px">
+            <div class="btn-grid">
+                <button class="action-btn" style="cursor:pointer; width:100%; font-size:0.95rem; border:1px solid #dbeafe; background:#fff;" onclick="exportBackup()">
+                    <i class="fas fa-file-export" style="color:var(--primary-blue)"></i> 匯出
+                </button>  
+                <button class="action-btn" style="cursor:pointer; width:100%; font-size:0.95rem; border:1px solid #dbeafe; background:#fff;" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-file-import" style="color:var(--primary-blue)"></i> 匯入
+                </button>
+            </div>
+            <input type="file" id="importFile" style="display:none" onchange="importBackup(this)">   
+            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #94a3b8; color: #ffffff; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="offlineAllImages()">
+                    <i class="fas fa-plane-slash"></i> 離線化
+                 </button>
+                 <button class="btn-reset-app" style="flex: 1; font-size:0.95rem; height: 45px; background: #fee2e2; color: #ef4444; border: none; border-radius: 10px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="resetApp()">
+                    <i class="fas fa-redo-alt"></i> 重置
+                 </button>
+            </div>
+        </div> 
+</div> </div>
+<div id="allergyOverlay" class="allergy-overlay" onclick="closeAllergyCard()">
+    <div class="allergy-card" onclick="event.stopPropagation()">
+        <div class="al-badge">アレルギー ・ ALLERGY</div>
+        <div class="al-title">アレルギーの<br>お願い</div>
+        <div class="al-intro">恐れ入りますが、アレルギーのため<br>次の2つが食べられません。</div>
+        <div class="al-item2">玉ねぎ（オニオン）<div class="al-note">タレ・付け合わせにも入れないでいただけると助かります。</div></div>
+        <div class="al-item2">里芋・タロイモ（同じ種類のイモ）</div>
+        <div class="al-plea">お手数をおかけしますが、これらを使わずに調理していただけますでしょうか。よろしくお願いいたします。</div>
+        <div class="al-close" onclick="closeAllergyCard()">閉じる ・ 關閉</div>
+    </div>
+</div>
+<nav class="bottom-nav">
+    <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
+    <i class="fas fa-wallet nav-icon" onclick="switchView('wallet', this)"></i>
+    <i class="fas fa-info-circle nav-icon" onclick="switchView('info', this)"></i>
+</nav>
+<div id="imagePreviewModal" class="img-preview-overlay" onclick="closeImagePreview(event)">
+    <div class="img-preview-container">
+        <img id="imgPreviewTarget" class="img-preview-content" src="" onclick="toggleImageZoom(event)">
+    </div>
+    <div class="img-preview-hint"></div>
+    <i class="fas fa-times img-preview-close"></i>
+</div>
+<script>
+    let scrollPos = 0;
+    function lockScroll() {
+        scrollPos = window.pageYOffset;
+        document.body.style.top = `-${scrollPos}px`;
+        document.body.style.position = 'fixed'; // 修正這行
+        document.body.style.width = '100%';    // 防止寬度縮減
+        document.body.classList.add('modal-open');
+    }
+    function unlockScroll() {
+        // 1. 移除鎖定類別
+        document.body.classList.remove('modal-open');
+        // 2. 關鍵修正：將 position 還原，否則頁面會卡死
+        document.body.style.position = ''; 
+        document.body.style.top = '';
+        document.body.style.width = '';
+        // 3. 回到原本紀錄的捲動位置
+        window.scrollTo(0, scrollPos);
+    }
+    // 核心助手：根據當前模式與狀態，回傳正確的行程陣列
+    function getTargetEvents(dayData) {
+        if (!dayData.hasBranch) {
+            // 單一模式：確保 events 存在並回傳
+            if (!dayData.events) dayData.events = [];
+            return dayData.events;
+        } else {
+            // 分流模式：根據 currentBranch 回傳 A 或 B
+            if (currentBranch === 'A') {
+                if (!dayData.eventsA) dayData.eventsA = [];
+                return dayData.eventsA;
+            } else {
+                if (!dayData.eventsB) dayData.eventsB = [];
+                return dayData.eventsB;
+            }
+        }
+    }
+    const CITY_COORDS = {
+        "Osaka": { lat: 34.6937, lon: 135.5023 },
+        "Fukushima": { lat: 34.6969, lon: 135.4869 },
+        "USJ": { lat: 34.6654, lon: 135.4323 },
+        "Kobe": { lat: 34.6901, lon: 135.1956 },
+        "Sannomiya": { lat: 34.6946, lon: 135.1980 },
+        "KIX": { lat: 34.4342, lon: 135.2441 }
+    };
+    // 1. 變數定義區 (修正 HTTPS)
+    const DEFAULT_MAP_EMBED = "https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed";
+    const DEFAULT_MAP_LINK = "https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7";
+    let RATE = 0.22;
+    let currentBranch = 'A'; 
+    let isJpyTop = true; 
+    let currentDayIdx = 0;
+    let currentEvent = null;
+    let currentTextEditTargetId = null;
+    const COLORS = {
+        food: 'var(--col-food)',
+        transport: 'var(--col-transport)',
+        car: 'var(--col-transport)',
+        flight: 'var(--col-transport)',
+        sightseeing: 'var(--col-sight)',
+        lodging: 'var(--col-lodging)' 
+    };
+    // 2. 行程資料（大阪聖誕 2026-12-24~27）
+    let itineraryData = [
+        {
+            day: 1, dayCN: "第一天", date: "12/24", fullDate: "2026-12-24", week: "WED", title: "抵達關西・福島聖誕夜", heroCity: "大阪・福島",
+            loc: "Osaka", hotel: "ホテル阪神大阪 (阪神本館)",
+            bg: "https://images.unsplash.com/photo-1590559899731-a382839e5549?w=800",
+            events: [
+                {
+                    time: "15:40", type: "flight", iconType: "plane", title: "桃園 → 關西機場", location: "桃園機場",
+                    ps_label_1: "AirAsia D7 378　台北 15:40 → 關西 19:20（官方時刻）", ps_content_1: "https://www.airasia.com",
+                    ps_label_2: "訂位後填入",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "航班資訊", desc1_content: "AirAsia D7 378，桃園 15:40 起飛，19:20（日本時間）抵達 KIX。（官方時刻）",
+                    desc2_title: "抵達後動線", desc2_content: "入境 → JR 関西空港駅 → 関空快速 直達「福島駅」約 70 分 ¥1,210。（車程為預估）",
+                    desc3_title: "落地提醒", desc3_content: "先開通 iPhone Wallet ICOCA（Apple Pay 以 Mastercard 儲值最穩）、確認 Visit Japan Web QR。",
+                    link_web: "https://www.airbus-airasia.com"
+                },
+                {
+                    time: "19:20", type: "transport", iconType: "train", title: "關西機場 → 福島駅", location: "KIX → 福島",
+                    ps_label_1: "関空快速 直達 福島駅 約70分 ¥1,210（車程預估）", ps_label_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "搭乘位置", desc1_content: "JR 関西空港駅 → 関空快速（大阪方向），直達福島駅，不需換車。（約70分・預估）",
+                    desc2_title: "IC 卡", desc2_content: "iPhone Wallet ICOCA 感應進出；不買任何票券（Pass 試算皆不划算）。",
+                    desc3_title: "備註", desc3_content: "抵達福島駅後徒步至阪神本館。"
+                },
+                {
+                    time: "20:45", type: "lodging", iconType: "hotel", title: "ホテル阪神大阪 入住（預估）", location: "大阪市福島区",
+                    ps_label_1: "Jalan・スーペリアダブル 3泊 ¥64,580（含溫泉券/人/晚）", ps_label_2: "訂房後填入",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "房型 / 規則", desc1_content: "スーペリアダブル 30㎡（2026-04 翻新，床 180×200）。無早晚餐。CHECK-IN 15:00–21:00，CHECK-OUT 12:00。超過 24:00 才需事前聯繫。",
+                    desc2_title: "溫泉", desc2_content: "溫泉券每人每晚 1 張。7F 男湯／6F 女湯，10:00–23:00（最終入場 22:00）。",
+                    desc3_title: "抵達時間", desc3_content: "約 20:45 入住（預估，依班機 19:20 + 通關 + 車程推算）。",
+                    link_web: "https://www.hotelhanshin.co.jp/osaka/"
+                },
+                {
+                    time: "22:00", type: "food", iconType: "fire", title: "焼肉ごりちゃん 福島店", location: "阪神福島駅 西口1分",
+                    ps_label_1: "玉ねぎ完全NG（先出示過敏紅線卡）", ps_content_1: "玉ねぎは一切食べられません。タレや付け合わせにも入れないでください。",
+                    ps_label_2: "看板・おすすめ盛り合わせ", ps_content_2: "おすすめの盛り合わせをください。",
+                    ps_label_3: "予約 22時", ps_content_3: "22時に予約した〇〇です。少し遅れてすみません。",
+                    gps: "+81 6-6454-7036", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "福島超人氣燒肉，阪神福島駅西口徒步 1 分。營業 17:00–24:00。",
+                    desc2_title: "預約", desc2_content: "☎ 06-6454-7036／HotPepper。出發前 1 個月訂 22:00 場，告知可能延遲抵達 + 玉ねぎ完全NG。",
+                    desc3_title: "紅線", desc3_content: "Aaron：玉ねぎ絕對NG（連器具接觸都不行）。點餐務必出示過敏紅線卡。",
+                    link_web: "https://www.hotpepper.jp/strJ003324789/"
+                },
+                {
+                    time: "23:30", type: "food", iconType: "bowl-rice", title: "一蘭（儀式・首夜）", location: "道頓堀別館(24h) / 梅田",
+                    ps_label_1: "拉麵客製", ps_content_1: "麺のかたさ：かため。味の濃さ：ふつう。ねぎ：なし。",
+                    ps_label_2: "追加", ps_content_2: "替玉（かえだま）をお願いします。",
+                    ps_label_3: "", ps_content_3: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "儀式", desc1_content: "抵達首夜的一蘭儀式。道頓堀別館 24 小時營業；或梅田周邊深夜店（出發前確認營業）。",
+                    desc2_title: "備註", desc2_content: "免預約。福島 → 道頓堀約車程 15 分（預估）／→ 梅田徒步 15 分。點餐記得ねぎ抜き。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: "https://ke47500.gorp.jp/"
+                }
+            ]
+        },
+        {
+            day: 2, dayCN: "第二天", date: "12/25", fullDate: "2026-12-25", week: "THU", title: "環球影城・聖誕全日", heroCity: "USJ・大阪",
+            loc: "USJ", hotel: "ホテル阪神大阪 (阪神本館)",
+            bg: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
+            events: [
+                {
+                    time: "07:40", type: "transport", iconType: "train", title: "福島 → USJ（開園前）", location: "福島 → ユニバーサルシティ",
+                    ps_label_1: "JR 環狀線/ゆめ咲線 約15分 ¥190（車程預估）", ps_label_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "搭乘位置", desc1_content: "福島駅 → 西九条乗換 → ユニバーサルシティ駅。趕開園前抵達 rope drop。（約15分・預估）",
+                    desc2_title: "提醒", desc2_content: "無快速通關，靠開園衝刺。先查當日開園時間（11 月官方公布）。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "08:00", type: "sightseeing", iconType: "camera", title: "USJ 開園・Rope Drop", location: "ユニバーサル・スタジオ・ジャパン",
+                    ps_label_1: "聖誕限定・開園衝刺", ps_label_2: "開園と同時に人気アトラクションへ。",
+                    ps_content_1: "https://www.usj.co.jp/web/ja/jp",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "攻略", desc1_content: "無快速通關。開園先衝人氣設施：Aaron 單人 Single Rider 飛天翼龍；哈利波特兩人同乘（伴侶不搭刺激設施）。",
+                    desc2_title: "聖誕重點", desc2_content: "以夜間聖誕秀 / 燈飾氛圍為主軸（9 月官方公布聖誕內容後再校準本頁）。",
+                    desc3_title: "Single Rider", desc3_content: "飛天翼龍、好萊塢美夢等提供單人快速通道（出發前於官方 App 確認）。",
+                    link_web: "https://www.usj.co.jp/web/ja/jp"
+                },
+                {
+                    time: "12:00", type: "food", iconType: "utensils", title: "園內午餐", location: "USJ 園區",
+                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモ（里芋）は食べられません。除いてもらえますか？",
+                    ps_label_2: "推薦", ps_content_2: "おすすめはどれですか？",
+                    ps_label_3: "", ps_content_3: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "美食介紹", desc1_content: "園內餐廳擇一。兩人過敏紅線：Aaron 玉ねぎ、伴侶 タロイモ，皆完全NG。",
+                    desc2_title: "備註", desc2_content: "聖誕旺季園內用餐排隊，建議錯開 12:00 尖峰。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "15:00", type: "sightseeing", iconType: "camera", title: "哈利波特魔法世界（兩人同遊）", location: "The Wizarding World of Harry Potter",
+                    ps_label_1: "哈利波特禁忌之旅", ps_label_2: "ハリー・ポッター・エリアへ。",
+                    ps_content_1: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "景點介紹", desc1_content: "兩人一起玩的重點區。禁忌之旅（Forbidden Journey）伴侶可接受；活米村聖誕佈置拍照。",
+                    desc2_title: "注意事項", desc2_content: "熱門區可能需區域抽選券（當日於官方 App 領取，出發前確認）。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "16:53", type: "sightseeing", iconType: "music", title: "聖誕燈飾・點燈・夜間秀", location: "USJ 園區",
+                    ps_label_1: "聖誕樹點燈 / 夜間遊行", ps_label_2: "クリスマスショーの時間を確認。",
+                    ps_content_1: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "重點", desc1_content: "日落約 16:53（預估）。聖誕樹燈飾與夜間秀是本次過節主軸，優先卡位。",
+                    desc2_title: "備註", desc2_content: "確切場次待 9 月官方公布，填入「USJ 快捷」備忘欄。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "18:45", type: "food", iconType: "utensils", title: "Parkside Grill（USJ 內）", location: "USJ・Jurassic Park 區",
+                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは完全に除いてください。器具の接触も不可です。",
+                    ps_label_2: "預約", ps_content_2: "予約した〇〇です。",
+                    ps_label_3: "伴侶牛排熟度", ps_content_3: "ミディアム（中まで火を通し、赤い肉汁が出ない程度）でお願いします。",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "USJ 園內景觀餐廳（Jurassic Park 區）。園內用餐可延長聖誕氛圍。",
+                    desc2_title: "預約", desc2_content: "TableCheck 線上預約。優先案內＝入園日前 1 個月 11:00(JST) 開放 → 11/25 台灣時間 10:00 開搶；備援：當日門口 QR。前日可取消。",
+                    desc3_title: "紅線", desc3_content: "Aaron 玉ねぎ、伴侶 タロイモ 完全NG；伴侶牛排要熟度適中不見血。",
+                    link_web: "https://www.tablecheck.com/en/shops/parkside-grille/reserve"
+                }
+            ]
+        },
+        {
+            day: 3, dayCN: "第三天", date: "12/26", fullDate: "2026-12-26", week: "FRI", title: "神戶・聖誕慢遊", heroCity: "神戶・三宮",
+            loc: "Kobe", hotel: "ホテル阪神大阪 (阪神本館)",
+            bg: "https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=800",
+            events: [
+                {
+                    time: "10:00", type: "transport", iconType: "train", title: "福島 → 神戶三宮", location: "福島 → 神戸三宮",
+                    ps_label_1: "阪神 直通特急 約35分 ¥330（車程預估）", ps_label_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "搭乘位置", desc1_content: "阪神福島駅 → 直通特急 → 神戸三宮。約 35 分 ¥330。（預估）",
+                    desc2_title: "節奏", desc2_content: "此次是來過節、不趕行程。有馬溫泉不排，慢步神戶港與三宮。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "11:30", type: "food", iconType: "fire", title: "神戸プレジール本店（神戶牛）", location: "三宮・Hotel The B Kobe 1F",
+                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは一切使わないでください。器具の接触も不可です。",
+                    ps_label_2: "伴侶牛排熟度", ps_content_2: "ミディアム（赤い肉汁が出ない程度）でお願いします。",
+                    ps_label_3: "預約", ps_content_3: "11時半に予約した〇〇です。個室をお願いしました。",
+                    gps: "+81 78-571-0141", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "Aaron 定案的神戶牛（捨モーリヤ）。Lunch 11:30–15:00（LO 14:00）。三宮 Hotel The B Kobe 1F。",
+                    desc2_title: "預約", desc2_content: "TableCheck 線上／☎ 078-571-0141。備註玉ねぎ・タロイモNG、伴侶熟度適中、包廂。",
+                    desc3_title: "紅線", desc3_content: "兩人過敏紅線務必先告知；鐵板燒共用鐵板要特別交代分開處理。",
+                    link_web: "https://www.tablecheck.com/ja/shops/kobe-kobeplaisir/reserve"
+                },
+                {
+                    time: "14:00", type: "food", iconType: "utensils", title: "幸せのパンケーキ 神戸店（下午茶）", location: "三宮 徒步3分",
+                    ps_label_1: "招牌鬆餅", ps_content_1: "幸せのパンケーキをください。",
+                    ps_label_2: "", ps_content_2: "",
+                    ps_label_3: "", ps_content_3: "",
+                    gps: "+81 78-392-8888", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "伴侶每日下午茶／舒芙蕾鬆餅站。週六 10:00–20:30，三宮徒步 3 分。",
+                    desc2_title: "預約", desc2_content: "EPARK epark.jp/shopinfo/hit625717 或 HotPepper strJ001262734；☎ 078-392-8888。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: "https://www.epark.jp/shopinfo/hit625717/"
+                },
+                {
+                    time: "15:30", type: "sightseeing", iconType: "camera", title: "神戶港・Harborland 聖誕燈飾", location: "神戸ハーバーランド",
+                    ps_label_1: "神戶港散步", ps_label_2: "ハーバーランド・モザイクへ。",
+                    ps_content_1: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "景點介紹", desc1_content: "神戶港灣慢步、聖誕燈飾。日落約 16:54（預估）。",
+                    desc2_title: "注意事項", desc2_content: "神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；改看 Harborland／MOSAIC 港區燈飾。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "19:00", type: "food", iconType: "utensils", title: "Osteria Gaudente（MOSAIC 3F・港景義麵）", location: "神戸ハーバーランド umie MOSAIC 3F",
+                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは使わないでください。",
+                    ps_label_2: "伴侶最愛義大利麵", ps_content_2: "おすすめのパスタはどれですか？",
+                    ps_label_3: "", ps_content_3: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "MOSAIC 3F 義大利麵餐廳，港景。伴侶愛義大利麵。備選：櫻（2F 神戶牛）／8 EIGHTH BEEF（1F）。",
+                    desc2_title: "預約", desc2_content: "⚠️ 訂位連結待補（WebSearch 額度後查）。umie 總機 078-382-7100。",
+                    desc3_title: "紅線", desc3_content: "義大利麵常見洋蔥、醬料需確認；出示紅線卡。",
+                    link_web: ""
+                },
+                {
+                    time: "21:00", type: "lodging", iconType: "water", title: "阪神本館 溫泉（②/3・預估）", location: "阪神本館 7F男/6F女",
+                    ps_label_1: "溫泉券 3 晚各 1 張／人", ps_label_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "溫泉", desc1_content: "回福島後泡湯。10:00–23:00，最終入場 22:00 — 須在 22:00 前入場（預估回程時間，留意末班與最終入場）。",
+                    desc2_title: "備註", desc2_content: "若回程太晚錯過，改 12/27 晨湯補足。",
+                    desc3_title: "", desc3_content: ""
+                }
+            ]
+        },
+        {
+            day: 4, dayCN: "第四天", date: "12/27", fullDate: "2026-12-27", week: "SAT", title: "自然醒・溫泉・返程", heroCity: "大阪・梅田",
+            loc: "Osaka", hotel: "ホテル阪神大阪 (退房)",
+            bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
+            events: [
+                {
+                    time: "10:30", type: "lodging", iconType: "water", title: "阪神本館 晨湯（③/3・儀式）", location: "阪神本館 7F男/6F女",
+                    ps_label_1: "溫泉券 最後 1 張／人", ps_label_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "溫泉", desc1_content: "退房前晨湯。10:00 開放，checkout 12:00 前最佳時段（此段確定可行）。溫泉儀式收尾。",
+                    desc2_title: "備註", desc2_content: "泡完退房、寄放行李於櫃檯再出門。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "12:00", type: "lodging", iconType: "hotel", title: "退房・寄行李", location: "ホテル阪神大阪",
+                    ps_label_1: "行李寄放", ps_content_1: "荷物を預かってもらえますか？夕方に取りに戻ります。",
+                    ps_label_2: "", ps_label_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "接駁位置", desc1_content: "CHECK-OUT 12:00。行李寄放櫃檯，晚間取回再赴機場。",
+                    desc2_title: "注意事項", desc2_content: "確認退房費用結清。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "12:15", type: "food", iconType: "fire", title: "肉のあさつ 梅田お初天神店（しゃぶ＋江戸前寿司）", location: "梅田・お初天神",
+                    ps_label_1: "玉ねぎ完全NG／生魚は一名不可（出示紅線卡）", ps_content_1: "玉ねぎは一切NG。刺身は一名食べられません。すき焼きの生卵はOKです。",
+                    ps_label_2: "壽喜燒生蛋液", ps_content_2: "すき焼き用の生卵をお願いします。",
+                    ps_label_3: "預約", ps_content_3: "予約した〇〇です。",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "黃金出汁しゃぶしゃぶ＋江戸前寿司，一店雙修：Aaron 愛壽司/生食、伴侶要壽喜燒生蛋液。",
+                    desc2_title: "預約", desc2_content: "TableCheck tablecheck.com/ja/nikuno-asatsu/reserve 或 HotPepper strJ003411553。備註洋蔥可否全去除。",
+                    desc3_title: "紅線", desc3_content: "伴侶：生魚/刺身NG，但壽喜燒生蛋液可；Aaron：玉ねぎ完全NG。",
+                    link_web: "https://www.tablecheck.com/ja/nikuno-asatsu/reserve"
+                },
+                {
+                    time: "15:15", type: "food", iconType: "utensils", title: "モンシェール堂島本店（下午茶・堂島捲）", location: "堂島（近福島/梅田）",
+                    ps_label_1: "堂島ロール", ps_content_1: "堂島ロールをください。",
+                    ps_label_2: "內用", ps_content_2: "店内で食べられますか？",
+                    ps_label_3: "", ps_content_3: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "堂島捲發源店，伴侶下午茶。離福島/梅田動線近。（grenier 只外帶，改此店可內用確認）。",
+                    desc2_title: "預約", desc2_content: "⚠️ 內用現況＋預約方式待補查（WebSearch 額度後）。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: ""
+                },
+                {
+                    time: "16:30", type: "sightseeing", iconType: "camera", title: "梅田購物・東急ハンズ（＋一蘭末日儀式・彈性）", location: "梅田",
+                    ps_label_1: "梅田採買", ps_label_2: "ハンズ・大丸・阪急へ。",
+                    ps_content_1: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "景點介紹", desc1_content: "梅田最後採買。一蘭末日儀式視胃納彈性安排（午餐+下午茶已重，可快速一碗或改隔日心願）。",
+                    desc2_title: "注意事項", desc2_content: "須於約 17:30 前結束，回福島取行李赴機場（福島→KIX 約70分・預估）。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "18:00", type: "transport", iconType: "train", title: "梅田/福島 → 關西機場", location: "→ KIX",
+                    ps_label_1: "取行李 → 関空快速 福島→KIX 約70分 ¥1,210（預估）", ps_label_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "搭乘位置", desc1_content: "回福島取寄放行李 → 福島駅 関空快速 直達 KIX。（約70分・預估）預留通關/退稅時間。",
+                    desc2_title: "備註", desc2_content: "國際線建議起飛前 2 小時到；20:45 班機 → 約 18:45 前抵機場。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "20:45", type: "flight", iconType: "plane", title: "關西機場 → 桃園", location: "關西機場",
+                    ps_label_1: "AirAsia D7　關西 20:45 → 台北 23:05（官方時刻）", ps_content_1: "https://www.airasia.com",
+                    ps_label_2: "訂位後填入",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "航班資訊", desc1_content: "AirAsia 回程，KIX 20:45 → TPE 23:05。（官方時刻）",
+                    desc2_title: "提醒", desc2_content: "退稅、免稅提領、確認登機門。旅程結束，平安回家。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: "https://www.airasia.com"
+                }
+            ]
+        }
+    ];
+        function saveItineraryToLocal() {
+        localStorage.setItem('tripDataOsaka2026', JSON.stringify(itineraryData));
+    }
+    function init() {
+        const savedData = localStorage.getItem('tripDataOsaka2026');
+        if (savedData) {
+            try {
+                itineraryData = JSON.parse(savedData);
+            } catch(e) { console.error("Data load error", e); }
+        }
+        renderDateScroller();
+        switchDay(0);
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('expDate').value = today;
+        updateDateLabel(today);
+        loadExpenses();
+        updateTimeHighlight();
+        setInterval(updateTimeHighlight, 60000); 
+        updateRate();
+        setInterval(updateRate, 3600000);
+        initInfoMap();
+        checkVjwBtn();
+        loadUsjNote();
+        applyRateLockUI();
+    }
+    async function updateWeather() {
+        const day = itineraryData[currentDayIdx];
+        const cityName = day.loc || "Osaka";
+        document.getElementById('wLoc').innerText = cityName;
+        const coord = CITY_COORDS[cityName] || CITY_COORDS["Osaka"];
+        const cacheKey = 'osaka_weather_' + cityName;
+        try {
+            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coord.lat}&longitude=${coord.lon}&hourly=temperature_2m,weathercode&timezone=auto`);
+            const data = await response.json();
+            renderRealWeather(data);
+            try { localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), data: data })); } catch(e) {}
+        } catch (e) {
+            console.warn("天氣讀取失敗，改用快取", e);
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) { try { renderRealWeather(JSON.parse(cached).data); } catch(_) {} }
+        }
+    }
+    function updateDateLabel(dateStr) {
+        const d = new Date(dateStr);
+        const label = `${d.getMonth() + 1}/${d.getDate()}`;
+        document.getElementById('displayDateLabel').innerText = label;
+    }
+    async function updateRate() {
+        if (getRateLock().locked) { applyRateLockUI(); return; }
+        try {
+            const res = await fetch('https://api.exchangerate-api.com/v4/latest/JPY');
+            if (!res.ok) throw new Error('網路回應不正確'); // 增加回應檢查
+            const data = await res.json();
+            if(data && data.rates && data.rates.TWD) {
+                RATE = data.rates.TWD;
+                document.getElementById('rateTitle').innerText = `匯率換算 [ ${RATE.toFixed(3)} ]`;
+            }
+        } 
+        catch(e) {
+            console.error("匯率更新失敗，使用保底匯率:", e);
+            // 如果抓取失敗，確保 RATE 依然有值，避免 calcRate 出錯
+            if (!RATE) RATE = 0.22; 
+            document.getElementById('rateTitle').innerText = `匯率換算 [ 使用預設 ${RATE} ]`;
+        }
+    }
+    function swapCurrency() {
+        isJpyTop = !isJpyTop;
+        document.getElementById('labelTop').innerText = isJpyTop ? "JPY" : "TWD";
+        document.getElementById('labelBottom').innerText = isJpyTop ? "TWD" : "JPY";
+        document.getElementById('inputTop').value = "";
+        document.getElementById('inputBottom').value = "";
+    }
+    function calcRate(pos) {
+        // 1. 強化檢查：確保 RATE 存在且大於 0
+        if (!RATE || RATE <= 0) RATE = 0.22; {
+            console.warn("匯率資料尚未就緒或數值異常:", RATE);
+            return; 
+        }
+        const topInput = document.getElementById('inputTop');
+        const bottomInput = document.getElementById('inputBottom');
+        // 2. 獲取數值並檢查是否為有效數字
+        const val = parseFloat(pos === 'top' ? topInput.value : bottomInput.value);
+        if (isNaN(val)) {
+            // 如果輸入框是空的或非數字，清空另一個輸入框
+            pos === 'top' ? (bottomInput.value = "") : (topInput.value = "");
+            return;
+        }
+        // 3. 執行換算
+        if (isJpyTop) { 
+            // 模式：上方為 JPY，下方為 TWD
+            if(pos === 'top') bottomInput.value = Math.round(val * RATE);
+            else topInput.value = Math.round(val / RATE);
+        } else { 
+            // 模式：上方為 TWD，下方為 JPY
+            if(pos === 'top') bottomInput.value = Math.round(val / RATE);
+            else topInput.value = Math.round(val * RATE);
+        }
+    }
+    function renderDateScroller() {
+        const el = document.getElementById('dateScroller');
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        itineraryData.forEach((d, i) => { d.day = i+1; d.dayCN = `第${i+1}天`; });
+
+        el.innerHTML = itineraryData.map((d, i) => `
+            <div class="date-item ${i===currentDayIdx?'active':''}" onclick="switchDay(${i})">
+                <span class="d-day">${d.week}</span>
+                <span class="d-date">${d.date}</span>
+            </div>
+        `).join('') + `<div class="add-day-btn" onclick="openAddDayModal()">+</div>`;
+    }
+    function openAddDayModal() {
+        lockScroll();
+        resetModalUI();
+        document.getElementById('dateModalTitle').innerText = "新增旅遊日期";
+        document.getElementById('newDateInput').value = "";
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.onclick = confirmAddDay;
+        btn.innerText = "新增";
+        document.getElementById('editDayExtraFields').style.display = 'none';
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+    function confirmAddDay() {
+        const input = document.getElementById('newDateInput').value;
+        if(!input) return showCustomAlert("請選擇日期");
+        const d = new Date(input);
+        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const week = weekDays[d.getDay()];
+        const dateStr = `${d.getMonth()+1}/${d.getDate()}`;
+        const newDay = {
+            day: itineraryData.length + 1,
+            dayCN: `第${itineraryData.length + 1}天`,
+            date: dateStr,
+            fullDate: input,
+            week: week,
+            title: "新行程",
+            heroCity: "新城市",
+            loc: "新地點",
+            hotel: "新住宿",
+            bg: "",
+            events: []
+        };
+        itineraryData.push(newDay);
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        saveItineraryToLocal();
+        document.getElementById('dateInputModal').classList.remove('active');
+        renderDateScroller();
+        switchDay(itineraryData.findIndex(x => x.fullDate === input));
+    }
+    function openEditDayModal() {
+        lockScroll();
+        resetModalUI(); 
+        const dayData = itineraryData[currentDayIdx];
+        document.getElementById('dateModalTitle').innerText = "編輯每日資訊";
+        document.getElementById('newDateInput').value = dayData.fullDate;
+        document.getElementById('editDayExtraFields').style.display = 'block';
+        document.getElementById('day-edit-title').value = dayData.title;
+        document.getElementById('day-edit-loc').value = dayData.heroCity;
+        document.getElementById('day-edit-bg').value = dayData.bg;
+        document.getElementById('day-edit-has-branch').checked = dayData.hasBranch || false;
+        document.getElementById('day-edit-map-embed').value = dayData.mapEmbed || "";
+        document.getElementById('day-edit-map-link').value = dayData.mapLink || "";
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.onclick = confirmEditDay;
+        btn.innerText = "儲存";
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+    function confirmEditDay() {
+        const input = document.getElementById('newDateInput').value;
+        if(!input) return showCustomAlert("請選擇日期");
+    
+        const d = new Date(input);
+        const weekDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+        const dayData = itineraryData[currentDayIdx];
+
+        // 1. 基本資訊更新
+        dayData.fullDate = input;
+        dayData.date = `${d.getMonth()+1}/${d.getDate()}`;
+        dayData.week = weekDays[d.getDay()];
+        dayData.title = document.getElementById('day-edit-title').value;
+        dayData.heroCity = document.getElementById('day-edit-loc').value;
+        dayData.bg = document.getElementById('day-edit-bg').value;
+        dayData.mapEmbed = document.getElementById('day-edit-map-embed').value;
+        dayData.mapLink = document.getElementById('day-edit-map-link').value;
+        // 2. 處理分流邏輯 (關鍵修正區)
+        const isBranchEnabled = document.getElementById('day-edit-has-branch').checked;
+        if (isBranchEnabled) {
+            if (!dayData.hasBranch) {
+                // 模式切換：單一 -> 分流
+                // 將原本的主行程 events 複製到 eventsA，並初始化 eventsB
+                dayData.eventsA = dayData.events ? JSON.parse(JSON.stringify(dayData.events)) : [];
+                dayData.eventsB = dayData.eventsB || []; 
+                dayData.events = []; // 清空主容器，避免混淆
+                currentBranch = 'A'; // 預設切換到 A 分流
+            }
+        } else {
+            if (dayData.hasBranch) {
+                // 模式切換：分流 -> 單一
+                // 預設將 A 計畫的內容拉回主行程，並刪除 A/B 陣列
+                dayData.events = dayData.eventsA ? JSON.parse(JSON.stringify(dayData.eventsA)) : [];
+                delete dayData.eventsA;
+                delete dayData.eventsB;
+            }
+        }
+        dayData.hasBranch = isBranchEnabled;
+        // 3. 排序並存檔
+        itineraryData.sort((a,b) => new Date(a.fullDate) - new Date(b.fullDate));
+        saveItineraryToLocal();
+        // 4. UI 更新
+        document.getElementById('dateInputModal').classList.remove('active');
+        renderDateScroller();
+        // 重新定位到編輯後的日期
+        const newIdx = itineraryData.findIndex(x => x.fullDate === input);
+        switchDay(newIdx);
+    }
+    function deleteDay() {
+        showCustomConfirm("刪除本日所有行程？", function() {
+            itineraryData.splice(currentDayIdx, 1);
+            saveItineraryToLocal();
+            renderDateScroller();
+            if (itineraryData.length > 0) {
+                switchDay(0);
+            } else {
+                location.reload(); // 或顯示「目前無行程」畫面
+            }
+            closeConfirm();
+        });
+    }
+    function switchDay(idx) {
+        if(itineraryData.length === 0) return;
+        if(idx >= itineraryData.length) idx = itineraryData.length - 1;
+        if(idx < 0) idx = 0;
+        currentDayIdx = idx;
+        const data = itineraryData[idx];
+        document.querySelectorAll('.date-item').forEach((e, i) => e.classList.toggle('active', i===idx));
+        document.getElementById('heroCard').style.backgroundImage = data.bg ? `url('${data.bg}')` : 'none';
+        document.getElementById('heroCard').style.backgroundColor = data.bg ? 'transparent' : '#dbeafe';
+        document.getElementById('dayVertical').innerText = data.dayCN;
+        document.getElementById('heroDay').innerText = `DAY ${data.day}`;
+        document.getElementById('heroCity').innerHTML = `<i class="fas fa-location-dot"></i> ${data.heroCity}`;
+        document.getElementById('heroTitle').innerText = data.title;
+        document.getElementById('wLoc').innerText = data.loc;
+        const events = data.hasBranch ? (currentBranch === 'A' ? data.eventsA : data.eventsB) : data.events;
+        let lodgingEvt = null;
+        let haslodging = false;
+        if(events) {
+             lodgingEvt = events.find(e => e.type === 'lodging');
+             if(lodgingEvt) haslodging = true;
+        }
+        if(haslodging && lodgingEvt) {
+             document.getElementById('hotelName').innerText = lodgingEvt.title;
+             document.getElementById('hotelInfoBar').style.display = 'flex';
+             document.getElementById('hotelInfoBar').onclick = function() {
+                 const eIdx = events.indexOf(lodgingEvt);
+                 const ctx = { isBranch: data.hasBranch, branchType: currentBranch, idx: eIdx };
+                 openDetailModal(lodgingEvt, ctx);
+             }
+        } else {
+             document.getElementById('hotelInfoBar').style.display = 'none';
+        }
+        document.getElementById('branchToggle').style.display = data.hasBranch ? 'flex' : 'none';
+        renderTimeline(data);
+        updateWeather(); 
+        updateTimeHighlight();
+    }
+    function switchBranch(type) {
+        currentBranch = type;
+        document.querySelectorAll('.branch-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        switchDay(currentDayIdx);
+    }
+    function renderTimeline(data) {
+        const container = document.getElementById('timelineList');
+        let events = data.events;
+        if(data.hasBranch) events = currentBranch === 'A' ? data.eventsA : data.eventsB;
+        events.sort((a, b) => a.time.localeCompare(b.time));
+        const defaultEmbed = "https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed";
+        const defaultLink = "https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7";
+        const mapEmbedSrc = data.mapEmbed || defaultEmbed;
+        const mapLinkHref = data.mapLink || defaultLink;
+        const mapHtml = `
+            <div class="map-card-wrapper" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="info-map-container" style="margin-bottom:0; border-radius: 16px 16px 0 0;">
+                    <iframe class="info-map-iframe" src="${mapEmbedSrc}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <a href="${mapLinkHref}" target="_blank" class="info-map-link-bottom">
+                     <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
+                </a>
+            </div>
+        `;
+        const eventsHtml = events.map((evt, idx) => {
+            let iconClass = 'fa-circle';
+            if(evt.iconType === 'plane') iconClass = 'fa-plane';
+            else if(evt.iconType === 'car') iconClass = 'fa-car';
+            else if(evt.iconType === 'train') iconClass = 'fa-train';
+            else if(evt.iconType === 'utensils') iconClass = 'fa-utensils';
+            else if(evt.iconType === 'camera') iconClass = 'fa-camera';
+            else if(evt.iconType === 'water') iconClass = 'fa-water';
+            else if(evt.iconType === 'mountain') iconClass = 'fa-mountain';
+            else if(evt.iconType === 'fire') iconClass = 'fa-fire';
+            else if(evt.iconType === 'bowl-rice') iconClass = 'fa-bowl-rice';
+            else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
+            else if(evt.iconType === 'music') iconClass = 'fa-music';
+            else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; 
+            let displayDesc = evt.desc1_content || ""; 
+            const eventContext = { isBranch: data.hasBranch, branchType: currentBranch, idx: idx };
+            const safeEvt = JSON.stringify(evt).replace(/'/g, "&#39;");
+            const safeCtx = JSON.stringify(eventContext).replace(/'/g, "&#39;");
+            return `
+            <div class="timeline-row type-${evt.type}" data-time="${evt.time}">
+                <div class="t-time-col">${evt.time}</div>
+                <div class="t-line-col">
+                    <div class="t-dot"></div>
+                    <div class="t-line"></div>
+                </div>
+                <div class="t-content-col" onclick='openDetailModal(${JSON.stringify(evt)}, ${JSON.stringify(eventContext)})'>
+                    <div class="t-bar"></div>
+                    <div class="t-title">${evt.title}</div>
+                    <div class="t-tag-row">
+                        <i class="fas ${iconClass} t-tag-icon"></i>
+                        <span class="t-tag-text">${evt.type.toUpperCase()}</span>
+                    </div>
+                    <div class="t-desc" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${displayDesc}</div>
+                </div>
+            </div>`;
+        }).join('');
+        container.innerHTML = eventsHtml + mapHtml + `<button class="add-event-btn" style="margin-top: 10px" onclick="addEvent()"><i class="fas fa-plus" style="font-size: 1.2rem"></i></button>`;
+    }
+    function addEvent() {
+        const data = itineraryData[currentDayIdx];
+        const targetArray = getTargetEvents(data); // 使用助手
+        targetArray.push({
+            time: "10:00", title: "新行程", type: "food", iconType: "utensils", location: "新地點",
+            ps_label_1: "", ps_content_1: "", 
+            desc1_title: "美食介紹", desc1_content: ""
+        });
+        saveItineraryToLocal();
+        switchDay(currentDayIdx); 
+    }
+    function deleteEvent() {
+        showCustomConfirm("刪除此行程？", function() {
+            const data = itineraryData[currentDayIdx];
+            const events = getTargetEvents(data); // 使用助手
+            if(window.currentEventContext) {
+                 events.splice(window.currentEventContext.idx, 1);
+            }
+            saveItineraryToLocal();
+            closeDetailModal();
+            closeConfirm();
+            switchDay(currentDayIdx);
+        });
+    }
+    function updateTimeHighlight() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMin = now.getMinutes();
+        const currentTotalMins = currentHour * 60 + currentMin;
+        const rows = document.querySelectorAll('.timeline-row');
+        rows.forEach(r => r.classList.remove('active'));
+        let activeRow = null;
+        rows.forEach(row => {
+            const timeText = row.getAttribute('data-time');
+            if (!timeText) return;
+            const [h, m] = timeText.split(':').map(Number);
+            const eventTotalMins = h * 60 + m;
+            if (eventTotalMins <= currentTotalMins) activeRow = row; 
+        });
+        if (activeRow) activeRow.classList.add('active');
+    }
+    // --- Modal Logic (Updated with 3 Helper Functions) ---
+    function openDetailModal(evt, context) {
+        window.currentEvent = evt;
+        window.currentEventContext = context;
+        lockScroll();
+        const container = document.getElementById('modalContent');
+        const color = COLORS[evt.type] || '#333';
+        let html = '';
+        // 1. Header
+        html += `<div class="m-header">
+                    <span class="m-tag" style="color:${color}; border-color:${color}">${evt.type.toUpperCase()}</span>
+                    <i class="far fa-clock m-time-icon"></i>
+                    <span class="m-time">${evt.time}</span>
+                 </div>`;
+        html += `<div class="m-title">${evt.title}</div>`;
+        html += `<div class="m-addr" style="margin-top:12px;margin-bottom:0px"><i class="fas fa-map-marker-alt"></i> ${evt.location || ''}</div>`;
+        // 2. Body
+        if (evt.type === 'food') {
+            html += getPointAndSpeakHtml(evt);
+            html += getAboutSectionHtml(evt, '美食介紹', '營業時間', '店鋪地址');
+        } else if (['transport', 'car', 'flight', 'lodging'].includes(evt.type)) {
+            html += getReservationHtml(evt);
+            html += getAboutSectionHtml(evt, '接駁位置', '坐駕介紹', '注意事項');
+        } else if (evt.type === 'sightseeing') {
+            html += getPointAndSpeakHtml(evt);
+            html += getAboutSectionHtml(evt, '景點介紹', '停車地址', '注意事項');
+        }
+        // 3. Links
+        if(evt.link_map || evt.link_web || evt.link_vlog) {
+             html += `<div style="margin-top:20px">
+                ${evt.link_map ? `<a href="${evt.link_map}" class="m-btn btn-map" style="margin-top: 10px; margin-bottom: 0px"><i class="fas fa-location-arrow"></i> Google Maps</a>` : ''}
+                ${evt.link_web ? `<a href="${evt.link_web}" class="m-btn btn-web" style="margin-top: 20px; margin-bottom: 0px">官方網站</a>` : ''}
+                ${evt.link_vlog ? `<a href="${evt.link_vlog}" class="m-btn btn-vlog" style="margin-top: 0px; margin-bottom: 0px"><i class="fab fa-youtube"></i> 說明 & 操作 </a>` : ''}
+             </div>`;
+        }
+        // 4. Edit Button
+        html += `<div class="modal-edit-btn-bottom" style="margin-top: 20px; margin-bottom: 20px" onclick="enableEditMode()">
+            <i class="fas fa-pen"></i> 編輯行程
+        </div>`;
+        container.innerHTML = html;
+        document.querySelector('.modal-overlay').classList.add('active');
+        document.querySelector('.modal-container').scrollTop = 0;
+        document.getElementById('detailModal').classList.add('active');
+    }
+    // --- Helper 1: About Section (已修改：新增圖片連結功能) ---
+    function getAboutSectionHtml(evt, t1Default, t2Default, t3Default) {
+        const hasGps = evt.gps && evt.gps.toString().trim() !== "";
+        const hasC1 = evt.desc1_content && evt.desc1_content.toString().trim() !== "";
+        const hasC2 = evt.desc2_content && evt.desc2_content.toString().trim() !== "";
+        const hasC3 = evt.desc3_content && evt.desc3_content.toString().trim() !== "";
+        const hasImg = evt.desc_img && evt.desc_img.toString().trim() !== "";
+        if (!hasGps && !hasC1 && !hasC2 && !hasC3 && !hasImg) return "";
+        let html = `<div class="m-sec-header" style="margin-top:25px"><i class="fas fa-exclamation-circle"></i> 詳細資訊 ( ABOUT )</div>`;
+        if (hasGps) {
+            let gpsIcon = 'fa-location-arrow';
+            if(evt.gps_title === 'Phone') gpsIcon = 'fas fa-phone-alt fa-flip-horizontal';
+            html += `<div class="about-box"><i class="fas ${gpsIcon} ab-icon" style="font-size:1.4rem"></i><div><div class="ab-label">${evt.gps_title || 'MAP CODE'}</div><div class="ab-code" style="font-size:1.2rem; margin-top:5px">${evt.gps}</div></div></div>`;
+        }
+        if (hasC1 || hasC2 || hasC3 || hasImg) {
+            html += `<div class="desc-list">`;
+            if (hasC1) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc1_title || t1Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc1_content}</div></div>`;
+            if (hasC2) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc2_title || t2Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc2_content}</div></div>`;
+            if (hasC3) html += `<div class="desc-item" style="cursor:default"><div class="desc-title">${evt.desc3_title || t3Default}</div><div class="desc-content" style="white-space: pre-wrap">${evt.desc3_content}</div></div>`;
+            if (hasImg) {
+                // 修改：加入 onclick="openImagePreview(...)"
+                html += `<img src="${evt.desc_img}" onclick="openImagePreview('${evt.desc_img}')" style="width:100%; border-radius:12px; margin-top:5px; display:block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor:pointer;">`;
+            }
+            html += `</div>`;
+        }
+        return html;
+    }
+    // --- Helper 2: Reservation Info ---
+    function getReservationHtml(evt) {
+        const val1 = evt.ps_label_1 ? evt.ps_label_1.toString().trim() : ""; 
+        const val2 = evt.ps_label_2 ? evt.ps_label_2.toString().trim() : ""; 
+        const hasTop = val1 !== "";    
+        const hasBottom = val2 !== ""; 
+        if (!hasTop && !hasBottom) return "";
+        let html = `<div class="res-combined-box" style="margin-top:10px">`;
+        if (hasTop) {
+            html += `
+            <div class="res-top" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0; padding-bottom:15px;">
+                <div>
+                    <div class="res-label" style="margin:0; font-size:0.8rem">RESERVATION INFORMATION</div>
+                    <div class="res-abc" style="margin-top:10px; margin-bottom:0; font-size:1rem; white-space: pre-wrap">${val1}</div>
+                </div>
+                <div onclick="goToReservation()" style="display:flex;">
+                    <i class="fas fa-ticket-alt res-link-icon" style="font-size:1.2rem"></i>
+                </div>
+            </div>`;
+        }
+        if (hasTop && hasBottom) html += `<div class="res-divider"></div>`;
+        if (hasBottom) {
+            html += `
+            <div class="res-bottom">
+                <div>
+                    <div class="conf-title" style="font-size:0.8rem">CONFIRMATION NO.</div>
+                    <div class="conf-val" style="margin-top:10px; font-size:1rem">${val2}</div>
+                </div>
+                <i class="far fa-copy copy-icon" style="font-size:1.2rem" onclick="copyToClipboard('${val2}')"></i>
+            </div>`;
+        }
+        html += `</div>`;
+        return html;
+    }
+    // --- Helper 3: Point & Speak ---
+    function getPointAndSpeakHtml(evt) {
+        const safeTrim = (str) => str ? str.toString().trim() : "";
+        let html = "";
+        if (evt.type === 'food') {
+            let rowsHtml = "";
+            const sets = [
+                { cn: safeTrim(evt.ps_label_1), jp: safeTrim(evt.ps_content_1) },
+                { cn: safeTrim(evt.ps_label_2), jp: safeTrim(evt.ps_content_2) },
+                { cn: safeTrim(evt.ps_label_3), jp: safeTrim(evt.ps_content_3) }
+            ];
+            sets.forEach(item => {
+                if (item.cn !== "" || item.jp !== "") {
+                    rowsHtml += `
+                    <div class="food-rec-item">
+                        <span class="rec-name-cn">${item.cn}</span>
+                        <span class="rec-name-jp" onclick="openCenterPopup('${item.cn}', '${item.jp}', 'blue')">${item.jp}</span>
+                    </div>`;
+                }
+            });
+            if (rowsHtml === "") return "";
+            html = `<div class="m-sec-header" style="margin-top:15px"><i class="fas fa-thumbs-up"></i> 指差し会話 ( POINT & SPEAK )</div><div class="food-rec-list">${rowsHtml}</div>`;
+        } else if (evt.type === 'sightseeing') {
+            const cn = safeTrim(evt.ps_label_1);
+            const jp = safeTrim(evt.ps_label_2);
+            const link = safeTrim(evt.ps_content_1);
+            if (cn === "" && jp === "" && link === "") return "";
+            let jpHtml = "";
+            if (link !== "") {
+                jpHtml = `<a href="${link}" target="_blank" class="ps-jp" style="font-size:1rem; white-space: pre-wrap; display:block">${jp}</a>`;
+            } else {
+                jpHtml = `<span class="ps-jp" style="font-size:1rem; text-decoration:none; cursor:default; color:#1e3a8a; white-space: pre-wrap; display:block">${jp}</span>`;
+            }
+            html = `
+            <div class="m-sec-header" style="margin-top:15px"><i class="fas fa-comment-dots"></i> 指差し会話 ( POINT & SPEAK )</div>
+            <div class="ps-box">
+                <span class="ps-cn" style="font-size:1rem; white-space: pre-wrap; display:block">${cn}</span>
+                ${jpHtml}
+            </div>`;
+        }
+        return html;
+    }
+    function showFullDesc(title, content) {
+        document.getElementById('textEditTitle').innerText = title;
+        document.getElementById('textEditArea').value = content;
+        document.getElementById('textEditConfirmBtn').style.display = 'none';
+        document.getElementById('textEditModal').querySelector('.btn-no').innerText = "關閉";
+        document.getElementById('textEditArea').readOnly = true; 
+        document.getElementById('textEditModal').classList.add('active');
+    }
+    function renderEditFormFields(type, evt) {
+        let fields = '';
+        let t1 = evt.desc1_title || "";
+        let t2 = evt.desc2_title || "";
+        let t3 = evt.desc3_title || "";
+        if(type === 'food') {
+             if(!t1) t1 = "美食介紹";
+             if(!t2) t2 = "營業時間";
+             if(!t3) t3 = "店鋪地址";
+             fields = `
+                <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
+                <div class="edit-row" style="margin-top:10px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-l1" value="${evt.ps_label_1 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+                </div>
+                <div class="edit-row" style="margin-top:10px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-c2" value="${evt.ps_content_2 || ''}"></div>
+                </div>
+                <div class="edit-row" style="margin-top:10px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">中文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-l3" value="${evt.ps_label_3 || ''}"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">日文品項</div><input class="edit-input" style="margin-top:5px" id="e-ps-c3" value="${evt.ps_content_3 || ''}"></div>
+                </div>
+             `;
+        } else if (['transport', 'car', 'flight', 'lodging'].includes(type)) {
+             if(!t1) t1 = "接駁位置";
+             if(!t2) t2 = "坐駕介紹";
+             if(!t3) t3 = "注意事項";
+             fields = `
+                <div class="edit-section-title" style="margin-top:18px">預約 & 訂單 ( RESERVATION & CONFIRMATION )</div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">預約說明</div><textarea class="edit-input" style="margin-top:5px; height:34px; padding:5px; line-height:1.4;" id="e-ps-l1">${evt.ps_label_1 || ''}</textarea></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">訂單代號</div><input class="edit-input" style="margin-top:5px" id="e-ps-l2" value="${evt.ps_label_2 || ''}"></div>
+             `;
+        } else if (type === 'sightseeing') {
+             if(!t1) t1 = "景點介紹";
+             if(!t2) t2 = "停車地址";
+             if(!t3) t3 = "注意事項";
+             fields = `
+                <div class="edit-section-title" style="margin-top:18px">指差し会話 ( POINT & SPEAK )</div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">中文名稱</div><textarea class="edit-input" style="margin-top:5px; height:34px; padding:5px; line-height:1.4;" id="e-ps-l1">${evt.ps_label_1 || ''}</textarea></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">日文名稱</div><textarea class="edit-input" style="margin-top:5px; height:34px; padding:5px; line-height:1.4;" id="e-ps-l2">${evt.ps_label_2 || ''}</textarea></div>
+                <div class="edit-group" style="margin-top:10px"><div class="edit-label">連結</div><input class="edit-input" style="margin-top:5px" id="e-ps-c1" value="${evt.ps_content_1 || ''}"></div>
+             `;
+        }
+        // 在 renderEditFormFields 函式的 return 部分
+        return `
+            ${fields}
+            <div class="edit-section-title" style="margin-top:30px">詳細資訊 ( ABOUT )</div>
+            <div class="edit-row" style="margin-top:10px">
+                 <div class="edit-group" style="flex:1">
+                    <div class="edit-label">標題</div>
+                    <select class="edit-select" id="e-gps-title" style="margin-top:5px; height:36px">
+                        <option value="MAP CODE" ${(!evt.gps_title || evt.gps_title === 'MAP CODE') ? 'selected' : ''}>MAP CODE</option>
+                        <option value="Phone" ${evt.gps_title === 'Phone' ? 'selected' : ''}>Phone</option>
+                    </select>
+                 </div>
+                 <div class="edit-group" style="flex:1"><div class="edit-label">內容</div><input class="edit-input" style="margin-top:5px" id="e-gps" value="${evt.gps || ''}"></div>
+            </div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(一)</div><input class="edit-input" style="margin-top:5px" id="e-d1-t" value="${t1}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(一)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d1-c')">${evt.desc1_content || ''}</div><input type="hidden" id="e-d1-c" value="${evt.desc1_content || ''}"></div>
+            </div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(二)</div><input class="edit-input" style="margin-top:5px" id="e-d2-t" value="${t2}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(二)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d2-c')">${evt.desc2_content || ''}</div><input type="hidden" id="e-d2-c" value="${evt.desc2_content || ''}"></div>
+            </div>
+            <div class="edit-row" style="margin-top:10px">
+                <div class="edit-group" style="flex:1"><div class="edit-label">標題(三)</div><input class="edit-input" id="e-d3-t" style="margin-top:5px" value="${t3}"></div>
+                <div class="edit-group" style="flex:1"><div class="edit-label">內容(三)</div><div class="edit-content-box" style="margin-top:5px" onclick="openTextEdit('e-d3-c')">${evt.desc3_content || ''}</div><input type="hidden" id="e-d3-c" value="${evt.desc3_content || ''}"></div>
+            </div>
+            
+            <div class="edit-group" style="margin-top:10px">
+                <div class="edit-label">圖片說明 ( LINK )</div>
+                <input class="edit-input" id="e-d-img" style="margin-top:5px" value="${evt.desc_img || ''}" placeholder="">
+            </div>
+        `;
+    }
+    function openTextEdit(targetId) {
+        currentTextEditTargetId = targetId;
+        document.getElementById('textEditTitle').innerText = "編輯內容";
+        document.getElementById('textEditArea').readOnly = false;
+        document.getElementById('textEditArea').value = document.getElementById(targetId).value;
+        document.getElementById('textEditConfirmBtn').style.display = 'block';
+        document.getElementById('textEditModal').querySelector('.btn-no').innerText = "取消";
+        document.getElementById('textEditModal').classList.add('active');
+        document.getElementById('textEditConfirmBtn').onclick = function() {
+            const val = document.getElementById('textEditArea').value;
+            document.getElementById(currentTextEditTargetId).value = val;
+            document.getElementById(currentTextEditTargetId).previousElementSibling.innerText = val || '';
+            closeTextEdit();
+        };
+    }
+    function closeTextEdit() {
+        document.getElementById('textEditModal').classList.remove('active');
+    }
+    function onTypeChange() {
+        const newType = document.getElementById('e-type').value;
+        const dynamicArea = document.getElementById('dynamic-fields');
+        const evt = { ...window.currentEvent }; 
+        evt.desc1_title = ""; evt.desc2_title = ""; evt.desc3_title = ""; 
+        dynamicArea.innerHTML = renderEditFormFields(newType, evt);
+    }
+    function enableEditMode() {
+        const evt = window.currentEvent;
+        const container = document.getElementById('modalContent');
+        container.innerHTML = `
+            <div class="edit-form">
+                <div class="edit-group"><div class="edit-label">旅遊行程</div><input class="edit-input" style="margin-top:7px" id="e-title" value="${evt.title}"></div>
+                <div class="edit-group"><div class="edit-label">旅遊地點</div><input class="edit-input" style="margin-top:7px" id="e-loc" value="${evt.location || ''}"></div>
+                <div class="edit-row" style="margin-top:1px">
+                    <div class="edit-group" style="flex:1"><div class="edit-label">開始時間</div><input type="time" class="edit-input" id="e-time" value="${evt.time}" style="margin-top:7px;width:80%; height:20px;"></div>
+                    <div class="edit-group" style="flex:1"><div class="edit-label">分類</div>
+                        <select class="edit-select" id="e-type" onchange="onTypeChange()" style="margin-top:7px;height:38px">
+                            <option value="sightseeing" ${evt.type==='sightseeing'?'selected':''}>景點</option>
+                            <option value="food" ${evt.type==='food'?'selected':''}>餐飲</option>
+                            <option value="lodging" ${evt.type==='lodging'?'selected':''}>住宿</option>
+                            <option value="transport" ${evt.type==='transport'?'selected':''}>交通</option>
+                            <option value="flight" ${evt.type==='flight'?'selected':''}>航班</option>
+                            <option value="car" ${evt.type==='car'?'selected':''}>租車</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="dynamic-fields">${renderEditFormFields(evt.type, evt)}</div>
+                <div class="edit-section-title" style="margin-top:16px">連結 ( LINK )</div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">GOOGLE MAPS</div><input class="edit-input" style="margin-top:7px" id="e-l-map" value="${evt.link_map || ''}"></div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">官方網站</div><input class="edit-input" style="margin-top:7px" id="e-l-web" value="${evt.link_web || ''}"></div>
+                <div class="edit-group" style="margin-top:0px"><div class="edit-label">說明 & 操作</div><input class="edit-input" style="margin-top:7px" id="e-l-vlog" value="${evt.link_vlog || ''}"></div>
+                <div class="edit-btn-group">
+                    <button class="btn-save" onclick="saveEdit()">儲存修改</button>
+                    <button class="btn-cancel" onclick="openDetailModal(window.currentEvent, window.currentEventContext)">取消</button>
+                </div>
+                <button class="btn-delete-event" style="margin-top:10px" onclick="deleteEvent()">刪除此行程</button>
+            </div>
+        `;
+    }
+    function saveEdit() {
+        const data = itineraryData[currentDayIdx];
+        const targetEvents = getTargetEvents(data); // 統一使用助手函式取得對象
+        const idx = window.currentEventContext.idx;
+        const evt = targetEvents[idx];
+        if (!evt) return;
+        // 讀取欄位
+        evt.title = document.getElementById('e-title').value;
+        evt.time = document.getElementById('e-time').value;
+        evt.type = document.getElementById('e-type').value;
+        evt.location = document.getElementById('e-loc').value;
+        // 指標性內容更新
+        evt.ps_label_1 = document.getElementById('e-ps-l1')?.value || '';
+        evt.ps_content_1 = document.getElementById('e-ps-c1')?.value || '';
+        evt.ps_label_2 = document.getElementById('e-ps-l2')?.value || '';
+        evt.ps_content_2 = document.getElementById('e-ps-c2')?.value || '';
+        evt.gps = document.getElementById('e-gps').value;
+        evt.gps_title = document.getElementById('e-gps-title').value;
+        evt.desc1_content = document.getElementById('e-d1-c').value;
+        evt.desc2_content = document.getElementById('e-d2-c').value;
+        evt.desc3_content = document.getElementById('e-d3-c').value;
+        evt.desc_img = document.getElementById('e-d-img').value;
+        evt.link_map = document.getElementById('e-l-map').value;
+        evt.link_web = document.getElementById('e-l-web').value;
+        evt.link_vlog = document.getElementById('e-l-vlog').value;
+        saveItineraryToLocal();
+        unlockScroll(); // <-- 加入這行，確保儲存後背景可以捲動
+        closeDetailModal();
+        switchDay(currentDayIdx); // 重新渲染頁面
+    }
+    function closeDetailModal() {
+        unlockScroll(); // 關閉時解除
+        document.getElementById('detailModal').classList.remove('active');
+    }
+    function openCenterPopup(cn, jp, theme) {
+        if(!jp) return; 
+        document.getElementById('cpJp').innerText = jp;
+        document.getElementById('cpSub').innerText = ""; 
+        const modal = document.getElementById('centerPopup');
+        modal.classList.add('active');
+        document.getElementById('cpJp').scrollTop = 0;
+    }
+    function closeCenterPopup() {
+        document.getElementById('centerPopup').classList.remove('active');
+    }
+    function showCustomAlert(text) {
+        lockScroll();
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmText').innerText = text;
+        const btnGroup = document.getElementById('confirmBtnGroup');
+        btnGroup.innerHTML = `<button class="confirm-btn btn-ok" onclick="closeConfirm()">確定</button>`;
+        modal.classList.add('active');
+    }
+    function showCustomConfirm(text, yesCallback) {
+        lockScroll();
+        const modal = document.getElementById('confirmModal');
+        document.getElementById('confirmText').innerText = text;
+        const btnGroup = document.getElementById('confirmBtnGroup');
+        btnGroup.innerHTML = `
+            <button class="confirm-btn btn-no" onclick="closeConfirm()">取消</button>
+            <button class="confirm-btn btn-yes" id="dynamicYesBtn">確定</button>
+        `;
+        document.getElementById('dynamicYesBtn').onclick = yesCallback;
+        modal.classList.add('active');
+    }
+    let pendingDeleteId = null; 
+    function delExpense(id) {
+        lockScroll();
+        pendingDeleteId = id; 
+        showCustomConfirm("確定要刪除這筆紀錄嗎？", function() { performDeleteSingle(); });
+    }
+    function performDeleteSingle() {
+        let data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+        data = data.filter(i => i.id !== pendingDeleteId);
+        localStorage.setItem('tripExpOsaka2026', JSON.stringify(data));
+        loadExpenses();
+        closeConfirm();
+    }
+    function askClearAll() {
+        lockScroll();
+        showCustomConfirm("確定要清除所有紀錄嗎？", function() { performClearAll(); });
+    }
+    function performClearAll() {
+        localStorage.removeItem('tripExpOsaka2026');
+        loadExpenses();
+        closeConfirm();
+    }
+    function closeConfirm() {
+        const modal = document.getElementById('confirmModal');
+        modal.classList.remove('active');
+        unlockScroll(); // 確保關閉後恢復滑動
+        pendingDeleteId = null;
+    }
+    function exportExpenses() {
+        const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+        if(data.length === 0) {
+            showCustomAlert("目前沒有任何記帳紀錄可匯出！");
+            return;
+        }
+        let txtContent = "2026 大阪聖誕 - 記帳紀錄\n-------------------------\n";
+        let total = 0;
+        data.reverse().forEach(item => {
+            const twd = Math.round(item.cost * RATE);
+            total += item.cost;
+            txtContent += `${item.date} | ${item.name} | JPY ${item.cost} (TWD ${twd})\n`;
+        });
+        txtContent += "-------------------------\n";
+        txtContent += `總計: JPY ${total} (約 TWD ${Math.round(total * RATE)})`;
+        const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "travel_expenses.txt";
+        link.click();
+    }
+    function exportBackup() {
+        const expenseData = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+        const backupData = {
+            version: "1.0",
+            timestamp: new Date().toISOString(),
+            itinerary: itineraryData,
+            expenses: expenseData
+        };
+        const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: "application/json;charset=utf-8" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "osaka_trip_backup_2026.json";
+        link.click();
+    }
+    function importBackup(input) {
+        const file = input.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                if(data.itinerary && data.expenses) {
+                    showCustomConfirm("匯入將會覆蓋現有所有資料，確定嗎？", function() {
+                        localStorage.setItem('tripDataOsaka2026', JSON.stringify(data.itinerary));
+                        localStorage.setItem('tripExpOsaka2026', JSON.stringify(data.expenses));
+                        closeConfirm();
+                        showCustomAlert("匯入成功！即將重新整理頁面。");
+                        setTimeout(() => location.reload(), 1500);
+                    });
+                } else {
+                    showCustomAlert("檔案格式錯誤");
+                }
+            } catch(err) {
+                showCustomAlert("讀取檔案失敗");
+            }
+        };
+        reader.readAsText(file);
+    }
+    function resetApp() {
+        showCustomConfirm("將會刪除\n所有行程與記帳紀錄！！", function() {
+            localStorage.removeItem('tripDataOsaka2026');
+            localStorage.removeItem('tripExpOsaka2026');
+            location.reload();
+        });
+    }
+    function copyToClipboard(text) {
+        if (!text) return;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).catch(err => fallbackCopy(text));
+        } else {
+            fallbackCopy(text);
+        }
+    }
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try { document.execCommand('copy'); } catch (err) {}
+        document.body.removeChild(textArea);
+    }
+    function renderRealWeather(data) {
+        const el = document.getElementById('weatherStrip');
+        const now = new Date();
+        const currentHour = now.getHours();
+    
+        // 取得當前時間點在 API 陣列中的索引
+        let html = '';
+        for(let i = 0; i < 24; i++) {
+            const targetIdx = currentHour + i;
+            const temp = Math.round(data.hourly.temperature_2m[targetIdx]);
+            const code = data.hourly.weathercode[targetIdx];
+            const timeLabel = (currentHour + i) % 24 + ":00";
+        
+            // 簡易天氣代碼轉換
+            let icon = 'fa-sun';
+            if (code > 0 && code <= 3) icon = 'fa-cloud-sun';
+            if (code >= 45) icon = 'fa-smog';
+            if (code >= 51) icon = 'fa-cloud-showers-heavy';
+            if (code >= 71) icon = 'fa-snowflake';
+
+            html += `
+                <div class="w-col">
+                    <div class="w-time">${timeLabel}</div>
+                    <div class="w-icon"><i class="fas ${icon}"></i></div>
+                    <div class="w-temp">${temp}°</div>
+                </div>`;
+        }
+        el.innerHTML = html;
+    }
+    function addExpense() {
+        const dateStr = document.getElementById('expDate').value;
+        const name = document.getElementById('expName').value;
+        const cost = parseInt(document.getElementById('expCost').value);
+        if(!dateStr || !name || !cost) return showCustomAlert("請填寫完整資訊");
+        const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+        data.push({ id: Date.now(), date: dateStr, name, cost });
+        localStorage.setItem('tripExpOsaka2026', JSON.stringify(data));
+        document.getElementById('expName').value = '';
+        document.getElementById('expCost').value = '';
+        loadExpenses();
+    }
+    function loadExpenses() {
+        const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+        const list = document.getElementById('expenseList');
+        let total = 0;
+        const currentRate = (RATE && RATE > 0) ? RATE : 0.22;
+        list.innerHTML = data.reverse().map(item => {
+            total += item.cost;
+            const twd = Math.round(item.cost * currentRate); // 使用檢查過的匯率
+            const dObj = new Date(item.date);
+            const dateDisplay = `${dObj.getFullYear()}/${dObj.getMonth()+1}/${dObj.getDate()}`;
+            return `
+            <div class="exp-item">
+                <div style="flex:1; display:flex; align-items:center; gap:10px;">
+                    <span class="exp-date" style="font-size:0.8rem; color:#64748b;">${dateDisplay}</span>
+                    <span class="exp-name">${item.name}</span>
+                </div>
+                <div class="exp-price">¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})</div>
+                <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
+            </div>`;
+        }).join('');
+        document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
+    }
+    function switchView(view, btn) {
+        document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
+        document.getElementById('view-' + view).classList.add('active');
+        document.querySelectorAll('.nav-icon').forEach(e => e.classList.remove('active'));
+        btn.classList.add('active');
+        window.scrollTo(0,0);
+    }
+    function initInfoMap() {
+        const savedConfig = localStorage.getItem('tripInfoMapConfigOsaka');
+        const defaultEmbed = "https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed";
+        const defaultLink = "https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7";
+        if (savedConfig) {
+            try {
+                const config = JSON.parse(savedConfig);
+                document.getElementById('globalInfoMapFrame').src = config.embed || defaultEmbed;
+                document.getElementById('globalInfoMapLink').href = config.link || defaultLink;
+            } catch(e) {}
+        }
+    }
+    function editInfoMap() {
+        document.getElementById('dateModalTitle').innerText = "編輯資訊頁地圖";
+        document.getElementById('newDateInput').style.display = 'none'; 
+        document.getElementById('editDayExtraFields').style.display = 'block';
+        document.getElementById('day-edit-title').parentElement.style.display = 'none';
+        document.getElementById('day-edit-loc').parentElement.style.display = 'none';
+        document.getElementById('day-edit-bg').parentElement.style.display = 'none';
+        const currentEmbed = document.getElementById('globalInfoMapFrame').src;
+        const currentLink = document.getElementById('globalInfoMapLink').getAttribute('href');
+        document.getElementById('day-edit-map-embed').value = currentEmbed;
+        document.getElementById('day-edit-map-link').value = currentLink;
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.innerText = "儲存設定";
+        btn.onclick = function() {
+            const newEmbed = document.getElementById('day-edit-map-embed').value;
+            const newLink = document.getElementById('day-edit-map-link').value;
+            const config = { embed: newEmbed, link: newLink };
+            localStorage.setItem('tripInfoMapConfigOsaka', JSON.stringify(config));
+            const defaultEmbed = "https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed";
+            const defaultLink = "https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7";
+            document.getElementById('globalInfoMapFrame').src = newEmbed || defaultEmbed;
+            document.getElementById('globalInfoMapLink').href = newLink || defaultLink;
+            resetModalUI();
+            document.getElementById('dateInputModal').classList.remove('active');
+        };
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+    // 編輯 VJW QR Code 連結的視窗 (修正版：解決離線化代碼過長無法編輯問題)
+    function editVjwQrs() {
+        lockScroll();
+        let saved = JSON.parse(localStorage.getItem('vjw_qrs_osaka') || '["", "", "", "", ""]');
+        while(saved.length < 5) saved.push("");
+        document.getElementById('dateModalTitle').innerText = "QR Code Links";
+        document.getElementById('newDateInput').style.display = 'none';
+        const fieldsArea = document.getElementById('editDayExtraFields');
+        fieldsArea.style.display = 'block';
+        // 生成輸入框邏輯
+        fieldsArea.innerHTML = `
+            <div class="edit-label" style="margin-bottom:15px; color:var(--primary-blue); font-size:0.8rem; line-height:1.4;">
+                * 「 離線化 」後，欄位為加密狀態<br>     請點擊「 清除圖片 」移除設定。
+            </div>
+            ${saved.map((val, i) => {
+                const isBase64 = val.startsWith('data:image');
+                return `
+                <div style="margin-bottom:0px; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="edit-label">第 ${i+1} 張</div>
+                        ${isBase64 ? `<span style="font-size:0.7rem; color:#ef4444; font-weight:700; cursor:pointer;" onclick="document.getElementById('vjw-input-${i}').value=''; this.style.display='none'; document.getElementById('vjw-input-${i}').placeholder='已清除，請儲存';">清除圖片</span>` : ''}
+                    </div>
+                    <input id="vjw-input-${i}" class="edit-input vjw-qr-input" 
+                           style="margin-top:10px; font-size:0.8rem;" 
+                           placeholder="${isBase64 ? '[ 已儲存離線化圖片 ]' : '請貼上圖片連結'}" 
+                           value="${isBase64 ? '' : val}"
+                           ${isBase64 ? 'readonly' : ''}>
+                    ${isBase64 ? `<input type="hidden" class="vjw-hidden-data" value="${val}">` : ''}
+                </div>
+                `;
+            }).join('')}
+        `;
+        const btn = document.getElementById('dateModalConfirmBtn');
+        btn.innerText = "儲存"; 
+        btn.onclick = function() {
+            const finalUrls = [];
+            for(let i=0; i<5; i++){
+                const input = document.getElementById(`vjw-input-${i}`);
+                const hidden = input.parentElement.querySelector('.vjw-hidden-data');
+                // 如果 input 沒被清空且有隱藏的 Base64，則保留 Base64；否則取 input 的值
+                if (hidden && input.placeholder === '[ 已儲存離線化圖片 ]') {
+                    finalUrls.push(hidden.value);
+                } else {
+                    finalUrls.push(input.value.trim());
+                }
+            }
+            localStorage.setItem('vjw_qrs_osaka', JSON.stringify(finalUrls));
+            checkVjwBtn(); 
+            document.getElementById('dateInputModal').classList.remove('active');
+            unlockScroll(); 
+        };
+        document.getElementById('dateInputModal').classList.add('active');
+    }
+    // 檢查是否要顯示離線按鈕
+    function checkVjwBtn() {
+        const saved = JSON.parse(localStorage.getItem('vjw_qrs_osaka') || '[]');
+        // 檢查是否「至少有一個欄位」不是空的
+        const hasAnyContent = saved.some(url => url && url.trim() !== "");
+        const qrIcon = document.getElementById('vjw-qr-icon-sidebar');
+        if (qrIcon) {
+            // 欄位有內容才顯示 (block)，否則隱藏 (none)
+            qrIcon.style.display = hasAnyContent ? 'block' : 'none';
+        }
+    }
+    // 開啟卡片顯示圖片
+    function openVjwQrModal() {
+        lockScroll();
+        const saved = JSON.parse(localStorage.getItem('vjw_qrs_osaka') || '[]');
+        let imgHtml = saved.filter(url => url !== "").map(url => `
+            <img src="${url}" style="width:100%; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1);" onclick="openImagePreview('${url}')">
+        `).join('');
+        // 借用 detailModal 來顯示
+        window.currentEvent = { type: 'lodging', title: 'VJW QR Codes', time: 'OFFLINE' }; // 偽裝資料
+        const container = document.getElementById('modalContent');
+        container.innerHTML = `
+            <div class="m-header"><span class="m-tag" style="color:red; border-color:red">入境 QR CODE</span></div>
+            <div style="margin-top:20px">${imgHtml}</div>
+        `;
+        document.getElementById('detailModal').classList.add('active');
+    }
+    function resetModalUI() {
+        document.getElementById('newDateInput').style.display = 'block';
+        document.getElementById('day-edit-title').parentElement.style.display = 'block';
+        document.getElementById('day-edit-loc').parentElement.style.display = 'block';
+        document.getElementById('day-edit-bg').parentElement.style.display = 'block';
+    }
+    /* --- 新增這個函式：切換並滑動到預約區塊 --- */
+    function goToReservation() {
+        const infoBtn = document.querySelectorAll('.nav-icon')[2];
+        switchView('info', infoBtn);
+        closeDetailModal();
+        setTimeout(() => {
+            const target = document.getElementById('resSection');
+            if(target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
+    }
+    // --- Image Preview Logic ---
+    function openImagePreview(src) {
+    if(!src) return;
+    lockScroll(); // <-- 加入這行
+    const modal = document.getElementById('imagePreviewModal');
+    const img = document.getElementById('imgPreviewTarget');
+    img.src = src;
+    img.classList.remove('zoomed'); // 預設不放大
+    modal.classList.add('active');
+    }
+    function closeImagePreview(e) {
+    // 只有點擊背景或關閉按鈕才關閉，點擊圖片本身不關閉
+    if (e.target.id === 'imagePreviewModal' || e.target.classList.contains('img-preview-close')) {
+        unlockScroll(); // <-- 加入這行
+        document.getElementById('imagePreviewModal').classList.remove('active');
+        document.getElementById('imgPreviewTarget').src = "";
+        }
+    }   
+    function toggleImageZoom(e) {
+    // 阻止冒泡，避免觸發關閉視窗
+    e.stopPropagation(); 
+    const img = document.getElementById('imgPreviewTarget');
+    img.classList.toggle('zoomed');
+    }
+    /*** 核心：將外部連結圖片轉為 Base64 數據，實現 100% 離線化 */
+    async function convertUrlToBase64(url) {
+        if (!url || url.startsWith('data:') || url.startsWith('blob:')) return url;
+        try {
+            // 加入 mode: 'cors' 嘗試跨域抓取
+            const response = await fetch(url, { mode: 'cors' });
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            console.warn("跳過無法跨域轉換的圖片:", url);
+            return url; 
+        }
+    }
+    async function offlineAllImages() {
+        lockScroll(); 
+        showCustomAlert("正在處理圖片離線化...\n這可能需要一點時間。");   
+        
+        let errorCount = 0;
+        let isSpaceFull = false;
+    
+        try {
+            // 建立一個暫存副本，避免儲存失敗時弄亂原始資料
+            let tempItinerary = JSON.parse(JSON.stringify(itineraryData));
+    
+            // 1. 處理行程圖片
+            for (let day of tempItinerary) {
+                if (day.bg && !day.bg.startsWith('data:')) {
+                    try {
+                        day.bg = await convertUrlToBase64(day.bg);
+                    } catch (e) { errorCount++; }
+                }
+                const allEvts = [...(day.events || []), ...(day.eventsA || []), ...(day.eventsB || [])];        
+                for (let evt of allEvts) {
+                    if (evt.desc_img && !evt.desc_img.startsWith('data:')) {
+                        try {
+                            evt.desc_img = await convertUrlToBase64(evt.desc_img);
+                        } catch (e) { errorCount++; }
+                    }
+                }
+            }
+    
+            // 2. 嘗試儲存
+            try {
+                localStorage.setItem('tripDataOsaka2026', JSON.stringify(tempItinerary));
+                itineraryData = tempItinerary; // 儲存成功才更新主變數
+            } catch (e) {
+                if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                    isSpaceFull = true;
+                } else {
+                    throw e; 
+                }
+            }
+    
+            closeConfirm(); 
+            setTimeout(() => {
+                if (isSpaceFull) {
+                    showCustomAlert("⚠️ 儲存空間已滿！\n您的圖片太多或解析度太高，瀏覽器無法容納。建議減少圖片數量或使用較小的圖檔。");
+                } else {
+                    let msg = "✅ 離線化處理完成！";
+                    if (errorCount > 0) msg += `\n(跳過了 ${errorCount} 張無法轉換的圖片)`;
+                    showCustomAlert(msg);
+                    switchDay(currentDayIdx);
+                }
+            }, 500);
+    
+        } catch (err) {
+            console.error("嚴重錯誤:", err);
+            closeConfirm();
+            showCustomAlert("❌ 執行失敗：請嘗試重新整理頁面，或檢查是否使用了過大的圖片檔案。");
+        } finally {
+            unlockScroll();
+        }
+    }
+    /* ===== 大阪優化模組 JS ===== */
+    // #1 過敏紅線卡
+    function openAllergyCard(){ lockScroll(); document.getElementById('allergyOverlay').classList.add('active'); }
+    function closeAllergyCard(){ unlockScroll(); document.getElementById('allergyOverlay').classList.remove('active'); }
+    // #3 USJ 備忘
+    function saveUsjNote(){ localStorage.setItem('osaka_usj_note', document.getElementById('usjNote').value); }
+    function loadUsjNote(){ const el = document.getElementById('usjNote'); if(el) el.value = localStorage.getItem('osaka_usj_note') || ''; }
+    // #6 匯率鎖定
+    function getRateLock(){ try { return JSON.parse(localStorage.getItem('osaka_rate_lock') || '{"locked":false,"rate":0.22}'); } catch(e){ return {locked:false, rate:0.22}; } }
+    function toggleRateLock(){
+        let lk = getRateLock();
+        if(!lk.locked){ lk.locked = true; lk.rate = (RATE && RATE > 0) ? RATE : 0.22; }
+        else { lk.locked = false; }
+        localStorage.setItem('osaka_rate_lock', JSON.stringify(lk));
+        applyRateLockUI();
+        if(!lk.locked) updateRate();
+    }
+    function applyRateLockUI(){
+        const lk = getRateLock();
+        const icon = document.getElementById('rateLockIcon');
+        const title = document.getElementById('rateTitle');
+        if(lk.locked){
+            RATE = lk.rate;
+            if(icon){ icon.className = 'fas fa-lock'; icon.style.color = '#ef4444'; }
+            if(title) title.innerText = `匯率換算 [ ${Number(RATE).toFixed(3)} · 鎖定 ]`;
+        } else {
+            if(icon){ icon.className = 'fas fa-lock-open'; icon.style.color = '#94a3b8'; }
+        }
+    }
+    init();
+</script>
+</body>
+</html>
