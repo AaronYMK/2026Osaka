@@ -9,6 +9,9 @@
     <title>【 2026 大阪聖誕 Osaka X'mas 】</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#233b7d">
+    <meta name="apple-mobile-web-app-title" content="大阪聖誕">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -30,6 +33,65 @@
             --radius: 16px;
             --shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.1);
         }
+        /* ===== v3 優化 ===== */
+        .now-fab{position:fixed;right:16px;bottom:100px;z-index:1500;background:var(--primary-blue);color:#fff;border:none;border-radius:50px;padding:11px 18px;font-size:0.9rem;font-weight:700;box-shadow:0 6px 18px rgba(59,130,246,.45);display:none;align-items:center;gap:7px;cursor:pointer;}
+        .now-fab.show{display:flex;}
+        .timeline-row.active .t-content-col{box-shadow:0 0 0 2px var(--primary-blue);border-radius:12px;}
+        .pin-card{background:linear-gradient(135deg,#233b7d,#3b5bab);color:#fff;border-radius:16px;padding:18px 18px 14px;margin-bottom:15px;box-shadow:0 6px 18px rgba(35,59,125,.3);}
+        .pin-head{font-weight:700;font-size:0.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px;opacity:.95;}
+        .pin-row{display:flex;gap:10px;margin-bottom:8px;font-size:0.9rem;line-height:1.4;}
+        .pin-k{flex-shrink:0;width:56px;opacity:.85;}
+        .pin-v{flex:1;font-weight:500;}
+        .pin-divider{height:1px;background:rgba(255,255,255,.2);margin:10px 0;}
+        .pin-addr{background:rgba(255,255,255,.15);border-radius:10px;padding:12px;margin:8px 0;font-size:0.9rem;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+        .pin-addr-note{width:100%;font-size:0.72rem;opacity:.8;margin-top:4px;}
+        .res-board{margin-top:15px;background:#fff;border:1px solid #dbeafe;border-radius:14px;overflow:hidden;}
+        .res-row{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;border-bottom:1px solid #eff6ff;}
+        .res-row:last-child{border-bottom:none;}
+        .res-t{font-size:0.95rem;font-weight:700;color:#1e3a8a;}
+        .res-w{font-size:0.72rem;color:#94a3b8;margin-top:2px;}
+        .res-chip{font-size:0.78rem;font-weight:700;padding:5px 12px;border-radius:50px;cursor:pointer;white-space:nowrap;}
+        .res-chip.todo{background:#f1f5f9;color:#94a3b8;}
+        .res-chip.booked{background:#dbeafe;color:#2563eb;}
+        .res-chip.ok{background:#dcfce7;color:#16a34a;}
+        .chk-card{background:#fff;border:1px solid #dbeafe;border-radius:14px;padding:6px 4px;margin-top:15px;}
+        .chk-item{display:flex;align-items:center;gap:12px;padding:11px 14px;font-size:0.92rem;color:#334155;cursor:pointer;border-bottom:1px solid #f8fafc;}
+        .chk-item:last-child{border-bottom:none;}
+        .chk-item i{color:#cbd5e1;font-size:1.15rem;}
+        .chk-item.on{color:#94a3b8;text-decoration:line-through;}
+        .chk-item.on i{color:#22c55e;}
+        .budget-card{padding:16px !important;}
+        .budget-bar{height:12px;background:#eff6ff;border-radius:50px;overflow:hidden;}
+        .budget-fill{height:100%;width:0;background:#22c55e;border-radius:50px;transition:width .4s;}
+        .cat-breakdown{margin-top:12px;}
+        .cat-title{font-size:0.75rem;color:#94a3b8;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
+        .cat-row{display:flex;justify-content:space-between;font-size:0.85rem;color:#475569;padding:3px 0;}
+        .quick-amt-row{display:flex;gap:6px;margin-top:12px;}
+        .quick-amt{flex:1;background:#eff6ff;border:1px solid #dbeafe;color:#2563eb;border-radius:8px;padding:8px 0;font-size:0.8rem;font-weight:700;cursor:pointer;}
+        .quick-amt:active{background:#dbeafe;}
+        .outfit-card .outfit-temp{font-size:1rem;font-weight:700;color:#1e3a8a;margin-bottom:8px;}
+        .outfit-card .outfit-note{font-size:0.88rem;color:#475569;line-height:1.6;}
+        .disp-card{display:flex;gap:12px;}
+        .disp-btn{flex:1;background:#fff;border:1px solid #dbeafe;border-radius:12px;padding:14px 8px;font-size:0.9rem;font-weight:700;color:#1e3a8a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .med-static{margin:12px 0;}
+        .med-line{display:flex;justify-content:space-between;padding:8px 12px;background:#f0f9ff;border-radius:8px;margin-bottom:6px;font-size:0.95rem;color:#0c4a6e;}
+        .med-jp{background:#e0f2fe;border-radius:10px;padding:12px;margin-bottom:8px;font-size:1.05rem;font-weight:700;color:#0c4a6e;text-align:center;}
+        .med-fields{display:flex;flex-direction:column;gap:6px;margin:14px 0;}
+        .med-fields label{font-size:0.78rem;color:#64748b;font-weight:700;}
+        .med-fields input{padding:9px 12px;border:1px solid #bae6fd;border-radius:8px;font-size:0.95rem;color:#0c4a6e;background:#f8fbff;}
+        body.fs-lg{zoom:1.12;}
+        body.fs-xl{zoom:1.25;}
+        body.dark{--bg-color:#0f172a;--card-bg:#1e293b;--text-main:#e2e8f0;--text-light:#94a3b8;--light-blue:#1e3a5f;--line-color:#334155;}
+        body.dark .balance-card,body.dark .rc-card,body.dark .opt-card,body.dark .ts-card,body.dark .em-hotline,body.dark .info-block,body.dark .food-rec-item,body.dark .res-combined-box,body.dark .calc-box,body.dark .res-board,body.dark .chk-card,body.dark .map-card-wrapper{background:#1e293b !important;border-color:#334155 !important;color:#e2e8f0;}
+        body.dark .res-row{border-color:#0f172a;}
+        body.dark .chk-item{border-color:#0f172a;color:#cbd5e1;}
+        body.dark .modal-container{background:#0f172a !important;}
+        body.dark .t-title,body.dark .m-title,body.dark .rc-title,body.dark .res-t,body.dark .em-header,body.dark .disp-btn{color:#e2e8f0 !important;}
+        body.dark .disp-btn{background:#1e293b !important;border-color:#334155 !important;}
+        body.dark .calc-input,body.dark .input-std,body.dark input,body.dark textarea,body.dark select{background:#0f172a !important;color:#e2e8f0 !important;border-color:#334155 !important;}
+        body.dark .bottom-nav{background:rgba(15,23,42,.95) !important;border-color:#334155 !important;}
+        body.dark .budget-bar{background:#334155;}
+        body.dark .quick-amt{background:#0f172a;border-color:#334155;}
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: var(--font-sans);
@@ -685,7 +747,23 @@
                     <span class="calc-label" style="font-size:0.8rem" id="labelBottom">TWD</span>
                     <input type="number" id="inputBottom" class="calc-input" placeholder="0" oninput="calcRate('bottom')">
                 </div>
+                <div class="quick-amt-row">
+                    <button class="quick-amt" onclick="fillQuick(500)">¥500</button>
+                    <button class="quick-amt" onclick="fillQuick(1000)">¥1000</button>
+                    <button class="quick-amt" onclick="fillQuick(3000)">¥3000</button>
+                    <button class="quick-amt" onclick="fillQuick(5000)">¥5000</button>
+                    <button class="quick-amt" onclick="fillQuick(10000)">¥10000</button>
+                </div>
             </div>
+        </div>
+        <div class="balance-card budget-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <div style="font-size:0.9rem;color:var(--primary-blue);font-weight:700;">總預算 (¥)</div>
+                <input id="budgetInput" type="number" placeholder="設定總預算" onchange="setBudget()" style="width:130px;text-align:right;border:1px solid #dbeafe;border-radius:8px;padding:6px 10px;font-size:0.95rem;color:#1e3a8a;background:#f8fbff;">
+            </div>
+            <div class="budget-bar"><div id="budgetFill" class="budget-fill"></div></div>
+            <div id="budgetText" style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:8px;"></div>
+            <div id="catBreakdown" class="cat-breakdown"></div>
         </div>
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
@@ -695,6 +773,9 @@
             <input type="date" id="expDate" style="width:0; height:0; opacity:0; position:absolute;" onchange="updateDateLabel(this.value)">
             <div style="margin-top:5px; margin-bottom:10px; font-size:1.5rem; font-family:var(--font-serif); color:#1e3a8a; font-weight:700;" id="totalDisplay">$0</div>
             <div style="margin-top:10px">
+                <div class="input-row" style="margin-bottom:8px">
+                    <select id="expCat" class="input-std" style="font-size:0.9rem;height:40px;flex:1"><option>餐飲</option><option>交通</option><option>購物</option><option>門票</option><option>其他</option></select>
+                </div>
                 <div class="input-row">
                     <input type="text" id="expName" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="項目">
                     <input type="number" id="expCost" class="input-std" style="font-size:0.9rem;height: 40px" placeholder="日幣">
@@ -750,9 +831,26 @@
              <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
         </a>
         </div>
+        <div class="pin-card">
+            <div class="pin-head"><i class="fas fa-thumbtack"></i> 重要資訊 ・ 釘選</div>
+            <div class="pin-row"><div class="pin-k">✈️ 去程</div><div class="pin-v">D7 378　TPE 15:40 → KIX 19:20</div></div>
+            <div class="pin-row"><div class="pin-k">✈️ 回程</div><div class="pin-v">KIX 20:45 → TPE 23:05（12/27）</div></div>
+            <div class="pin-divider"></div>
+            <div class="pin-row"><div class="pin-k">🏨 飯店</div><div class="pin-v">ホテル阪神大阪（本館）<br>IN 15:00–21:00 / OUT 12:00</div></div>
+            <div class="pin-addr" onclick="copyToClipboard('〒553-0003 大阪府大阪市福島区福島5-6-16 ホテル阪神大阪')">
+                〒553-0003 大阪市福島区福島5-6-16　<i class="far fa-copy"></i>
+                <div class="pin-addr-note">點一下複製日文地址給計程車司機</div>
+            </div>
+            <div class="pin-row"><div class="pin-k">☎ 飯店</div><div class="pin-v" onclick="copyToClipboard('06-6344-1661')" style="cursor:pointer">06-6344-1661 <i class="far fa-copy" style="opacity:.7"></i></div></div>
+        </div>
         <div class="allergy-quickbtn" onclick="openAllergyCard()">
             <i class="fas fa-triangle-exclamation"></i>
             <div><div class="aq-title">過敏紅線卡</div><div class="aq-sub">ALLERGY ・ 一鍵給店員看</div></div>
+            <i class="fas fa-chevron-right" style="margin-left:auto;opacity:.6"></i>
+        </div>
+        <div class="allergy-quickbtn" style="background:#0ea5e9;box-shadow:0 6px 18px rgba(14,165,233,.35)" onclick="openMedicalCard()">
+            <i class="fas fa-kit-medical"></i>
+            <div><div class="aq-title">緊急醫療卡</div><div class="aq-sub">MEDICAL ・ 血型/藥物/保險</div></div>
             <i class="fas fa-chevron-right" style="margin-left:auto;opacity:.6"></i>
         </div>
         <div class="em-header"><i class="fas fa-exclamation-circle"></i> 緊急聯絡 & 支援</div>
@@ -784,6 +882,7 @@
             <div class="ts-cn">( 可以使用信用卡嗎？ )</div>
         </div>
                 <div id="resSection" class="em-header" style="margin-top:30px"><i class="fas fa-file-invoice" style="color:#1e3a8a"></i> 預約 & 訂位</div>
+        <div id="resBoard" class="res-board"></div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FLIGHT</div>
             <div class="rc-title" style="margin-bottom:5px">AirAsia D7（去/回）</div>
@@ -883,6 +982,20 @@
             </table>
             <div class="opt-note" style="margin-top:10px">※ 神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；日落為天文推算（預估）。</div>
         </div>
+<div class="em-header" style="margin-top:30px"><i class="fas fa-tshirt" style="color:#1e3a8a"></i> 12月大阪 穿搭</div>
+        <div class="opt-card outfit-card">
+            <div class="outfit-temp">🌡️ 5–10°C ・ 洋蔥式穿搭</div>
+            <div class="outfit-note">發熱衣＋毛衣＋防風外套；圍巾・手套・毛帽；好走防水鞋。室內暖氣強，外套可脫；日落約 16:55、天黑得早，傍晚更冷。</div>
+        </div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-suitcase-rolling" style="color:#1e3a8a"></i> 行前打包清單</div>
+        <div class="chk-card" id="packCard"></div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-gift" style="color:#1e3a8a"></i> 必買 / 伴手禮</div>
+        <div class="chk-card" id="souvCard"></div>
+        <div class="em-header" style="margin-top:30px"><i class="fas fa-sliders-h" style="color:#1e3a8a"></i> 顯示設定</div>
+        <div class="opt-card disp-card">
+            <button class="disp-btn" onclick="toggleDark()"><i class="fas fa-moon"></i> <span id="darkLbl">深色模式</span></button>
+            <button class="disp-btn" onclick="cycleFont()"><i class="fas fa-text-height"></i> <span id="fontLbl">字級：標準</span></button>
+        </div>
 <div class="em-header" style="margin-top:30px"><i class="fas fa-sync-alt" style="color:#1e3a8a"></i> 資料同步</div>
         <div class="info-block" style="margin-top: 20px">
             <div class="btn-grid">
@@ -915,6 +1028,27 @@
         <div class="al-close" onclick="closeAllergyCard()">閉じる ・ 關閉</div>
     </div>
 </div>
+<div id="medOverlay" class="allergy-overlay" onclick="closeMedicalCard()">
+    <div class="allergy-card" style="border-color:#0ea5e9" onclick="event.stopPropagation()">
+        <div class="al-badge" style="background:#0ea5e9">緊急醫療 ・ MEDICAL</div>
+        <div class="al-title" style="font-size:1.7rem">緊急醫療卡</div>
+        <div class="med-static">
+            <div class="med-line"><b>救急・消防</b><span>119</span></div>
+            <div class="med-line"><b>警察</b><span>110</span></div>
+            <div class="med-line"><b>過敏 NG</b><span>玉ねぎ / 里芋</span></div>
+        </div>
+        <div class="med-jp">「救急車を呼んでください」<div class="al-note">(請幫我叫救護車)</div></div>
+        <div class="med-jp">「アレルギーがあります」<div class="al-note">(我有食物過敏)</div></div>
+        <div class="med-fields">
+            <label>血型</label><input id="medBlood" oninput="saveMedical()" placeholder="A / B / O / AB">
+            <label>慢性病・常用藥</label><input id="medMeds" oninput="saveMedical()" placeholder="無 / 藥名">
+            <label>保險</label><input id="medIns" oninput="saveMedical()" placeholder="新光樂遊卡 886-2-2326-6722">
+            <label>緊急聯絡人</label><input id="medEmg" oninput="saveMedical()" placeholder="姓名 / 電話">
+        </div>
+        <div class="al-close" onclick="closeMedicalCard()">閉じる ・ 關閉</div>
+    </div>
+</div>
+<button class="now-fab" id="nowFab" onclick="scrollToNow()"><i class="fas fa-location-crosshairs"></i> 現在</button>
 <nav class="bottom-nav">
     <i class="fas fa-list-ul nav-icon active" onclick="switchView('trip', this)"></i>
     <i class="fas fa-wallet nav-icon" onclick="switchView('wallet', this)"></i>
@@ -1262,6 +1396,12 @@
         checkVjwBtn();
         loadUsjNote();
         applyRateLockUI();
+        applyDisplayPrefs();
+        registerSW();
+        renderResBoard();
+        renderChecklists();
+        renderBudget();
+        setupNowFab();
     }
     async function updateWeather() {
         const day = itineraryData[currentDayIdx];
@@ -2109,7 +2249,8 @@
         const cost = parseInt(document.getElementById('expCost').value);
         if(!dateStr || !name || !cost) return showCustomAlert("請填寫完整資訊");
         const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
-        data.push({ id: Date.now(), date: dateStr, name, cost });
+        const cat = (document.getElementById('expCat')||{}).value || '其他';
+        data.push({ id: Date.now(), date: dateStr, name, cost, cat });
         localStorage.setItem('tripExpOsaka2026', JSON.stringify(data));
         document.getElementById('expName').value = '';
         document.getElementById('expCost').value = '';
@@ -2136,6 +2277,7 @@
             </div>`;
         }).join('');
         document.getElementById('totalDisplay').innerText = "$" + Math.round(total * RATE).toLocaleString();
+        try{ renderBudget(); }catch(e){}
     }
     function switchView(view, btn) {
         document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
@@ -2143,6 +2285,7 @@
         document.querySelectorAll('.nav-icon').forEach(e => e.classList.remove('active'));
         btn.classList.add('active');
         window.scrollTo(0,0);
+        var _f=document.getElementById('nowFab'); if(_f) _f.classList.toggle('show', view==='trip');
     }
     function initInfoMap() {
         const savedConfig = localStorage.getItem('tripInfoMapConfigOsaka');
@@ -2411,6 +2554,103 @@
         } else {
             if(icon){ icon.className = 'fas fa-lock-open'; icon.style.color = '#94a3b8'; }
         }
+    }
+
+    // ===== v3 新增功能 =====
+    function registerSW(){ if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(function(e){ console.warn('SW reg fail', e); }); } }
+    function applyDisplayPrefs(){
+        var dark = localStorage.getItem('osaka_dark')==='1';
+        document.body.classList.toggle('dark', dark);
+        var dl=document.getElementById('darkLbl'); if(dl) dl.innerText= dark?'淺色模式':'深色模式';
+        var fs=localStorage.getItem('osaka_font')||'0';
+        document.body.classList.remove('fs-lg','fs-xl');
+        if(fs==='1') document.body.classList.add('fs-lg');
+        else if(fs==='2') document.body.classList.add('fs-xl');
+        var fl=document.getElementById('fontLbl'); if(fl) fl.innerText='字級：'+(fs==='1'?'大':(fs==='2'?'特大':'標準'));
+    }
+    function toggleDark(){ var d=localStorage.getItem('osaka_dark')==='1'; localStorage.setItem('osaka_dark', d?'0':'1'); applyDisplayPrefs(); }
+    function cycleFont(){ var fs=parseInt(localStorage.getItem('osaka_font')||'0'); fs=(fs+1)%3; localStorage.setItem('osaka_font', fs); applyDisplayPrefs(); }
+    function scrollToNow(){
+        try{ var todayStr=new Date().toISOString().split('T')[0];
+            var idx=itineraryData.findIndex(function(d){return d.fullDate===todayStr;});
+            if(idx>=0 && idx!==currentDayIdx){ switchDay(idx); }
+        }catch(e){}
+        setTimeout(function(){
+            try{ updateTimeHighlight(); }catch(e){}
+            var a=document.querySelector('.timeline-row.active');
+            if(!a) a=document.querySelector('.timeline-row');
+            if(a) a.scrollIntoView({behavior:'smooth', block:'center'});
+        }, 130);
+    }
+    function setupNowFab(){
+        var f=document.getElementById('nowFab'); if(f) f.classList.add('show');
+        try{ var todayStr=new Date().toISOString().split('T')[0];
+            if(itineraryData.some(function(d){return d.fullDate===todayStr;})){ setTimeout(scrollToNow, 400); }
+        }catch(e){}
+    }
+    var RES_ITEMS=[
+        {k:'flight', c:'FLIGHT', t:'AirAsia D7 機票', w:'去12/24・回12/27', def:'已訂'},
+        {k:'hotel', c:'STAY', t:'ホテル阪神大阪', w:'12/24-27 3泊', def:'已訂'},
+        {k:'gori', c:'FOOD', t:'ごりちゃん 燒肉', w:'12/24 22:00', def:'未訂'},
+        {k:'parkside', c:'FOOD', t:'Parkside Grill', w:'12/25 18:45・11/25開搶', def:'未訂'},
+        {k:'plaisir', c:'FOOD', t:'神戸プレジール', w:'12/26 11:30', def:'未訂'},
+        {k:'pancake', c:'FOOD', t:'幸せのパンケーキ', w:'12/26 14:00', def:'未訂'},
+        {k:'gaudente', c:'FOOD', t:'Osteria Gaudente', w:'12/26 19:00', def:'未訂'},
+        {k:'asatsu', c:'FOOD', t:'肉のあさつ', w:'12/27 12:15', def:'未訂'}
+    ];
+    var RES_STATUS=['未訂','已訂','已確認'];
+    function getResStatus(){ try{return JSON.parse(localStorage.getItem('osaka_res_status')||'{}');}catch(e){return {};} }
+    function renderResBoard(){
+        var el=document.getElementById('resBoard'); if(!el) return;
+        var st=getResStatus();
+        el.innerHTML=RES_ITEMS.map(function(it){
+            var s=st[it.k]||it.def;
+            var cls=s==='已確認'?'ok':(s==='已訂'?'booked':'todo');
+            return '<div class="res-row"><div class="res-info"><div class="res-t">'+it.t+'</div><div class="res-w">'+it.c+' ・ '+it.w+'</div></div><div class="res-chip '+cls+'" onclick="cycleResStatus(\''+it.k+'\')">'+s+'</div></div>';
+        }).join('');
+    }
+    function cycleResStatus(k){
+        var st=getResStatus();
+        var it=RES_ITEMS.find(function(x){return x.k===k;}); var cur=st[k]||it.def;
+        var ni=(RES_STATUS.indexOf(cur)+1)%3; st[k]=RES_STATUS[ni];
+        localStorage.setItem('osaka_res_status', JSON.stringify(st)); renderResBoard();
+    }
+    var PACK_ITEMS=['護照 / 機票確認','現金 & 信用卡','手機 ICOCA / Apple Pay','常備藥 & 個人藥','暖暖包','口罩','保暖外套 / 發熱衣','圍巾・手套・毛帽','雨傘 / 雨具','行動電源 & 充電線','保濕・護唇膏','隱形眼鏡 / 眼鏡','環保購物袋'];
+    var SOUV_ITEMS=['白色戀人 / Royce 生巧','薯條三兄弟','面膜 (LuLuLun)','藥妝 (合力他命/休足時間/蒸氣眼罩)','神戸布丁 / 甜點','抹茶點心','大阪限定 Pocky','蓬鬆泡芙 (堂島等)'];
+    function getChecks(){ try{return JSON.parse(localStorage.getItem('osaka_check')||'{}');}catch(e){return {};} }
+    function renderChecklists(){
+        var ck=getChecks();
+        function build(items,key){ return items.map(function(t,i){ var id=key+i; var on=ck[id];
+            return '<div class="chk-item '+(on?'on':'')+'" onclick="toggleCheck(\''+id+'\')"><i class="fas '+(on?'fa-check-square':'fa-square')+'"></i><span>'+t+'</span></div>'; }).join(''); }
+        var pc=document.getElementById('packCard'); if(pc) pc.innerHTML=build(PACK_ITEMS,'pack');
+        var sc=document.getElementById('souvCard'); if(sc) sc.innerHTML=build(SOUV_ITEMS,'souv');
+    }
+    function toggleCheck(id){ var ck=getChecks(); ck[id]=!ck[id]; localStorage.setItem('osaka_check', JSON.stringify(ck)); renderChecklists(); }
+    function loadMedical(){ var m={}; try{m=JSON.parse(localStorage.getItem('osaka_medical')||'{}');}catch(e){}
+        function set(id,v){ var el=document.getElementById(id); if(el) el.value=v||''; }
+        set('medBlood',m.blood); set('medMeds',m.meds); set('medIns',m.ins||'新光樂遊卡 886-2-2326-6722'); set('medEmg',m.emg);
+    }
+    function saveMedical(){ function g(id){ return (document.getElementById(id)||{}).value||''; }
+        localStorage.setItem('osaka_medical', JSON.stringify({blood:g('medBlood'),meds:g('medMeds'),ins:g('medIns'),emg:g('medEmg')})); }
+    function openMedicalCard(){ loadMedical(); lockScroll(); document.getElementById('medOverlay').classList.add('active'); }
+    function closeMedicalCard(){ unlockScroll(); document.getElementById('medOverlay').classList.remove('active'); }
+    function fillQuick(v){ if(!isJpyTop) swapCurrency(); var t=document.getElementById('inputTop'); t.value=v; calcRate('top'); }
+    function setBudget(){ var v=parseInt(document.getElementById('budgetInput').value)||0; localStorage.setItem('osaka_budget', v); renderBudget(); }
+    function renderBudget(){
+        var exp=[]; try{ exp=JSON.parse(localStorage.getItem('tripExpOsaka2026')||'[]'); }catch(e){}
+        var spent=exp.reduce(function(s,e){return s+(e.cost||0);},0);
+        var budget=parseInt(localStorage.getItem('osaka_budget')||'0')||0;
+        var bi=document.getElementById('budgetInput'); if(bi && document.activeElement!==bi) bi.value=budget||'';
+        var pct=budget>0?Math.min(100,Math.round(spent/budget*100)):0;
+        var fill=document.getElementById('budgetFill');
+        if(fill){ fill.style.width=pct+'%'; fill.style.background=(budget&&spent>budget)?'#ef4444':(pct>=80?'#f59e0b':'#22c55e'); }
+        var txt=document.getElementById('budgetText');
+        if(txt){ txt.innerHTML= budget>0 ? '<span>已花 ¥'+spent.toLocaleString()+'</span><span>'+pct+'% ・ 剩 ¥'+Math.max(0,budget-spent).toLocaleString()+'</span>' : '<span>已花 ¥'+spent.toLocaleString()+'</span><span>尚未設定預算</span>'; }
+        var cats={}; exp.forEach(function(e){ var c=e.cat||'其他'; cats[c]=(cats[c]||0)+(e.cost||0); });
+        var order=['餐飲','交通','購物','門票','其他'];
+        var cb=document.getElementById('catBreakdown');
+        if(cb){ var rows=order.filter(function(c){return cats[c];}).map(function(c){ return '<div class="cat-row"><span>'+c+'</span><span>¥'+cats[c].toLocaleString()+'</span></div>'; }).join('');
+            cb.innerHTML= rows ? '<div class="cat-title">分類統計</div>'+rows : ''; }
     }
     init();
 </script>

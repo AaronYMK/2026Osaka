@@ -1,0 +1,14 @@
+{
+  "name": "2026 大阪聖誕 Osaka X'mas",
+  "short_name": "大阪聖誕",
+  "description": "2026/12/24-27 大阪四天三夜聖誕行程（離線可用）",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eff6ff",
+  "theme_color": "#233b7d",
+  "icons": [
+    { "src": "icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
