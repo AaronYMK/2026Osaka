@@ -6,12 +6,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="referrer" content="no-referrer">
-    <title>【 2026 大阪聖誕 Osaka X'mas 】</title>
+    <title>【 2026 神戸聖誕 Kobe X'mas 】</title>
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#233b7d">
-    <meta name="apple-mobile-web-app-title" content="大阪聖誕">
+    <meta name="apple-mobile-web-app-title" content="神戸聖誕">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -568,7 +568,7 @@
             overflow: hidden !important;
             position: fixed; /* 徹底阻止 iOS 橡皮筋回彈 */
         }
-        /* ===== 大阪優化模組 CSS ===== */
+        /* ===== 神戸優化模組 CSS ===== */
         .allergy-quickbtn{ display:flex; align-items:center; gap:14px; background:#ef4444; color:#fff; border-radius:16px; padding:18px 20px; margin-bottom:15px; box-shadow:0 6px 18px rgba(239,68,68,.35); cursor:pointer; }
         .allergy-quickbtn > i:first-child{ font-size:1.6rem; }
         .aq-title{ font-size:1.15rem; font-weight:800; }
@@ -682,9 +682,9 @@
     </div>
 </div>
 <header>
-    <span class="trip-tag">Osaka Christmas 2026</span>
+    <span class="trip-tag">Kobe Christmas 2026</span>
     <div class="trip-title">
-        【 大阪聖誕之旅 】
+        【 神戸聖誕之旅 】
     </div>
 </header>
 <div id="view-trip" class="view-section active">
@@ -706,7 +706,7 @@
             <div style="display:flex; align-items:center;">
                 <i class="fas fa-sync-alt weather-update-btn" style="font-size:1.35rem;margin-right:10px;cursor:pointer;color:var(--primary-blue)" onclick="updateWeather()"></i>
                 <div>
-                    <div class="weather-loc" id="wLoc">Tokyo</div>
+                    <div class="weather-loc" id="wLoc">Kobe</div>
                 </div>
                 <div class="header-action-group">
                     <i class="fas fa-pen header-btn-icon edit" onclick="openEditDayModal()"></i>
@@ -825,9 +825,9 @@
             <i class="fas fa-pen"></i>
         </div>
         <div class="info-map-container">
-            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://maps.google.com/maps?q=%E5%A4%A7%E9%98%AA+%E7%A6%8F%E5%B3%B6%E9%A7%85&z=12&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe id="globalInfoMapFrame" class="info-map-iframe" src="https://maps.google.com/maps?q=%E7%A5%9E%E6%88%B8%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%E3%82%AA%E3%83%AA%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%AB%E3%83%9B%E3%83%86%E3%83%AB&z=15&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a id="globalInfoMapLink" href="https://maps.app.goo.gl/6Vo1W9rhZFjys7zh7" target="_blank" class="info-map-link-bottom">
+        <a id="globalInfoMapLink" href="https://maps.google.com/?q=%E7%A5%9E%E6%88%B8%E3%83%A1%E3%83%AA%E3%82%B1%E3%83%B3%E3%83%91%E3%83%BC%E3%82%AF%E3%82%AA%E3%83%AA%E3%82%A8%E3%83%B3%E3%82%BF%E3%83%AB%E3%83%9B%E3%83%86%E3%83%AB" target="_blank" class="info-map-link-bottom">
              <i class="fas fa-location-arrow" style="font-size:1.2rem"></i>
         </a>
         </div>
@@ -836,12 +836,12 @@
             <div class="pin-row"><div class="pin-k">✈️ 去程</div><div class="pin-v">D7 378　TPE 15:40 → KIX 19:20</div></div>
             <div class="pin-row"><div class="pin-k">✈️ 回程</div><div class="pin-v">KIX 20:45 → TPE 23:05（12/27）</div></div>
             <div class="pin-divider"></div>
-            <div class="pin-row"><div class="pin-k">🏨 飯店</div><div class="pin-v">ホテル阪神大阪（本館）<br>IN 15:00–21:00 / OUT 12:00</div></div>
-            <div class="pin-addr" onclick="copyToClipboard('〒553-0003 大阪府大阪市福島区福島5-6-16 ホテル阪神大阪')">
-                〒553-0003 大阪市福島区福島5-6-16　<i class="far fa-copy"></i>
+            <div class="pin-row"><div class="pin-k">🏨 飯店</div><div class="pin-v">神戸メリケンパークオリエンタルホテル<br>IN 15:00 / OUT 11:00</div></div>
+            <div class="pin-addr" onclick="copyToClipboard('〒650-0042 神戸市中央区波止場町5-6 神戸メリケンパークオリエンタルホテル')">
+                〒650-0042 神戸市中央区波止場町5-6　<i class="far fa-copy"></i>
                 <div class="pin-addr-note">點一下複製日文地址給計程車司機</div>
             </div>
-            <div class="pin-row"><div class="pin-k">☎ 飯店</div><div class="pin-v" onclick="copyToClipboard('06-6344-1661')" style="cursor:pointer">06-6344-1661 <i class="far fa-copy" style="opacity:.7"></i></div></div>
+            <div class="pin-row"><div class="pin-k">☎ 飯店</div><div class="pin-v" onclick="copyToClipboard('078-325-8111')" style="cursor:pointer">078-325-8111 <i class="far fa-copy" style="opacity:.7"></i></div></div>
         </div>
         <div class="allergy-quickbtn" onclick="openAllergyCard()">
             <i class="fas fa-triangle-exclamation"></i>
@@ -895,48 +895,48 @@
         </div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">LODGING</div>
-            <div class="rc-title" style="margin-bottom:5px">ホテル阪神大阪（阪神本館）</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">スーペリアダブル 3泊 ¥64,580 ・ IN 15-21 / OUT 12:00</div>
+            <div class="rc-title" style="margin-bottom:5px">神戸メリケンパークオリエンタルホテル</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">スタンダードダブル西向 3泊 ¥79,197（含3日早餐・到店付款） ・ IN 15 / OUT 11</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">訂房後填入</div>
-                <div class="rc-link" onclick="copyToClipboard('Jalan yad346945')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+                <div class="rc-link" onclick="copyToClipboard('Jalan yad302008')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+            </div>
+        </div>
+        <div class="rc-card" style="margin-top:20px">
+            <div class="rc-cat">FERRY</div>
+            <div class="rc-title" style="margin-bottom:5px">神戸-関空ベイ・シャトル（回程）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/27 17:00 神戸空港→關空 ・ 片道¥1,880 ・ 線上先訂（唯一達標主班）</div>
+            <div class="rc-divider"></div>
+            <div class="rc-code-box">
+                <div class="rc-code-val">kobe-access.jp</div>
+                <div class="rc-link" onclick="copyToClipboard('https://www.kobe-access.jp/')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
             </div>
         </div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
-            <div class="rc-title" style="margin-bottom:5px">焼肉ごりちゃん 福島店</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/24 22:00 ・ 告知延遲＋玉ねぎNG</div>
+            <div class="rc-title" style="margin-bottom:5px">仔牛屋 神戸三宮店（神戸牛焼肉）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/24 23:15 ・ 平安夜速訂 ・ 玉ねぎ全NG</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
-                <div class="rc-code-val">06-6454-7036</div>
-                <div class="rc-link" onclick="copyToClipboard('06-6454-7036')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+                <div class="rc-code-val">一休/食べログ（訂前查號）</div>
+                <div class="rc-link" onclick="copyToClipboard('仔牛屋 神戸三宮店')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
             </div>
         </div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
-            <div class="rc-title" style="margin-bottom:5px">Parkside Grill（USJ 內）</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/25 18:45 ・ TableCheck</div>
+            <div class="rc-title" style="margin-bottom:5px">石田屋 北野坂店（神戸牛すき焼き）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 18:30 ・ 訂位窗約9/1開 ・ 玉ねぎ抜き・鍋も別＋生蛋液</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
-                <div class="rc-code-val">11/25 台灣10:00 開搶</div>
-                <div class="rc-link" onclick="copyToClipboard('https://www.tablecheck.com/en/shops/parkside-grille/reserve')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
-            </div>
-        </div>
-        <div class="rc-card" style="margin-top:20px">
-            <div class="rc-cat">FOOD</div>
-            <div class="rc-title" style="margin-bottom:5px">神戸プレジール本店（神戶牛）</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 11:30 ・ TableCheck／電話 ・ 包廂＋熟度＋紅線</div>
-            <div class="rc-divider"></div>
-            <div class="rc-code-box">
-                <div class="rc-code-val">078-571-0141</div>
-                <div class="rc-link" onclick="copyToClipboard('078-571-0141')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+                <div class="rc-code-val">一休（訂前查號）</div>
+                <div class="rc-link" onclick="copyToClipboard('石田屋 北野坂店')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
             </div>
         </div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
             <div class="rc-title" style="margin-bottom:5px">幸せのパンケーキ 神戸店</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 14:00 ・ EPARK / HotPepper</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 15:00 ・ EPARK / 順番受付</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
                 <div class="rc-code-val">078-392-8888</div>
@@ -945,22 +945,12 @@
         </div>
         <div class="rc-card" style="margin-top:20px">
             <div class="rc-cat">FOOD</div>
-            <div class="rc-title" style="margin-bottom:5px">Osteria Gaudente（MOSAIC 3F）</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/26 19:00 ・ HotPepper/一休/ぐるなび ・ 週六Dinner17:00-21:00</div>
+            <div class="rc-title" style="margin-bottom:5px">神戸プレジール本店（鉄板焼）</div>
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/27 11:30 ・ 週日午餐✓ ・ TableCheck/電話 ・ 洋蔥全NG＋鐵板分區</div>
             <div class="rc-divider"></div>
             <div class="rc-code-box">
-                <div class="rc-code-val">umie 078-382-7100</div>
-                <div class="rc-link" onclick="copyToClipboard('078-382-7100')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
-            </div>
-        </div>
-        <div class="rc-card" style="margin-top:20px">
-            <div class="rc-cat">FOOD</div>
-            <div class="rc-title" style="margin-bottom:5px">きよ助（谷町六丁目・純すき焼き）</div>
-            <div style="font-size:0.8rem; color:#64748b; margin-bottom:10px">12/27 11:30 ・ 予約不可・當日10:30排隊 ・ 生蛋液✓</div>
-            <div class="rc-divider"></div>
-            <div class="rc-code-box">
-                <div class="rc-code-val">06-6767-1767</div>
-                <div class="rc-link" onclick="copyToClipboard('06-6767-1767')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
+                <div class="rc-code-val">078-571-0141</div>
+                <div class="rc-link" onclick="copyToClipboard('078-571-0141')"><i class="far fa-copy" style="font-size:1.2rem"></i></div>
             </div>
         </div>
         <div class="em-header" style="margin-top:30px"><i class="fas fa-hat-wizard" style="color:#1e3a8a"></i> USJ 快捷</div>
@@ -975,14 +965,14 @@
         <div class="opt-card">
             <table class="illum-table">
                 <tr><th class="il-date">日期</th><th class="il-sun">日落</th><th>燈飾重點</th></tr>
-                <tr><td class="il-date">12/24 大阪</td><td class="il-sun">16:53</td><td class="il-note-td">御堂筋イルミ／Grand Front／梅田</td></tr>
+                <tr><td class="il-date">12/24 神戸</td><td class="il-sun">16:53</td><td class="il-note-td">メリケンパーク聖誕燈飾</td></tr>
                 <tr><td class="il-date">12/25 USJ</td><td class="il-sun">16:53</td><td class="il-note-td">USJ 聖誕夜間秀・樹燈</td></tr>
-                <tr><td class="il-date">12/26 神戶</td><td class="il-sun">16:54</td><td class="il-note-td">Harborland／MOSAIC 港燈飾</td></tr>
-                <tr><td class="il-date">12/27 大阪</td><td class="il-sun">16:55</td><td class="il-note-td">返程日・梅田</td></tr>
+                <tr><td class="il-date">12/26 神戸</td><td class="il-sun">16:54</td><td class="il-note-td">MOSAIC 大観覧車／港燈飾</td></tr>
+                <tr><td class="il-date">12/27 神戸</td><td class="il-sun">16:55</td><td class="il-note-td">返程日・元町/メリケン</td></tr>
             </table>
             <div class="opt-note" style="margin-top:10px">※ 神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；日落為天文推算（預估）。</div>
         </div>
-<div class="em-header" style="margin-top:30px"><i class="fas fa-tshirt" style="color:#1e3a8a"></i> 12月大阪 穿搭</div>
+<div class="em-header" style="margin-top:30px"><i class="fas fa-tshirt" style="color:#1e3a8a"></i> 12月 神戸 穿搭</div>
         <div class="opt-card outfit-card">
             <div class="outfit-temp">🌡️ 5–10°C ・ 洋蔥式穿搭</div>
             <div class="outfit-note">發熱衣＋毛衣＋防風外套；圍巾・手套・毛帽；好走防水鞋。室內暖氣強，外套可脫；日落約 16:55、天黑得早，傍晚更冷。</div>
@@ -1122,11 +1112,11 @@
         sightseeing: 'var(--col-sight)',
         lodging: 'var(--col-lodging)' 
     };
-    // 2. 行程資料（大阪聖誕 2026-12-24~27）
+    // 2. 行程資料（神戸聖誕 2026-12-24~27）
     let itineraryData = [
         {
-            day: 1, dayCN: "第一天", date: "12/24", fullDate: "2026-12-24", week: "WED", title: "抵達關西・福島聖誕夜", heroCity: "大阪・福島",
-            loc: "Osaka", hotel: "ホテル阪神大阪 (阪神本館)",
+            day: 1, dayCN: "第一天", date: "12/24", fullDate: "2026-12-24", week: "THU", title: "進港・神戸メリケン・仔牛屋", heroCity: "神戸・メリケンパーク",
+            loc: "Kobe", hotel: "神戸メリケンパークオリエンタルホテル",
             bg: "https://images.unsplash.com/photo-1590559899731-a382839e5549?w=800",
             events: [
                 {
@@ -1135,79 +1125,100 @@
                     ps_label_2: "訂位後填入",
                     gps: "", gps_title: "Phone",
                     desc1_title: "航班資訊", desc1_content: "AirAsia D7 378，桃園 15:40 起飛，19:20（日本時間）抵達 KIX。（官方時刻）",
-                    desc2_title: "抵達後動線", desc2_content: "入境 → JR 関西空港駅 → 関空快速 直達「福島駅」約 70 分 ¥1,210。（車程為預估）",
-                    desc3_title: "落地提醒", desc3_content: "先開通 iPhone Wallet ICOCA（Apple Pay 以 Mastercard 儲值最穩）、確認 Visit Japan Web QR。",
-                    link_web: "https://www.airbus-airasia.com"
+                    desc2_title: "落地提醒", desc2_content: "先開通 iPhone Wallet ICOCA、確認 Visit Japan Web QR；本次交通命脈＝神戸-関空ベイ・シャトル高速船。",
+                    desc3_title: "抵日聯絡", desc3_content: "深夜到著先致電飯店 078-325-8111 告知晚到。",
+                    link_web: "https://www.airasia.com"
                 },
                 {
-                    time: "19:20", type: "transport", iconType: "train", title: "關西機場 → 福島駅", location: "KIX → 福島",
-                    ps_label_1: "関空快速 直達 福島駅 約70分 ¥1,210（車程預估）", ps_label_2: "",
+                    time: "19:20", type: "transport", iconType: "ship", title: "關空 → Bay Shuttle 高速船 → 神戸空港", location: "KIX → 神戸空港",
+                    ps_label_1: "臨櫃買片道（不買セット券）", ps_content_1: "神戸行きの高速船、片道 大人1枚ください。",
+                    ps_label_2: "船票 片道 ¥1,880／人", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "搭乘位置", desc1_content: "JR 関西空港駅 → 関空快速（大阪方向），直達福島駅，不需換車。（約70分・預估）",
-                    desc2_title: "IC 卡", desc2_content: "iPhone Wallet ICOCA 感應進出；不買任何票券（Pass 試算皆不划算）。",
-                    desc3_title: "備註", desc3_content: "抵達福島駅後徒步至阪神本館。"
+                    desc1_title: "搭乘動線", desc1_content: "入境 → T1 1F「A出入口」ベイ・シャトル櫃檯（6:00–翌0:15）臨櫃買片道 ¥1,880 → 免費接駁巴士至海上碼頭（開船 20 分前到）→ 高速船約 30 分至神戸空港。",
+                    desc2_title: "⚠️ 決斷死線／備案", desc2_content: "出關 ≤21:35 → 衝 22:00 前的船；21:50 仍未過關 → 放棄船，改利木津巴士 21:55／22:10（¥2,200・約65分・三宮 23:00／23:15）＋計程車到飯店。不等 0:15 末班船。（時刻預估，出發前一週複查運航狀況）",
+                    desc3_title: "重要", desc3_content: "碼頭計程車禁入，錯過接駁巴士＝錯過船。船班／運航狀況出發前一週務必複查。",
+                    link_web: "https://www.kobe-access.jp/"
                 },
                 {
-                    time: "20:45", type: "lodging", iconType: "hotel", title: "ホテル阪神大阪 入住（預估）", location: "大阪市福島区",
-                    ps_label_1: "Jalan・スーペリアダブル 3泊 ¥64,580（含溫泉券/人/晚）", ps_label_2: "訂房後填入",
+                    time: "22:00", type: "transport", iconType: "car", title: "神戸空港 → 計程車直達飯店", location: "神戸空港 → メリケンパーク",
+                    ps_label_1: "給司機（日文地址）", ps_content_1: "神戸市中央区波止場町5-6 神戸メリケンパークオリエンタルホテルまでお願いします。",
+                    ps_label_2: "", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "房型 / 規則", desc1_content: "スーペリアダブル 30㎡（2026-04 翻新，床 180×200）。無早晚餐。CHECK-IN 15:00–21:00，CHECK-OUT 12:00。超過 24:00 才需事前聯繫。",
-                    desc2_title: "溫泉", desc2_content: "溫泉券每人每晚 1 張。7F 男湯／6F 女湯，10:00–23:00（最終入場 22:00）。",
-                    desc3_title: "抵達時間", desc3_content: "約 20:45 入住（預估，依班機 19:20 + 通關 + 車程推算）。",
-                    link_web: "https://www.hotelhanshin.co.jp/osaka/"
+                    desc1_title: "為何直接計程車", desc1_content: "神戸空港 → メリケンパーク 計程車約 15–20 分、¥3,600–4,200（預估）。深夜拖行李，金錢換體力，CP 勝 Port Liner 轉乘。",
+                    desc2_title: "省錢備案", desc2_content: "Port Liner 神戸空港→三宮 ¥340 約18分，再從三宮計程車到飯店；深夜不建議。",
+                    desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "22:00", type: "food", iconType: "fire", title: "焼肉ごりちゃん 福島店", location: "阪神福島駅 西口1分",
+                    time: "22:30", type: "lodging", iconType: "hotel", title: "神戸メリケンパークオリエンタルホテル 入住", location: "神戸市中央区波止場町",
+                    ps_label_1: "深夜到著（已電話告知）", ps_content_1: "遅くにチェックインします。電話で連絡済みの〇〇です。",
+                    ps_label_2: "地址複製給司機", ps_content_2: "神戸市中央区波止場町5-6",
+                    gps: "+81 78-325-8111", gps_title: "Phone",
+                    desc1_title: "房型 / 規則", desc1_content: "スタンダードダブル ウエストビュー、3 泊 ¥79,197 到店付款・含 3 日雙人自助早餐。IN 15:00 / OUT 11:00。12/22 前免費取消。",
+                    desc2_title: "早餐", desc2_content: "含 3 日自助早餐（約 7:00–10:00・出發前確認），港景メリケンパーク。",
+                    desc3_title: "地址 / 電話", desc3_content: "〒650-0042 神戸市中央区波止場町5-6／078-325-8111。",
+                    link_web: "https://www.kobe-oriental.co.jp/"
+                },
+                {
+                    time: "23:15", type: "food", iconType: "fire", title: "仔牛屋 神戸三宮店（神戸牛焼肉）", location: "神戸三宮",
                     ps_label_1: "玉ねぎ完全NG（先出示過敏紅線卡）", ps_content_1: "玉ねぎは一切食べられません。タレや付け合わせにも入れないでください。",
-                    ps_label_2: "看板・おすすめ盛り合わせ", ps_content_2: "おすすめの盛り合わせをください。",
-                    ps_label_3: "予約 22時", ps_content_3: "22時に予約した〇〇です。少し遅れてすみません。",
-                    gps: "+81 6-6454-7036", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "福島超人氣燒肉，阪神福島駅西口徒步 1 分。營業 17:00–24:00。",
-                    desc2_title: "預約", desc2_content: "☎ 06-6454-7036／HotPepper。出發前 1 個月訂 22:00 場，告知可能延遲抵達 + 玉ねぎ完全NG。",
-                    desc3_title: "紅線", desc3_content: "Aaron：玉ねぎ絕對NG（連器具接觸都不行）。點餐務必出示過敏紅線卡。",
-                    link_web: "https://www.hotpepper.jp/strJ003324789/"
+                    ps_label_2: "平安夜・已預約", ps_content_2: "予約した〇〇です。",
+                    ps_label_3: "看板・おすすめ", ps_content_3: "おすすめの盛り合わせをください。",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "神戸牛焼肉、LO 翌1:00 — Day1 晚 23:15 唯一還能吃到的（糸桜 LO22:00／一牛 LO22:30 皆出局）。三宮。",
+                    desc2_title: "預約", desc2_content: "一休／食べログ／☎（訂前查號）。平安夜 12/24 超熱門，一開放立即訂，備註玉ねぎ全排除、可能稍晚到。",
+                    desc3_title: "紅線", desc3_content: "Aaron 玉ねぎ絕對NG（連器具接觸都不行）。點餐務必出示過敏紅線卡。",
+                    link_web: ""
                 },
                 {
-                    time: "23:00", type: "food", iconType: "bowl-rice", title: "一蘭（儀式・首夜・Aaron 獨自快速）", location: "梅田周邊深夜店（近飯店優先）",
+                    time: "00:40", type: "food", iconType: "bowl-rice", title: "一蘭 三宮（儀式・首夜・Aaron 獨自）", location: "神戸三宮",
                     ps_label_1: "拉麵客製", ps_content_1: "麺のかたさ：かため。味の濃さ：ふつう。ねぎ：なし。",
                     ps_label_2: "追加", ps_content_2: "替玉（かえだま）をお願いします。",
                     ps_label_3: "", ps_content_3: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "儀式（慢遊調整）", desc1_content: "伴侶吃完燒肉先回房休息；Aaron 自己快速一碗完成首夜一蘭儀式，別拖太晚——隔天 USJ 才有體力。優先梅田近飯店的深夜店，不特地跑道頓堀。",
-                    desc2_title: "備註", desc2_content: "免預約。就近梅田/福島周邊深夜店（出發前確認營業）。點餐記得ねぎ抜き，快速吃完早回。",
+                    desc1_title: "儀式", desc1_content: "首夜一蘭儀式（Aaron 自己快速一碗）；伴侶吃完仔牛屋先回飯店休息。三宮一蘭營業 –翌4:00。",
+                    desc2_title: "備註", desc2_content: "免預約。ねぎ抜き、快速吃完早回，隔天 USJ 才有體力。",
                     desc3_title: "", desc3_content: "",
-                    link_web: "https://ke47500.gorp.jp/"
+                    link_web: ""
                 }
             ]
         },
         {
-            day: 2, dayCN: "第二天", date: "12/25", fullDate: "2026-12-25", week: "THU", title: "環球影城・聖誕全日", heroCity: "USJ・大阪",
-            loc: "USJ", hotel: "ホテル阪神大阪 (阪神本館)",
+            day: 2, dayCN: "第二天", date: "12/25", fullDate: "2026-12-25", week: "FRI", title: "USJ 慢遊・聖誕全日", heroCity: "USJ・大阪湾",
+            loc: "USJ", hotel: "神戸メリケンパークオリエンタルホテル",
             bg: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=800",
             events: [
                 {
-                    time: "08:40", type: "transport", iconType: "train", title: "福島 → USJ（慢遊式・不趕開園）", location: "福島 → ユニバーサルシティ",
-                    ps_label_1: "JR 環狀線/ゆめ咲線 約15分 ¥190（車程預估）", ps_label_2: "",
+                    time: "08:00", type: "food", iconType: "utensils", title: "飯店自助早餐（含在房價）", location: "神戸メリケンパークオリエンタルホテル",
+                    ps_label_1: "", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "搭乘位置", desc1_content: "福島駅 → 西九条乗換 → ユニバーサルシティ駅（約15分・預估）。不玩刺激設施故不必卡 rope drop，睡飽再出發。",
-                    desc2_title: "提醒", desc2_content: "先查當日開園時間（11 月官方公布）。以聖誕氛圍為主、設施靠 Single Rider 隨機補。",
+                    desc1_title: "從容早餐", desc1_content: "7:30–8:00 準時吃雙人自助早餐（含在房價）。吃飽再出發 USJ，一天氛圍慢遊。",
+                    desc2_title: "", desc2_content: "",
                     desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "09:30", type: "sightseeing", iconType: "camera", title: "USJ 慢遊入場（重氛圍・不衝設施）", location: "ユニバーサル・スタジオ・ジャパン",
-                    ps_label_1: "聖誕限定・慢步入園", ps_label_2: "先感受聖誕佈置與街景。",
-                    ps_content_1: "https://www.usj.co.jp/web/ja/jp",
+                    time: "09:00", type: "transport", iconType: "train", title: "神戸 → USJ（慢遊式・不趕開園）", location: "三宮 → ユニバーサルシティ",
+                    ps_label_1: "約50–60分（預估）", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "搭乘動線", desc1_content: "飯店 → 三宮（巴士/計程車約10分）→ JR/阪神 至西九条 → ゆめ咲線 ユニバーサルシティ駅。約50–60分（預估）。不衝 rope drop，睡飽再出發。",
+                    desc2_title: "提醒", desc2_content: "當日開園時間 9–11 月官方公布再校準。此行以聖誕氛圍為主、不衝設施。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "10:00", type: "sightseeing", iconType: "camera", title: "USJ 慢遊入場（重氛圍・不衝設施）", location: "ユニバーサル・スタジオ・ジャパン",
+                    ps_label_1: "聖誕限定・慢步入園", ps_content_1: "https://www.usj.co.jp/web/ja/jp",
+                    ps_label_2: "先感受聖誕佈置與街景", ps_content_2: "",
                     gps: "", gps_title: "MAP CODE",
-                    desc1_title: "慢遊策略", desc1_content: "不 rope drop 衝刺。悠閒入園、先逛聖誕街景拍照。Aaron 想玩飛天翼龍靠 Single Rider 隨機插隊（隊短再玩）；哈利波特兩人同乘留到下午。",
-                    desc2_title: "聖誕重點", desc2_content: "全天主軸＝夜間聖誕秀/點燈氛圍，不是設施數量（9 月官方公布聖誕內容後再校準）。",
-                    desc3_title: "Single Rider", desc3_content: "飛天翼龍、好萊塢美夢等有單人快速通道，隊短隨時補（官方 App 確認）。",
+                    desc1_title: "慢遊策略", desc1_content: "不 rope drop 衝刺，悠閒入園先逛聖誕街景拍照。想玩飛天翼龍靠 Single Rider 隨機補（隊短再玩）；哈利波特兩人同乘留下午。",
+                    desc2_title: "聖誕重點", desc2_content: "全天主軸＝夜間聖誕秀／點燈氛圍，不是設施數量（9 月官方公布聖誕內容後校準）。",
+                    desc3_title: "門票", desc3_content: "12/25 門票 約 12/20 開賣，追蹤腳本會提前預警（見預約看板 USJ 門票）。",
                     link_web: "https://www.usj.co.jp/web/ja/jp"
                 },
                 {
-                    time: "12:00", type: "food", iconType: "utensils", title: "園內午餐", location: "USJ 園區",
+                    time: "12:00", type: "food", iconType: "utensils", title: "USJ 園內午餐", location: "USJ 園區",
                     ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモ（里芋）は食べられません。除いてもらえますか？",
                     ps_label_2: "推薦", ps_content_2: "おすすめはどれですか？",
-                    ps_label_3: "", ps_content_3: "",
                     gps: "", gps_title: "MAP CODE",
                     desc1_title: "美食介紹", desc1_content: "園內餐廳擇一。兩人過敏紅線：Aaron 玉ねぎ、伴侶 タロイモ，皆完全NG。",
                     desc2_title: "備註", desc2_content: "聖誕旺季園內用餐排隊，建議錯開 12:00 尖峰。",
@@ -1217,178 +1228,224 @@
                     time: "13:30", type: "food", iconType: "utensils", title: "園內咖啡・甜點 歇腳（伴侶悠閒）", location: "USJ 園區",
                     ps_label_1: "坐下來休息", ps_content_1: "温かい飲み物とデザートをください。",
                     ps_label_2: "", ps_content_2: "",
-                    ps_label_3: "", ps_content_3: "",
                     gps: "", gps_title: "MAP CODE",
                     desc1_title: "慢遊歇腳", desc1_content: "午餐後找園內咖啡廳/甜點坐下歇腳，補上伴侶每日下午的悠閒時光，避免站整天。聖誕限定甜點可拍照。",
                     desc2_title: "", desc2_content: "",
                     desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "15:00", type: "sightseeing", iconType: "camera", title: "哈利波特魔法世界（兩人同遊）", location: "The Wizarding World of Harry Potter",
-                    ps_label_1: "哈利波特禁忌之旅", ps_label_2: "ハリー・ポッター・エリアへ。",
-                    ps_content_1: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "景點介紹", desc1_content: "兩人一起玩的重點區。禁忌之旅（Forbidden Journey）伴侶可接受；活米村聖誕佈置拍照。",
-                    desc2_title: "注意事項", desc2_content: "熱門區可能需區域抽選券（當日於官方 App 領取，出發前確認）。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "16:53", type: "sightseeing", iconType: "music", title: "聖誕燈飾・點燈・夜間秀", location: "USJ 園區",
-                    ps_label_1: "聖誕樹點燈 / 夜間遊行", ps_label_2: "クリスマスショーの時間を確認。",
-                    ps_content_1: "",
+                    time: "16:53", type: "sightseeing", iconType: "music", title: "USJ 聖誕燈飾・點燈・夜間秀", location: "USJ 園區",
+                    ps_label_1: "聖誕樹點燈 / 夜間秀", ps_content_1: "クリスマスショーの時間を確認。",
+                    ps_label_2: "", ps_content_2: "",
                     gps: "", gps_title: "MAP CODE",
                     desc1_title: "重點", desc1_content: "日落約 16:53（預估）。聖誕樹燈飾與夜間秀是本次過節主軸，優先卡位。",
-                    desc2_title: "備註", desc2_content: "確切場次待 9 月官方公布，填入「USJ 快捷」備忘欄。",
+                    desc2_title: "備註", desc2_content: "確切場次待 9 月官方公布，填入「USJ 快捷」備忘欄。哈利波特兩人同乘也排這時段。",
                     desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "18:45", type: "food", iconType: "utensils", title: "Parkside Grill（USJ 內）", location: "USJ・Jurassic Park 區",
-                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは完全に除いてください。器具の接触も不可です。",
-                    ps_label_2: "預約", ps_content_2: "予約した〇〇です。",
-                    ps_label_3: "伴侶牛排熟度", ps_content_3: "ミディアム（中まで火を通し、赤い肉汁が出ない程度）でお願いします。",
+                    time: "21:00", type: "transport", iconType: "train", title: "★ USJ → 神戸（回程 4 組時刻卡）", location: "ユニバーサルシティ → 神戸",
+                    ps_label_1: "安全底線：23:00 前上車", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "USJ 園內景觀餐廳（Jurassic Park 區）。園內用餐可延長聖誕氛圍。",
-                    desc2_title: "預約", desc2_content: "TableCheck 線上預約。優先案內＝入園日前 1 個月 11:00(JST) 開放 → 11/25 台灣時間 10:00 開搶；備援：當日門口 QR。前日可取消。",
-                    desc3_title: "紅線", desc3_content: "Aaron 玉ねぎ、伴侶 タロイモ 完全NG；伴侶牛排要熟度適中不見血。",
-                    link_web: "https://www.tablecheck.com/en/shops/parkside-grille/reserve"
+                    desc1_title: "回程 4 組時刻（擇一・隨機應變）", desc1_content: "① 21:24 京橋直通 → 22:01（1轉）⭐　② 22:09 → 22:57（1轉）⭐　③ 22:32 → 23:21　④ 23:12 → 翌0:01。（時刻為預估，出發前一週複查）",
+                    desc2_title: "底線", desc2_content: "安全底線 23:00 前上車回神戸。太晚就三宮下車後計程車回飯店。⭐＝推薦省時班。",
+                    desc3_title: "備註", desc3_content: "USJ → 神戸需在西九条／大阪／三宮轉乘。這 4 組建議存進手機備忘。",
+                    link_web: ""
+                },
+                {
+                    time: "23:30", type: "food", iconType: "bowl-rice", title: "第一旭 三宮本店（宵夜拉麵①・Aaron 獨自）", location: "神戸三宮",
+                    ps_label_1: "拉麵（ねぎ抜き）", ps_content_1: "ねぎ抜きでお願いします。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "宵夜拉麵①。醬油豚骨、三宮本店 Tabelog 3.55 最高、營業 –翌1:00。Aaron 獨自（伴侶先回飯店）。",
+                    desc2_title: "備援拉麵卡", desc2_content: "若第一旭休/滿 → 美な味（鶏白湯・換口味）或 賀正軒（週六 –翌4:00 深夜）。拉麵一人三碗計畫最推＝第一旭。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: ""
                 }
             ]
         },
         {
-            day: 3, dayCN: "第三天", date: "12/26", fullDate: "2026-12-26", week: "FRI", title: "神戶・聖誕慢遊", heroCity: "神戶・三宮",
-            loc: "Kobe", hotel: "ホテル阪神大阪 (阪神本館)",
+            day: 3, dayCN: "第三天", date: "12/26", fullDate: "2026-12-26", week: "SAT", title: "自然醒・三宮慢遊・神戸牛壽喜燒", heroCity: "神戸・三宮",
+            loc: "Sannomiya", hotel: "神戸メリケンパークオリエンタルホテル",
             bg: "https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?w=800",
             events: [
                 {
-                    time: "10:00", type: "transport", iconType: "train", title: "福島 → 神戶三宮", location: "福島 → 神戸三宮",
-                    ps_label_1: "阪神 直通特急 約35分 ¥330（車程預估）", ps_label_2: "",
-                    gps: "", gps_title: "Phone",
-                    desc1_title: "搭乘位置", desc1_content: "阪神福島駅 → 直通特急 → 神戸三宮。約 35 分 ¥330。（預估）",
-                    desc2_title: "節奏", desc2_content: "此次是來過節、不趕行程。有馬溫泉不排，慢步神戶港與三宮。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "11:30", type: "food", iconType: "fire", title: "神戸プレジール本店（神戶牛）", location: "三宮・Hotel The B Kobe 1F",
-                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは一切使わないでください。器具の接触も不可です。",
-                    ps_label_2: "伴侶牛排熟度", ps_content_2: "ミディアム（赤い肉汁が出ない程度）でお願いします。",
-                    ps_label_3: "預約", ps_content_3: "11時半に予約した〇〇です。個室をお願いしました。",
-                    gps: "+81 78-571-0141", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "Aaron 定案的神戶牛（捨モーリヤ）。Lunch 11:30–15:00（LO 14:00）。三宮 Hotel The B Kobe 1F。",
-                    desc2_title: "預約", desc2_content: "TableCheck 線上／☎ 078-571-0141。備註玉ねぎ・タロイモNG、伴侶熟度適中、包廂。",
-                    desc3_title: "紅線", desc3_content: "兩人過敏紅線務必先告知；鐵板燒共用鐵板要特別交代分開處理。",
-                    link_web: "https://www.tablecheck.com/ja/shops/kobe-kobeplaisir/reserve"
-                },
-                {
-                    time: "14:00", type: "food", iconType: "utensils", title: "幸せのパンケーキ 神戸店（下午茶）", location: "三宮 徒步3分",
-                    ps_label_1: "招牌鬆餅", ps_content_1: "幸せのパンケーキをください。",
-                    ps_label_2: "", ps_content_2: "",
-                    ps_label_3: "", ps_content_3: "",
-                    gps: "+81 78-392-8888", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "伴侶每日下午茶／舒芙蕾鬆餅站。週六 10:00–20:30，三宮徒步 3 分。",
-                    desc2_title: "預約", desc2_content: "EPARK epark.jp/shopinfo/hit625717 或 HotPepper strJ001262734；☎ 078-392-8888。",
-                    desc3_title: "", desc3_content: "",
-                    link_web: "https://www.epark.jp/shopinfo/hit625717/"
-                },
-                {
-                    time: "15:00", type: "sightseeing", iconType: "camera", title: "ナガサワ文具センター 本店（北星・大人の鉛筆）", location: "三宮センター街",
-                    ps_label_1: "找「大人の鉛筆 2.0mm」", ps_content_1: "北星鉛筆の「大人の鉛筆」2.0mmはありますか？替芯もお願いします。",
-                    ps_label_2: "", ps_content_2: "",
-                    ps_label_3: "", ps_content_3: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "文具職人", desc1_content: "神戶文具聖地ナガサワ本店，順三宮動線（鬆餅後→往元町/Harborland）。有北星「大人の鉛筆」系列。備援：梅田ロフト。",
-                    desc2_title: "備註", desc2_content: "Aaron 愛日本職人文具。原 Day4 梅田找鉛筆改此處一併完成，Day4 專心壽喜燒＋一蘭。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "15:30", type: "sightseeing", iconType: "camera", title: "神戶港・Harborland 聖誕燈飾", location: "神戸ハーバーランド",
-                    ps_label_1: "神戶港散步", ps_label_2: "ハーバーランド・モザイクへ。",
-                    ps_content_1: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "景點介紹", desc1_content: "神戶港灣慢步、聖誕燈飾。日落約 16:54（預估）。",
-                    desc2_title: "注意事項", desc2_content: "神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；改看 Harborland／MOSAIC 港區燈飾。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "19:00", type: "food", iconType: "utensils", title: "Osteria Gaudente（MOSAIC 3F・港景義麵）", location: "神戸ハーバーランド umie MOSAIC 3F",
-                    ps_label_1: "玉ねぎ・タロイモ 完全NG（出示紅線卡）", ps_content_1: "玉ねぎとタロイモは使わないでください。",
-                    ps_label_2: "伴侶最愛義大利麵", ps_content_2: "おすすめのパスタはどれですか？",
-                    ps_label_3: "", ps_content_3: "",
-                    gps: "", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "MOSAIC 3F 義大利麵餐廳，港景。伴侶愛義大利麵。備選：櫻（2F 神戶牛）／8 EIGHTH BEEF（1F）。",
-                    desc2_title: "預約", desc2_content: "HotPepper／一休／ぐるなび 可訂。週六 Dinner 17:00–21:00（LO20:30）。MOSAIC 3F 港景。umie 078-382-7100。",
-                    desc3_title: "紅線", desc3_content: "義大利麵常見洋蔥、醬料需確認；出示紅線卡。",
-                    link_web: "https://www.hotpepper.jp/strJ000795741/"
-                },
-                {
-                    time: "21:00", type: "lodging", iconType: "water", title: "阪神本館 溫泉（②/3・預估）", location: "阪神本館 7F男/6F女",
-                    ps_label_1: "溫泉券 3 晚各 1 張／人", ps_label_2: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "溫泉", desc1_content: "回福島後泡湯。10:00–23:00，最終入場 22:00 — 須在 22:00 前入場（預估回程時間，留意末班與最終入場）。",
-                    desc2_title: "備註", desc2_content: "若回程太晚錯過，改 12/27 晨湯補足。",
-                    desc3_title: "", desc3_content: ""
-                }
-            ]
-        },
-        {
-            day: 4, dayCN: "第四天", date: "12/27", fullDate: "2026-12-27", week: "SAT", title: "自然醒・溫泉・返程", heroCity: "大阪・梅田",
-            loc: "Osaka", hotel: "ホテル阪神大阪 (退房)",
-            bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
-            events: [
-                {
-                    time: "09:30", type: "lodging", iconType: "hotel", title: "早退房・寄行李（優先排きよ助）", location: "ホテル阪神大阪",
-                    ps_label_1: "行李寄放", ps_content_1: "荷物を預かってもらえますか？夕方に取りに戻ります。",
+                    time: "09:30", type: "food", iconType: "utensils", title: "自然醒・飯店自助早餐", location: "神戸メリケンパークオリエンタルホテル",
+                    ps_label_1: "", ps_content_1: "",
                     ps_label_2: "", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "早退房", desc1_content: "為排きよ助（予約不可）提前退房。checkout 12:00 前皆可，早退＋寄放行李，晚間取回赴機場。",
-                    desc2_title: "溫泉券③", desc2_content: "溫泉10:00才開、與10:30谷六排隊衝突→今日晨湯儀式放棄（或改前一晚多泡補足）。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "10:30", type: "sightseeing", iconType: "camera", title: "きよ助 排隊卡位（予約不可・谷六）", location: "谷町六丁目 徒步2分",
-                    ps_label_1: "先卡位", ps_content_1: "予約なし。開店11:30、先に並びます。",
-                    ps_label_2: "", ps_content_2: "",
-                    gps: "", gps_title: "Phone",
-                    desc1_title: "排隊策略", desc1_content: "10:00 福島出發（→東梅田→谷町線→谷六約25–30分・預估），10:30 到店卡位。週六中午人多，早排搶11:30首輪入座。",
-                    desc2_title: "注意事項", desc2_content: "予約不可故靠早排。若隊伍過長，備援：谷六周邊或回梅田另覓（但盡量吃到）。",
-                    desc3_title: "", desc3_content: ""
-                },
-                {
-                    time: "11:30", type: "food", iconType: "fire", title: "きよ助（純すき焼き・谷町六丁目）", location: "谷町六丁目 徒步2分",
-                    ps_label_1: "予約不可・當日排隊", ps_content_1: "予約なしで並びます。開店11:30、10:30頃から整列。",
-                    ps_label_2: "壽喜燒生蛋液", ps_content_2: "すき焼きの生卵をお願いします。",
-                    ps_label_3: "玉ねぎ（現場口頭）", ps_content_3: "玉ねぎを抜いていただけますか？アレルギーで器具の接触も避けたいです。",
-                    gps: "+81 6-6767-1767", gps_title: "Phone",
-                    desc1_title: "美食介紹", desc1_content: "Aaron 定案：谷六巷弄・純すき焼き専門、Tabelog 3.62・百名店2024，在地非觀光。午餐11:30–14:00(LO13:30)、¥1,800起、火曜休（12/27週六開）。伴侶生蛋液✓、牛肉適中。",
-                    desc2_title: "排隊", desc2_content: "予約不可。10:30 到附近卡位、11:30 開店首輪。週六中午人多。",
-                    desc3_title: "洋蔥注意", desc3_content: "標準午餐套餐含玉ねぎ且不能事前訂位＝無法事前保證。只能現場口頭拜託去除，Aaron 自行拿捏過敏風險。",
-                    link_web: "https://tabelog.com/osaka/A2701/A270204/27080288/"
-                },
-                {
-                    time: "14:30", type: "food", iconType: "utensils", title: "下午茶・咖啡廳（伴侶悠閒時光）", location: "心斎橋／梅田一帶",
-                    ps_label_1: "舒芙蕾/甜點", ps_content_1: "おすすめのデザートをください。",
-                    ps_label_2: "", ps_content_2: "",
-                    ps_label_3: "", ps_content_3: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "慢遊下午茶", desc1_content: "きよ助午餐後、往梅田取行李的空檔，找一間咖啡廳/舒芙蕾坐下來（伴侶每日悠閒時光）。谷六→心斎橋→梅田順路，不趕。",
+                    desc1_title: "放慢", desc1_content: "睡到自然醒，從容吃飯店自助早餐。伴侶輕鬆日；Aaron 早餐留胃給午前拉麵。",
                     desc2_title: "", desc2_content: "",
                     desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "16:30", type: "sightseeing", iconType: "camera", title: "梅田購物・東急ハンズ（＋一蘭末日儀式・彈性）", location: "梅田",
-                    ps_label_1: "梅田採買", ps_label_2: "ハンズ・大丸・阪急へ。",
-                    ps_content_1: "",
-                    gps: "", gps_title: "MAP CODE",
-                    desc1_title: "景點介紹", desc1_content: "一蘭末日儀式（近福島取行李）＋彈性代購緩衝點（東急ハンズ/大丸/阪急・臨時代購用）。鉛筆已移 Day3 神戶ナガサワ完成。",
-                    desc2_title: "注意事項", desc2_content: "須於約 17:30 前結束，回福島取行李赴機場（福島→KIX 約70分・預估）。",
+                    time: "10:20", type: "transport", iconType: "car", title: "飯店 → 三宮（分頭）", location: "メリケンパーク → 三宮",
+                    ps_label_1: "計程車/巴士約10分", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "分頭行動", desc1_content: "到三宮後分頭：伴侶去広重排神戸牛丼、Aaron 走去みなと軒吃拉麵②。11:45 三宮會合。",
+                    desc2_title: "", desc2_content: "",
                     desc3_title: "", desc3_content: ""
                 },
                 {
-                    time: "18:00", type: "transport", iconType: "train", title: "梅田/福島 → 關西機場", location: "→ KIX",
-                    ps_label_1: "取行李 → 関空快速 福島→KIX 約70分 ¥1,210（預估）", ps_label_2: "",
+                    time: "11:00", type: "food", iconType: "utensils", title: "広重（伴侶・神戸牛丼）", location: "三宮",
+                    ps_label_1: "神戸牛丼", ps_content_1: "神戸牛丼をください。",
+                    ps_label_2: "⚠️ 牛丼含洋蔥（Aaron 不吃・故分頭）", ps_content_2: "",
                     gps: "", gps_title: "Phone",
-                    desc1_title: "搭乘位置", desc1_content: "回福島取寄放行李 → 福島駅 関空快速 直達 KIX。（約70分・預估）預留通關/退稅時間。",
-                    desc2_title: "備註", desc2_content: "國際線建議起飛前 2 小時到；20:45 班機 → 約 18:45 前抵機場。",
+                    desc1_title: "美食介紹", desc1_content: "伴侶最愛神戸牛丼。9 席小店，建議 10:15–30 到排第一輪。牛丼含洋蔥→Aaron 不碰，故此餐分頭。",
+                    desc2_title: "同時段 Aaron", desc2_content: "Aaron 走 6 分到みなと軒吃拉麵②，11:45 與伴侶會合。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: ""
+                },
+                {
+                    time: "11:05", type: "food", iconType: "bowl-rice", title: "みなと軒（Aaron・拉麵②）", location: "三宮（距広重約6分）",
+                    ps_label_1: "拉麵（ねぎ抜き）", ps_content_1: "ねぎ抜きでお願いします。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "Aaron 拉麵②。距広重最近（走6分），11:00 開。分頭吃完 11:45 與伴侶會合。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: "",
+                    link_web: ""
+                },
+                {
+                    time: "12:30", type: "sightseeing", iconType: "camera", title: "ナガサワ文具本店（北星・大人の鉛筆）", location: "三宮 ジュンク堂三宮店 3F",
+                    ps_label_1: "找「大人の鉛筆 2.0mm」", ps_content_1: "北星鉛筆の「大人の鉛筆」2.0mmはありますか？替芯もお願いします。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "文具職人", desc1_content: "神戸文具聖地ナガサワ本店（ジュンク堂三宮店 3F）。北星「大人の鉛筆」系列。Aaron 愛日本職人文具。",
+                    desc2_title: "", desc2_content: "",
                     desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "13:30", type: "sightseeing", iconType: "camera", title: "センタープラザ 扭蛋（ガチャ）", location: "三宮センタープラザ",
+                    ps_label_1: "扭蛋區", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "輕逛", desc1_content: "三宮センタープラザ 扭蛋（ガチャ）区（約 19:00 前）。三宮慢逛不趕。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "15:00", type: "food", iconType: "utensils", title: "幸せのパンケーキ 神戸店（下午茶・放鬆主場）", location: "三宮 徒步3分",
+                    ps_label_1: "招牌舒芙蕾鬆餅", ps_content_1: "幸せのパンケーキをください。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "+81 78-392-8888", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "伴侶最愛舒芙蕾鬆餅、今日放鬆主場。三宮徒步 3 分。週六約 10:00–20:30。",
+                    desc2_title: "預約", desc2_content: "EPARK／店頭順番受付／☎ 078-392-8888。備援下午茶卡：.donut。",
+                    desc3_title: "", desc3_content: "",
+                    link_web: "https://www.epark.jp/shopinfo/hit625717/"
+                },
+                {
+                    time: "17:00", type: "sightseeing", iconType: "camera", title: "モザイク大観覧車（黃昏港夜景）", location: "神戸ハーバーランド umie MOSAIC",
+                    ps_label_1: "摩天輪", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "景點介紹", desc1_content: "MOSAIC 大観覧車（週六 –23:00、¥800），黃昏看神戸港夜景。日落約 16:54（預估）。",
+                    desc2_title: "備援（時間有餘再去）", desc2_content: "アンパンマンこどもミュージアム 免費モール就在旁；已精簡不硬排，時間有餘再逛。",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "18:30", type: "food", iconType: "fire", title: "★ 石田屋 北野坂店（神戸牛すき焼き＋村上さん生卵）", location: "北野坂",
+                    ps_label_1: "玉ねぎ抜き・鍋も別（壽喜燒常放洋蔥・必指定）", ps_content_1: "すき焼きに玉ねぎを一切入れないでください。鍋も別にしていただけますか？アレルギーです。",
+                    ps_label_2: "伴侶：壽喜燒生蛋液", ps_content_2: "すき焼きの生卵（村上さんの卵）をお願いします。",
+                    ps_label_3: "已預約", ps_content_3: "予約した〇〇です。個室をお願いしました。",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "伴侶最愛儀式＝神戸牛すき焼き＋村上さん生蛋液。個室。Tabelog 3.63。LO 21:00 偏早。Day1 已燒肉，今晚改壽喜燒有變化。",
+                    desc2_title: "預約", desc2_content: "一休／☎（訂前查號）。訂位窗約 9/1 前後開。必指定「玉ねぎ抜き・鍋も別」並確認可壽喜燒＋生蛋液。",
+                    desc3_title: "選店理由", desc3_content: "選北野坂店（可壽喜燒＋生蛋液），非 Hanareの上（純燒肉無壽喜燒）。",
+                    link_web: ""
+                },
+                {
+                    time: "21:00", type: "sightseeing", iconType: "music", title: "回飯店・メリケンパーク 燈飾夜散步", location: "メリケンパーク",
+                    ps_label_1: "港邊聖誕燈飾", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "慢步收尾", desc1_content: "回飯店，門口即メリケンパーク聖誕燈飾（約 –23:00）。港灣夜景慢步收尾這一天。",
+                    desc2_title: "備註", desc2_content: "神戸ルミナリエ 2026 為 1/30–2/8，本次不逢；改看港區燈飾。",
+                    desc3_title: "", desc3_content: ""
+                }
+            ]
+        },
+        {
+            day: 4, dayCN: "第四天", date: "12/27", fullDate: "2026-12-27", week: "SUN", title: "自然醒・神戸牛午餐・搭船返程", heroCity: "神戸・元町",
+            loc: "Kobe", hotel: "神戸メリケンパークオリエンタルホテル（退房）",
+            bg: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800",
+            events: [
+                {
+                    time: "08:30", type: "food", iconType: "utensils", title: "自然醒・最後一天飯店早餐", location: "神戸メリケンパークオリエンタルホテル",
+                    ps_label_1: "", ps_content_1: "",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "從容", desc1_content: "睡到自然醒，吃最後一天飯店自助早餐。今天神戸牛午餐＋搭船回，節奏仍放慢。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "09:30", type: "food", iconType: "bowl-rice", title: "一蘭 三宮（儀式・末日・Aaron 獨自）", location: "神戸三宮",
+                    ps_label_1: "拉麵客製", ps_content_1: "麺のかたさ：かため。ねぎ：なし。",
+                    ps_label_2: "追加", ps_content_2: "替玉（かえだま）をお願いします。",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "儀式", desc1_content: "末日一蘭儀式（Aaron 自己）。伴侶悠閒，留胃給中午神戸牛鐵板燒。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: "",
+                    link_web: ""
+                },
+                {
+                    time: "11:00", type: "lodging", iconType: "hotel", title: "退房・寄行李", location: "神戸メリケンパークオリエンタルホテル",
+                    ps_label_1: "行李寄放", ps_content_1: "荷物を預かってもらえますか？夕方に取りに戻ります。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "退房", desc1_content: "OUT 11:00。退房後寄放行李，午餐＋下午茶後回來取，赴神戸空港搭船。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "11:30", type: "food", iconType: "fire", title: "★ 神戸プレジール本店（神戸牛 鉄板焼 午餐）", location: "三宮・Hotel The B Kobe 1F",
+                    ps_label_1: "玉ねぎ・タロイモ 完全NG＋鐵板分區", ps_content_1: "玉ねぎとタロイモは一切使わないでください。鉄板も分けて調理してください。",
+                    ps_label_2: "伴侶牛排熟度", ps_content_2: "ミディアム（赤い肉汁が出ない程度）でお願いします。",
+                    ps_label_3: "已預約", ps_content_3: "11時半に予約した〇〇です。個室をお願いしました。",
+                    gps: "+81 78-571-0141", gps_title: "Phone",
+                    desc1_title: "美食介紹", desc1_content: "神戸牛鐵板燒午餐。週日午餐營業✓。もも 80g ¥9,570 起。Lunch –LO14:00。三宮 Hotel The B Kobe 1F。",
+                    desc2_title: "預約", desc2_content: "TableCheck kobe-kobeplaisir／☎ 078-571-0141。⚠️ 電話確認洋蔥全排除、鐵板分區處理；勿訂錯同系店「ザ・ビー神戸」。",
+                    desc3_title: "紅線", desc3_content: "Aaron 玉ねぎ、伴侶 タロイモ 完全NG；伴侶熟度適中不見血。",
+                    link_web: "https://www.tablecheck.com/ja/shops/kobe-kobeplaisir/reserve"
+                },
+                {
+                    time: "14:00", type: "food", iconType: "utensils", title: "元町散步・LIMA COFFEE（下午茶）", location: "元町",
+                    ps_label_1: "咖啡・甜點", ps_content_1: "おすすめのコーヒーとデザートをください。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "MAP CODE",
+                    desc1_title: "慢遊下午茶", desc1_content: "午餐後元町慢步，LIMA COFFEE 下午茶（–18:00）。伴侶每日悠閒時光。備援：.donut。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "15:00", type: "lodging", iconType: "hotel", title: "回飯店取行李", location: "神戸メリケンパークオリエンタルホテル",
+                    ps_label_1: "取寄放行李", ps_content_1: "預けた荷物を受け取りたいです。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "取行李", desc1_content: "回飯店取寄放行李，準備搭計程車到神戸空港搭船。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "15:40", type: "transport", iconType: "car", title: "計程車 直達神戸空港", location: "メリケンパーク → 神戸空港",
+                    ps_label_1: "給司機", ps_content_1: "神戸空港までお願いします。",
+                    ps_label_2: "", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "動線", desc1_content: "15:40 計程車直達神戸空港（金錢換體力）。約15–20分。16:40 到 → 報到搭 17:00 船。",
+                    desc2_title: "", desc2_content: "",
+                    desc3_title: "", desc3_content: ""
+                },
+                {
+                    time: "17:00", type: "transport", iconType: "ship", title: "★ Bay Shuttle 高速船 → 關空 T1（回程）", location: "神戸空港 → KIX T1",
+                    ps_label_1: "回程船票線上先訂（可控・免手續費可改）", ps_content_1: "",
+                    ps_label_2: "片道 ¥1,880／人", ps_content_2: "",
+                    gps: "", gps_title: "Phone",
+                    desc1_title: "船班", desc1_content: "17:00 神戸空港 → 關空 高速船，約 30 分，T1 17:40 到（機場留 3 小時 5 分✅）。片道 ¥1,880。",
+                    desc2_title: "⚠️ 決斷", desc2_content: "18:00 船 → T1 18:40 僅 2h5m，不符「機場留 3 小時」；17:00 是唯一達標主班。停航前日 14 時知 → 改利木津 16:00 発（15:30 離飯店）。",
+                    desc3_title: "備註", desc3_content: "回程船 kobe-access.jp 線上先訂；出發前一週複查運航狀況。",
+                    link_web: "https://www.kobe-access.jp/"
                 },
                 {
                     time: "20:45", type: "flight", iconType: "plane", title: "關西機場 → 桃園", location: "關西機場",
@@ -1712,6 +1769,7 @@
             else if(evt.iconType === 'torii-gate') iconClass = 'fa-torii-gate';
             else if(evt.iconType === 'music') iconClass = 'fa-music';
             else if(evt.iconType === 'hotel') iconClass = 'fa-hotel'; 
+            else if(evt.iconType === 'ship') iconClass = 'fa-ship';
             let displayDesc = evt.desc1_content || ""; 
             const eventContext = { isBranch: data.hasBranch, branchType: currentBranch, idx: idx };
             const safeEvt = JSON.stringify(evt).replace(/'/g, "&#39;");
@@ -2166,7 +2224,7 @@
             showCustomAlert("目前沒有任何記帳紀錄可匯出！");
             return;
         }
-        let txtContent = "2026 大阪聖誕 - 記帳紀錄\n-------------------------\n";
+        let txtContent = "2026 神戸聖誕 - 記帳紀錄\n-------------------------\n";
         let total = 0;
         data.reverse().forEach(item => {
             const twd = Math.round(item.cost * RATE);
@@ -2557,7 +2615,7 @@
             unlockScroll();
         }
     }
-    /* ===== 大阪優化模組 JS ===== */
+    /* ===== 神戸優化模組 JS ===== */
     // #1 過敏紅線卡
     function openAllergyCard(){ lockScroll(); document.getElementById('allergyOverlay').classList.add('active'); }
     function closeAllergyCard(){ unlockScroll(); document.getElementById('allergyOverlay').classList.remove('active'); }
@@ -2621,13 +2679,13 @@
     }
     var RES_ITEMS=[
         {k:'flight', c:'FLIGHT', t:'AirAsia D7 機票', w:'去12/24・回12/27', def:'已訂'},
-        {k:'hotel', c:'STAY', t:'ホテル阪神大阪', w:'12/24-27 3泊', def:'已訂'},
-        {k:'gori', c:'FOOD', t:'ごりちゃん 燒肉', w:'12/24 22:00', def:'未訂'},
-        {k:'parkside', c:'FOOD', t:'Parkside Grill', w:'12/25 18:45・11/25開搶', def:'未訂'},
-        {k:'plaisir', c:'FOOD', t:'神戸プレジール', w:'12/26 11:30', def:'未訂'},
-        {k:'pancake', c:'FOOD', t:'幸せのパンケーキ', w:'12/26 14:00', def:'未訂'},
-        {k:'gaudente', c:'FOOD', t:'Osteria Gaudente', w:'12/26 19:00', def:'未訂'},
-        {k:'kiyosuke', c:'FOOD', t:'きよ助(當日排隊)', w:'12/27 11:30・予約不可・10:30卡位', def:'未訂'}
+        {k:'kferry', c:'FERRY', t:'Bay Shuttle 回程船', w:'12/27 17:00・線上先訂', def:'未訂'},
+        {k:'khotel', c:'STAY', t:'神戸メリケンパーク東方', w:'12/24-27 3泊', def:'已訂'},
+        {k:'koushi', c:'FOOD', t:'仔牛屋（神戸牛焼肉）', w:'12/24 23:15・平安夜速訂', def:'未訂'},
+        {k:'ishida', c:'FOOD', t:'石田屋 北野坂（すき焼き）', w:'12/26 18:30・約9/1開', def:'未訂'},
+        {k:'pancake', c:'FOOD', t:'幸せのパンケーキ', w:'12/26 15:00', def:'未訂'},
+        {k:'plaisir', c:'FOOD', t:'神戸プレジール本店', w:'12/27 11:30', def:'未訂'},
+        {k:'usj', c:'TICKET', t:'USJ 門票', w:'12/25入園・約12/20開賣', def:'未訂'}
     ];
     var RES_STATUS=['未訂','已訂','已確認'];
     function getResStatus(){ try{return JSON.parse(localStorage.getItem('osaka_res_status')||'{}');}catch(e){return {};} }
@@ -2647,7 +2705,7 @@
         localStorage.setItem('osaka_res_status', JSON.stringify(st)); renderResBoard();
     }
     var PACK_ITEMS=['護照 / 機票確認','現金 & 信用卡','手機 ICOCA / Apple Pay','常備藥 & 個人藥','暖暖包','口罩','保暖外套 / 發熱衣','圍巾・手套・毛帽','雨傘 / 雨具','行動電源 & 充電線','保濕・護唇膏','隱形眼鏡 / 眼鏡','環保購物袋'];
-    var SOUV_ITEMS=['白色戀人 / Royce 生巧','薯條三兄弟','面膜 (LuLuLun)','藥妝 (合力他命/休足時間/蒸氣眼罩)','神戸布丁 / 甜點','抹茶點心','大阪限定 Pocky','蓬鬆泡芙 (堂島等)'];
+    var SOUV_ITEMS=['白色戀人 / Royce 生巧','薯條三兄弟','面膜 (LuLuLun)','藥妝 (合力他命/休足時間/蒸氣眼罩)','神戸布丁 / 甜點','抹茶點心','神戸・元町ケーキ','神戸フランツ 魔法の壺プリン'];
     function getChecks(){ try{return JSON.parse(localStorage.getItem('osaka_check')||'{}');}catch(e){return {};} }
     function renderChecklists(){
         var ck=getChecks();

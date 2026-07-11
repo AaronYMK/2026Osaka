@@ -1,7 +1,7 @@
 {
-  "name": "2026 大阪聖誕 Osaka X'mas",
-  "short_name": "大阪聖誕",
-  "description": "2026/12/24-27 大阪四天三夜聖誕行程（離線可用）",
+  "name": "2026 神戸聖誕 Kobe X'mas",
+  "short_name": "神戸聖誕",
+  "description": "2026/12/24-27 神戸四天三夜聖誕行程（離線可用）",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
