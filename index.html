@@ -66,6 +66,19 @@
         .cat-breakdown{margin-top:12px;}
         .cat-title{font-size:0.75rem;color:#94a3b8;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
         .cat-row{display:flex;justify-content:space-between;font-size:0.85rem;color:#475569;padding:3px 0;}
+        .ai-card{padding:16px !important;}
+        .ai-head{display:flex;align-items:center;gap:8px;font-size:0.9rem;color:var(--primary-blue);font-weight:700;margin-bottom:10px;}
+        .ai-warn{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:10px;padding:8px 12px;font-size:0.8rem;line-height:1.6;margin-bottom:10px;}
+        .ai-note{font-size:0.8rem;color:#64748b;line-height:1.6;margin-top:10px;}
+        .ai-btn{width:100%;height:42px;border:none;border-radius:10px;background:var(--primary-blue);color:#fff;font-weight:700;font-size:0.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+        .ai-btn.sub{background:#eff6ff;color:#2563eb;border:1px solid #dbeafe;}
+        .ai-paste{width:100%;min-height:110px;border:1px solid #dbeafe;border-radius:10px;padding:10px;font-size:0.8rem;color:#1e3a8a;background:#f8fbff;font-family:monospace;margin:10px 0;box-sizing:border-box;resize:vertical;}
+        .exp-item.pending{background:#fef3c7;border-radius:10px;}
+        .pend-tag{font-size:0.7rem;font-weight:700;color:#b45309;background:#fde68a;border-radius:50px;padding:2px 8px;cursor:pointer;white-space:nowrap;}
+        body.dark .ai-warn{background:#422006 !important;border-color:#78350f !important;color:#fde68a;}
+        body.dark .ai-paste{background:#0f172a;color:#e2e8f0;border-color:#334155;}
+        body.dark .ai-btn.sub{background:#1e3a5f;color:#bfdbfe;border-color:#334155;}
+        body.dark .exp-item.pending{background:#422006;}
         .quick-amt-row{display:flex;gap:6px;margin-top:12px;}
         .quick-amt{flex:1;background:#eff6ff;border:1px solid #dbeafe;color:#2563eb;border-radius:8px;padding:8px 0;font-size:0.8rem;font-weight:700;cursor:pointer;}
         .quick-amt:active{background:#dbeafe;}
@@ -764,6 +777,14 @@
             <div class="budget-bar"><div id="budgetFill" class="budget-fill"></div></div>
             <div id="budgetText" style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:8px;"></div>
             <div id="catBreakdown" class="cat-breakdown"></div>
+        </div>
+        <div class="balance-card ai-card">
+            <div class="ai-head"><i class="fas fa-receipt"></i> 收據 AI 整理</div>
+            <div class="ai-warn"><i class="fas fa-eye-slash"></i> 拍照前先遮住卡號、會員編號、QR Code。AI 可能看錯小字，入帳前請對照原收據。</div>
+            <button class="ai-btn" onclick="copyReceiptPrompt()"><i class="fas fa-copy"></i> 複製收據整理提示詞</button>
+            <div class="ai-note">把提示詞和收據照片一起傳給 Claude 或 ChatGPT，再把 AI 回覆的表格貼到下面。</div>
+            <textarea id="aiPaste" class="ai-paste" placeholder="| 日期 | 店名 | 品項 | 數量 | 含稅金額 | 付款方式 | 分類 | 備註 |"></textarea>
+            <button class="ai-btn sub" onclick="importAiTable()"><i class="fas fa-file-import"></i> 匯入表格到記帳</button>
         </div>
         <div class="balance-card">
             <div class="date-picker-wrapper" onclick="document.getElementById('expDate').showPicker()">
@@ -2364,10 +2385,10 @@
             const dObj = new Date(item.date);
             const dateDisplay = `${dObj.getFullYear()}/${dObj.getMonth()+1}/${dObj.getDate()}`;
             return `
-            <div class="exp-item">
+            <div class="exp-item${item.pending ? ' pending' : ''}">
                 <div style="flex:1; display:flex; align-items:center; gap:10px;">
                     <span class="exp-date" style="font-size:0.8rem; color:#64748b;">${dateDisplay}</span>
-                    <span class="exp-name">${item.name}</span>
+                    <span class="exp-name">${item.name}</span>${item.pending ? `<span class="pend-tag" onclick="confirmPending(${item.id})">待確認</span>` : ''}
                 </div>
                 <div class="exp-price">¥${item.cost.toLocaleString()} ($${twd.toLocaleString()})</div>
                 <button class="exp-del" onclick="delExpense(${item.id})"><i class="fas fa-times-circle"></i></button>
@@ -2747,6 +2768,84 @@
         var cb=document.getElementById('catBreakdown');
         if(cb){ var rows=order.filter(function(c){return cats[c];}).map(function(c){ return '<div class="cat-row"><span>'+c+'</span><span>¥'+cats[c].toLocaleString()+'</span></div>'; }).join('');
             cb.innerHTML= rows ? '<div class="cat-title">分類統計</div>'+rows : ''; }
+    }
+    const RECEIPT_PROMPT = `請讀取這張日本收據照片，整理成下面這個 Markdown 表格，只輸出表格，不要其他文字：
+
+| 日期 | 店名 | 品項 | 數量 | 含稅金額 | 付款方式 | 分類 | 備註 |
+
+規則：
+1. 日期寫成 YYYY-MM-DD。
+2. 店名、品項翻成台灣繁體中文，後面括號保留日文原文。
+3. 含稅金額只寫日圓數字，不加 ¥ 和逗號。一張收據有多個品項就分成多列，不要加合計列；品項價格若未含稅，另加一列「消費稅」，讓各列加總等於收據合計。
+4. 付款方式只能寫：現金、信用卡、IC卡、其他。
+5. 分類只能寫：餐飲、交通、購物、門票、其他（住宿費歸「其他」，並在備註寫「住宿」）。
+6. 任何看不清楚的文字或數字，那一格寫「待確認」，不要自行猜測。
+7. 免稅、折扣、服務費寫在備註。`;
+    const EXP_CATS = ['餐飲','交通','購物','門票','其他'];
+    function copyReceiptPrompt(){
+        copyToClipboard(RECEIPT_PROMPT);
+        showCustomAlert('已複製提示詞。傳給 AI 時記得附上收據照片。');
+    }
+    function parseAiTable(raw, fallbackDate){
+        const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l && !/^\|?\s*:?-{3,}/.test(l));
+        const cellsOf = l => (l.includes('\t') ? l.split('\t') : l.replace(/^\|/, '').replace(/\|$/, '').split('|')).map(c => c.trim());
+        let head = null; const recs = [];
+        for (const line of lines) {
+            const c = cellsOf(line);
+            if (!head) { if (c.some(x => x.includes('日期')) && c.some(x => x.includes('金額'))) head = c; continue; }
+            if (c.every(x => !x)) continue;
+            const g = k => { const i = head.findIndex(h => h.includes(k)); return i >= 0 ? (c[i] || '') : ''; };
+            const date0 = g('日期'), store = g('店名'), item = g('品項'), qty = g('數量'), amt = g('金額'), pay = g('付款'), cat0 = g('分類'), note = g('備註');
+            if (/合計|小計|總計/.test(item || store)) continue;
+            let pending = [date0, store, item, qty, amt, cat0].some(v => v.includes('待確認'));
+            const cost = parseInt(amt.replace(/[^\d]/g, ''), 10) || 0;
+            if (!cost) pending = true;
+            let date = date0;
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date0)) { date = fallbackDate; pending = true; }
+            let cat = cat0;
+            if (!EXP_CATS.includes(cat0)) { cat = '其他'; pending = true; }
+            let name = (store && item) ? `${item}（${store}）` : (item || store || '未命名');
+            const q = parseInt(qty, 10);
+            if (q > 1) name += `×${q}`;
+            if (pay) name += ` ・${pay}`;
+            if (note && note !== '-') name += ` ・${note}`;
+            name = name.replace(/[<>]/g, '');
+            const rec = { id: Date.now() + recs.length, date, name, cost, cat };
+            if (pending) rec.pending = true;
+            recs.push(rec);
+        }
+        return { head, recs };
+    }
+    function importAiTable(){
+        const raw = (document.getElementById('aiPaste').value || '').trim();
+        if (!raw) return showCustomAlert('請先貼上 AI 回覆的表格');
+        const d = new Date();
+        const today = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const { head, recs } = parseAiTable(raw, document.getElementById('expDate').value || today);
+        if (!head) return showCustomAlert('找不到表頭。表格第一列要有「日期」和「含稅金額」欄。');
+        if (!recs.length) return showCustomAlert('表格裡沒有可匯入的資料列。');
+        const pend = recs.filter(r => r.pending).length;
+        const sum = recs.reduce((s, r) => s + r.cost, 0);
+        let msg = `將匯入 ${recs.length} 筆，合計 ¥${sum.toLocaleString()}。`;
+        if (pend) msg += `\n其中 ${pend} 筆有「待確認」，匯入後以黃底標示；對照原收據後，點「待確認」即可解除。`;
+        showCustomConfirm(msg, function(){
+            const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+            localStorage.setItem('tripExpOsaka2026', JSON.stringify(data.concat(recs)));
+            document.getElementById('aiPaste').value = '';
+            closeConfirm();
+            loadExpenses();
+        });
+    }
+    function confirmPending(id){
+        const hit = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]').find(i => i.id === id);
+        if (hit && !hit.cost) return showCustomAlert('這筆金額是 ¥0（收據上看不清楚）。請刪除這筆，再用上方欄位輸入正確金額。');
+        showCustomConfirm('已對照原收據，這筆內容和金額都正確嗎？\n（有錯請刪除這筆後重新輸入）', function(){
+            const data = JSON.parse(localStorage.getItem('tripExpOsaka2026') || '[]');
+            data.forEach(i => { if (i.id === id) delete i.pending; });
+            localStorage.setItem('tripExpOsaka2026', JSON.stringify(data));
+            closeConfirm();
+            loadExpenses();
+        });
     }
     init();
 </script>

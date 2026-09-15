@@ -1,5 +1,5 @@
 /* 2026 神戸聖誕 APP — Service Worker（真離線快取 + 內容可更新） */
-const CACHE = 'kobe-xmas-v2';
+const CACHE = 'kobe-xmas-v3';
 const CORE = ['./', './index.html', './manifest.json', './icon.png'];
 
 self.addEventListener('install', (e) => {
